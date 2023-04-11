@@ -16,6 +16,8 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { ArtikelsComponent } from './artikels/artikels.component';
 import { MatMenuModule } from '@angular/material/menu';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatToolbarModule,
     MatSidenavModule,
     MatMenuModule,
+    MatSnackBarModule,
+    MatDialogModule,
   ],
   providers: [ {
     provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true

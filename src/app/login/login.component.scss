@@ -1,0 +1,53 @@
+h2.mat-dialog-title {
+  text-align: center;
+  color: #FF4081;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: linear-gradient(to right, #b9d6d2 50%, #eecac6 50%);
+  height: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+mat-label {
+  color: #4CAF50;
+}
+
+mat-icon {
+  color: #4CAF50;
+}
+
+
+
+button.mat-button {
+  color: #fff;
+  background-color: #4CAF50;
+}
+
+button.mat-button:hover {
+  background-color: #FF4081;
+}
+
+.mat-dialog-content {
+  text-align: center;
+  background-color: #B2EBF2;
+
+}
+
+.mat-dialog-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
