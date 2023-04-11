@@ -14,12 +14,15 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { ArtikelsComponent } from './artikels/artikels.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
-    LoginComponent
+    LoginComponent,
+    ArtikelsComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +37,7 @@ import { LoginComponent } from './login/login.component';
     MatButtonModule,
     MatToolbarModule,
     MatSidenavModule,
+    MatMenuModule,
   ],
   providers: [ {
     provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true

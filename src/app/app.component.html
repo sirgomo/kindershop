@@ -1,2 +1,50 @@
-ajsdh
+<mat-toolbar>
+   <mat-toolbar-row>
+    <div class="men" >
+      <mat-icon>child_friendly</mat-icon>
+      <span>Sklep Dziecięcy</span>
+      <span class="spacer"></span>
+      <button mat-icon-button>
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+        <button mat-icon-button *ngIf="isLogged">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <button mat-icon-button (click)="login()" *ngIf="!isLogged">
+          <mat-icon>login</mat-icon>
+        </button>
+        <button mat-icon-button (click)="logout()" *ngIf="isLogged">
+          <mat-icon>logout</mat-icon>
+        </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>home</mat-icon>
+          <span>Strona Główna</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>feedback</mat-icon>
+          <span>Kontakt</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>help_outline</mat-icon>
+          <span>Pomoc</span>
+        </button>
+      </mat-menu>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
+   </mat-toolbar-row>
+   <mat-toolbar-row>
+    <div class="category">
+      <div class="catitem"><button mat-stroked-button> cat a</button></div>
+      <div class="catitem"><button mat-stroked-button > cat b</button></div>
+      <div class="catitem"><button mat-stroked-button > cat c</button></div>
+      <div class="catitem"><button mat-stroked-button > cat d</button></div>
+    </div>
+   </mat-toolbar-row>
+  </mat-toolbar>
+  <div class="banner_container">
+    <div class="banner"></div>
+  </div>
 <router-outlet></router-outlet>
