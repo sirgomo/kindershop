@@ -45,9 +45,25 @@ button.mat-button:hover {
 
 }
 
-.mat-dialog-actions {
+.action {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logButo {
+  display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+
 }
+
+.regButo {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+}
+

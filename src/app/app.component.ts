@@ -12,13 +12,13 @@ import { LoginComponent } from './login/login.component';
 })
 export class AppComponent {
 @ViewChild('menu', {static: true}) menu!: MatMenu;
-isLogged = false;
+isLogged$ = this.authServi.isloged$;
   constructor (private authServi: AuthService, private matDialog: MatDialog) {}
 
 login() {
-  this.authServi.setAppComponet(this);
+
   const dialogConfig : MatDialogConfig = new MatDialogConfig();
-  dialogConfig.height = '300px';
+  dialogConfig.height = '350px';
   dialogConfig.width = '400px';
 
   this.matDialog.open(LoginComponent, dialogConfig);

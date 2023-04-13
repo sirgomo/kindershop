@@ -7,15 +7,14 @@
       <button mat-icon-button>
         <mat-icon>shopping_cart</mat-icon>
       </button>
-        <button mat-icon-button *ngIf="isLogged">
+      <div  *ngIf="isLogged$ | async else notLogged">
+        <button mat-icon-button >
           <mat-icon>account_circle</mat-icon>
         </button>
-        <button mat-icon-button (click)="login()" *ngIf="!isLogged">
-          <mat-icon>login</mat-icon>
-        </button>
-        <button mat-icon-button (click)="logout()" *ngIf="isLogged">
+        <button mat-icon-button (click)="logout()">
           <mat-icon>logout</mat-icon>
         </button>
+      </div>
       <mat-menu #menu="matMenu">
         <button mat-menu-item>
           <mat-icon>home</mat-icon>
@@ -47,4 +46,9 @@
   <div class="banner_container">
     <div class="banner"></div>
   </div>
+  <ng-template #notLogged>
+    <button mat-icon-button (click)="login()">
+      <mat-icon>login</mat-icon>
+    </button>
+  </ng-template>
 <router-outlet></router-outlet>

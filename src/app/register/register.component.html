@@ -1,0 +1,116 @@
+<div class="container">
+  <div class="men">
+    <h2>Registrierung</h2>
+  </div>
+  <form [formGroup]="registrationForm" class="form">
+    <div class="input-row">
+        <mat-form-field>
+          <mat-label>E-Mail</mat-label>
+          <input matInput formControlName="email" required>
+          <mat-error *ngIf="registrationForm.controls['email'].hasError('email')">
+            Bitte geben Sie eine gültige E-Mail-Adresse ein.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Passwort</mat-label>
+          <input matInput type="password" formControlName="password" required>
+          <mat-error *ngIf="registrationForm.controls['password'].hasError('required')">
+            Passwort ist erforderlich.
+          </mat-error>
+          <mat-error *ngIf="registrationForm.controls['password'].hasError('minlength')">
+            Passwort muss mindestens 8 Zeichen lang sein.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Vorname</mat-label>
+          <input matInput formControlName="vorname" required>
+          <mat-error *ngIf="registrationForm.controls['vorname'].hasError('required')">
+            Vorname ist erforderlich.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Stadt</mat-label>
+          <input matInput formControlName="stadt" required>
+          <mat-error *ngIf="registrationForm.controls['stadt'].hasError('required')">
+            Stadt ist erforderlich.
+          </mat-error>
+        </mat-form-field>
+    </div>
+    <div class="input-row">
+        <mat-form-field>
+          <mat-label>Nachname</mat-label>
+          <input matInput formControlName="nachname" required>
+          <mat-error *ngIf="registrationForm.controls['nachname'].hasError('required')">
+            Nachname ist erforderlich.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Postleitzahl</mat-label>
+          <input matInput formControlName="plz" required type="number">
+          <mat-error *ngIf="registrationForm.controls['plz'].hasError('required')">
+            Postleitzahl ist erforderlich.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Straße</mat-label>
+          <input matInput formControlName="strasse" required>
+          <mat-error *ngIf="registrationForm.controls['strasse'].hasError('required')">
+            Straße ist erforderlich.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Hausnummer</mat-label>
+          <input matInput formControlName="hausnummer" required>
+          <mat-error *ngIf="registrationForm.controls['hausnummer'].hasError('required')">
+            Hausnummer ist erforderlich.
+          </mat-error>
+        </mat-form-field>
+    </div>
+
+
+
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="mat-subheading-2">Lieferadresse</div>
+            </mat-panel-title>
+            <mat-panel-description>
+              Falls die Versandadresse nicht identisch mit der Rechnungsadresse ist.
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="input-row">
+            <mat-form-field>
+              <mat-label>Nachname</mat-label>
+              <input matInput formControlName="l_nachname">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Postleitzahl</mat-label>
+              <input matInput formControlName="l_plz">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Straße</mat-label>
+              <input matInput formControlName="l_strasse">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Stadt</mat-label>
+              <input matInput formControlName="l_stadt">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Hausnummer</mat-label>
+              <input matInput formControlName="l_hausnummer">
+            </mat-form-field>
+
+        </div>
+        </mat-expansion-panel>
+        <div class="button-row">
+          <button mat-button color="primary" (click)="register()">Registrieren</button>
+          <span *ngIf="regi$ | async"></span>
+        </div>
+
+  </form>
+
+</div>

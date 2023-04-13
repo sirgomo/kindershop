@@ -18,13 +18,16 @@ import { ArtikelsComponent } from './artikels/artikels.component';
 import { MatMenuModule } from '@angular/material/menu';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatDialogModule} from '@angular/material/dialog';
+import { RegisterComponent } from './register/register.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
     LoginComponent,
-    ArtikelsComponent
+    ArtikelsComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +45,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatMenuModule,
     MatSnackBarModule,
     MatDialogModule,
+    MatExpansionModule,
   ],
   providers: [ {
     provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true

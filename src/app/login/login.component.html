@@ -15,9 +15,15 @@
     </form>
   </mat-dialog-content>
   <mat-dialog-actions align="center" class="action">
-    <button mat-button matDialogClose >Cancel</button>
-    <button mat-button color="primary" (click)="login()">Login</button>
+    <div class="logButo">
+      <button mat-button matDialogClose >Cancel</button>
+      <button mat-button color="primary" (click)="login()">Login</button>
+    </div>
+    <div class="regButo">
+      <button mat-button color="primary" (click)="register()">Registrieren</button>
+    </div>
   </mat-dialog-actions>
+  <span *ngIf="tryLogin$ | async"></span>
 </div>
 
 

@@ -34,6 +34,7 @@ body {  font-family: Roboto, "Helvetica Neue", sans-serif;  }
 .men {
   display: flex;
   background-image: url("assets/pasekKolor.png");
+  background-size: cover;
   justify-content: space-between;
   align-items: center;
   //color: #e8c5ba;

@@ -1,0 +1,79 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to right, #b9d6d2 50%, #eecac6 50%);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.men {
+  display: flex;
+  background-image: url('/assets/pasekKolor.png');
+  background-size: cover;
+  justify-content: center;
+  align-items: center;
+  //color: #e8c5ba;
+  color: #4CAF50;
+  flex-shrink: 1;
+  height: 50px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.input-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  gap: .4rem;
+}
+mat-expansion-panel {
+  width: 95%;
+}
+
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-subheading-2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+mat-form-field {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+mat-label {
+  color: #4CAF50;
+}
+
+mat-icon {
+  color: #4CAF50;
+}
+
+
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: .4rem;
+  padding: 2rem 2rem;
+  margin-bottom: auto;
+}
+
