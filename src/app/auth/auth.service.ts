@@ -27,7 +27,7 @@ export class AuthService {
       this.snack.open(Object(res).message, 'Ok', {duration: 2000});
       return '';
     }
-    console.log(Object(res).access_token);
+
     dilRef.close();
     this.isLogedSubject.next(true);
     this.token = Object(res).access_token;
