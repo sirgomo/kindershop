@@ -1,1 +1,69 @@
-<p>user works!</p>
+<div *ngIf="user$ | async as user else loading" class="container">
+  <form (ngSubmit)="updateUser(user)" class="form">
+    <div class="input-row">
+      <mat-form-field>
+        <mat-label>Email:</mat-label>
+        <input matInput type="email" name="email" [(ngModel)]="user.email" required>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Vorname:</mat-label>
+        <input matInput type="text" name="vorname" [(ngModel)]="user.vorname" required>
+      </mat-form-field>
+    </div>
+    <div class="input-row">
+      <mat-form-field>
+        <mat-label>Nachname:</mat-label>
+        <input matInput type="text" name="nachname" [(ngModel)]="user.nachname" required>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Straße:</mat-label>
+        <input matInput type="text" name="strasse" [(ngModel)]="user.strasse" required>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Hausnummer:</mat-label>
+        <input matInput type="text" name="hausnummer" [(ngModel)]="user.hausnummer" required>
+      </mat-form-field>
+    </div>
+    <div class="input-row">
+      <mat-form-field>
+        <mat-label>PLZ:</mat-label>
+        <input matInput type="number" name="plz" [(ngModel)]="user.plz" required>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Stadt:</mat-label>
+        <input matInput type="text" name="stadt" [(ngModel)]="user.stadt" required>
+      </mat-form-field>
+    </div>
+    <div class="input-row">
+      <button mat-raised-button color="primary" type="submit">Update</button>
+    </div>
+    <div class="input-row">
+      <mat-form-field>
+        <mat-label class="optional">Liefer-Nachname:</mat-label>
+        <input matInput type="text" name="l_nachname" [(ngModel)]="user.l_nachname">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label class="optional">Liefer-Straße:</mat-label>
+        <input matInput type="text" name="l_strasse" [(ngModel)]="user.l_strasse">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label class="optional">Liefer-Hausnummer:</mat-label>
+        <input matInput type="text" name="l_hausnummer" [(ngModel)]="user.l_hausnummer">
+      </mat-form-field>
+    </div>
+    <div class="input-row">
+      <mat-form-field>
+        <mat-label class="optional">Liefer-PLZ:</mat-label>
+        <input matInput type="number" name="l_plz" [(ngModel)]="user.l_plz">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label class="optional">Liefer-Stadt:</mat-label>
+        <input matInput type="text" name="l_stadt" [(ngModel)]="user.l_stadt">
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<ng-template #loading>
+  Loading...
+</ng-template>

@@ -2,7 +2,7 @@
   <div class="men">
     <h2>Registrierung</h2>
   </div>
-  <form [formGroup]="registrationForm" class="form">
+  <mat-dialog-content>  <form [formGroup]="registrationForm" class="form">
     <div class="input-row">
         <mat-form-field>
           <mat-label>E-Mail</mat-label>
@@ -105,12 +105,17 @@
             </mat-form-field>
 
         </div>
-        </mat-expansion-panel>
-        <div class="button-row">
-          <button mat-button color="primary" (click)="register()">Registrieren</button>
-          <span *ngIf="regi$ | async"></span>
-        </div>
+      </mat-expansion-panel>
+      </form>
+      </mat-dialog-content>
 
-  </form>
+
+        <mat-dialog-actions  class="action">
+          <div>
+            <button mat-raised-button color="primary" (click)="register()">Registrieren</button>
+            <span *ngIf="regi$ | async"></span>
+          </div>
+        </mat-dialog-actions>
+
 
 </div>

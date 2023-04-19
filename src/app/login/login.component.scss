@@ -1,69 +1,27 @@
-h2.mat-dialog-title {
+
+.log {
   text-align: center;
-  color: #FF4081;
+  color: #398dbd;
 }
 
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
   background: linear-gradient(to right, #b9d6d2 50%, #eecac6 50%);
-  height: 100%;
 }
-
-mat-form-field {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+mat-dialog-content {
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 }
-
-mat-label {
-  color: #4CAF50;
-}
-
-mat-icon {
-  color: #4CAF50;
-}
-
-
-
-button.mat-button {
-  color: #fff;
-  background-color: #4CAF50;
-}
-
-button.mat-button:hover {
-  background-color: #FF4081;
-}
-
-.mat-dialog-content {
-  text-align: center;
-  background-color: #B2EBF2;
-
-}
-
-.action {
+.actions {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-items: center;
+  .logButo {
+    display: flex;
+    width: 100%;
+   gap: .5rem;
+   margin-bottom: .5rem;
+  }
 }
-
-.logButo {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-
-}
-
-.regButo {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-
-}
-

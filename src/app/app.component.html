@@ -8,7 +8,7 @@
         <mat-icon>shopping_cart</mat-icon>
       </button>
       <div  *ngIf="isLogged$ | async else notLogged">
-        <button mat-icon-button >
+        <button mat-icon-button routerLink="user">
           <mat-icon>account_circle</mat-icon>
         </button>
         <button mat-icon-button (click)="logout()">
@@ -35,11 +35,17 @@
     </div>
    </mat-toolbar-row>
    <mat-toolbar-row>
-    <div class="category">
+    <div class="category" *ngIf="!isInUserProfil">
       <div class="catitem"><button mat-stroked-button> cat a</button></div>
       <div class="catitem"><button mat-stroked-button > cat b</button></div>
       <div class="catitem"><button mat-stroked-button > cat c</button></div>
       <div class="catitem"><button mat-stroked-button > cat d</button></div>
+    </div>
+    <div class="category" *ngIf="isInUserProfil">
+      <div class="catitem"><button mat-stroked-button>Passwort ändern</button></div>
+      <div class="catitem"><button mat-stroked-button>Bestellungen</button></div>
+      <div class="catitem"><button mat-stroked-button>Rechnungen</button></div>
+      <div class="catitem"><button mat-stroked-button (click)="goEinkaufen()">Züruck zum Einkaufen</button></div>
     </div>
    </mat-toolbar-row>
   </mat-toolbar>

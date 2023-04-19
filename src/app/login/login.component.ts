@@ -26,9 +26,9 @@ export class LoginComponent {
     }
     register() {
       const dialogConfig : MatDialogConfig = new MatDialogConfig();
-      dialogConfig.height = '60%';
-      dialogConfig.width = '50%';
-
+      dialogConfig.height = '39%';
+      dialogConfig.width = '71%';
+      this.dialRef.close();
       this.matDialog.open(RegisterComponent, dialogConfig);
     }
 }

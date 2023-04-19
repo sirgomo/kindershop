@@ -1,30 +1,32 @@
 <div class="container">
-  <h2 mat-dialog-title class="log">Login</h2>
-  <mat-dialog-content class="dialog">
+  <span *ngIf="tryLogin$ | async"></span>
+  <h2 class="log">Login</h2>
+  <mat-dialog-content>
+  <div class="login">
     <form>
       <mat-form-field>
         <mat-label>Email</mat-label>
         <input matInput [(ngModel)]="loginDto.email" name="email" type="email">
         <mat-icon matSuffix>email</mat-icon>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field >
         <mat-label>Password</mat-label>
         <input matInput [(ngModel)]="loginDto.password" type="password" name="password">
         <mat-icon matSuffix>lock</mat-icon>
       </mat-form-field>
     </form>
-  </mat-dialog-content>
-  <mat-dialog-actions align="center" class="action">
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <div class="actions">
     <div class="logButo">
-      <button mat-button matDialogClose >Cancel</button>
-      <button mat-button color="primary" (click)="login()">Login</button>
+      <button mat-raised-button matDialogClose >Cancel</button>
+      <button mat-raised-button color="primary" (click)="login()">Login</button>
     </div>
     <div class="regButo">
-      <button mat-button color="primary" (click)="register()">Registrieren</button>
+      <button mat-raised-button color="primary" (click)="register()">Registrieren</button>
     </div>
-  </mat-dialog-actions>
-  <span *ngIf="tryLogin$ | async"></span>
+  </div>
+
+</mat-dialog-actions>
 </div>
-
-
-

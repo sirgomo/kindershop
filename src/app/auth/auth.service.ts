@@ -7,6 +7,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
 import { Buffer } from 'buffer';
+import { Route, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class AuthService {
    isloged$ = this.isLogedSubject.asObservable();
    token = '';
 
-  constructor(private httpClient: HttpClient, private snack: MatSnackBar) {}
+  constructor(private httpClient: HttpClient, private snack: MatSnackBar, private route : Router) {}
 
   login(data : {email : string, password: string}, dilRef: MatDialogRef<LoginComponent>) {
    return this.httpClient.post(this.api + 'auth/login', data).pipe(map((res)=> {
@@ -44,6 +45,7 @@ export class AuthService {
       }
       this.token = Object(res).access_token;
       this.isLogedSubject.next(true);
+      dilRef.close();
       return '';
     }, take(1))))
   }
@@ -53,6 +55,7 @@ export class AuthService {
     localStorage.removeItem('role');
     localStorage.removeItem('email');
     localStorage.removeItem('userid')
+    this.route.navigateByUrl('/');
   }
   private setRole() {
 
