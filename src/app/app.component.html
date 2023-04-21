@@ -8,7 +8,7 @@
         <mat-icon>shopping_cart</mat-icon>
       </button>
       <div  *ngIf="isLogged$ | async else notLogged">
-        <button mat-icon-button routerLink="user">
+        <button mat-icon-button (click)="goToUser()">
           <mat-icon>account_circle</mat-icon>
         </button>
         <button mat-icon-button (click)="logout()">
@@ -28,6 +28,13 @@
           <mat-icon>help_outline</mat-icon>
           <span>Pomoc</span>
         </button>
+        <div *ngIf="role$ | async as role">
+          <button mat-menu-item *ngIf="role === 'admin'"  (click)="goToAdmin()">
+            <mat-icon>help_outline</mat-icon>
+            <span>Admin</span>
+          </button>
+        </div>
+
       </mat-menu>
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_vert</mat-icon>
@@ -35,16 +42,27 @@
     </div>
    </mat-toolbar-row>
    <mat-toolbar-row>
-    <div class="category" *ngIf="!isInUserProfil">
+    <div class="category" *ngIf="!isInUserProfil && !isInAdmin">
       <div class="catitem"><button mat-stroked-button> cat a</button></div>
       <div class="catitem"><button mat-stroked-button > cat b</button></div>
       <div class="catitem"><button mat-stroked-button > cat c</button></div>
       <div class="catitem"><button mat-stroked-button > cat d</button></div>
+      <div *ngIf="role$ | async as role">
+      <div class="catitem" *ngIf="role === 'admin'"><button mat-stroked-button (click)="goToAdmin()"> Admin</button></div>
+      </div>
     </div>
     <div class="category" *ngIf="isInUserProfil">
       <div class="catitem"><button mat-stroked-button>Passwort ändern</button></div>
       <div class="catitem"><button mat-stroked-button>Bestellungen</button></div>
       <div class="catitem"><button mat-stroked-button>Rechnungen</button></div>
+      <div class="catitem"><button mat-stroked-button (click)="goEinkaufen()">Züruck zum Einkaufen</button></div>
+      <div *ngIf="role$ | async as role">
+        <div class="catitem" *ngIf="role === 'admin'"><button mat-stroked-button (click)="goToAdmin()"> Admin</button></div>
+        </div>
+    </div>
+    <div class="category" *ngIf="isInAdmin">
+      <div class="catitem"><button mat-stroked-button routerLink="categories">Categories</button></div>
+      <div class="catitem"><button mat-stroked-button routerLink="artikels">Artikels</button></div>
       <div class="catitem"><button mat-stroked-button (click)="goEinkaufen()">Züruck zum Einkaufen</button></div>
     </div>
    </mat-toolbar-row>

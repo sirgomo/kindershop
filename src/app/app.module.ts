@@ -20,6 +20,11 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatDialogModule} from '@angular/material/dialog';
 import { RegisterComponent } from './register/register.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { AdminComponent } from './admin/admin.component';
+import { CategoriesComponent } from './admin/categories/categories.component';
+import { ArtiklesAdminComponent } from './admin/artikles-admin/artikles-admin.component';
+import {MatTableModule} from '@angular/material/table';
+import { AddCategoryComponent } from './admin/categories/add-category/add-category.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +32,11 @@ import {MatExpansionModule} from '@angular/material/expansion';
     UserComponent,
     LoginComponent,
     ArtikelsComponent,
-    RegisterComponent
+    RegisterComponent,
+    AdminComponent,
+    CategoriesComponent,
+    ArtiklesAdminComponent,
+    AddCategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +55,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatSnackBarModule,
     MatDialogModule,
     MatExpansionModule,
+    MatTableModule,
   ],
   providers: [ {
     provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true

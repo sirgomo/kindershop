@@ -1,0 +1,18 @@
+<mat-dialog-content class="container">
+  <div class="in">
+    <mat-form-field>
+      <mat-label>Category Name:</mat-label>
+      <input matInput placeholder="Enter Category Name" [(ngModel)]="categoryName">
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <div class="but">
+    <button mat-raised-button color="primary" (click)="save()" *ngIf="data === null">Save</button>
+    <button mat-raised-button color="primary" (click)="save()" *ngIf="data !== null">Update</button>
+    <button mat-raised-button color="warn" (click)="abort()">Cancel</button>
+  </div>
+  <span *ngIf="add$ | async"></span>
+</mat-dialog-actions>
+
+

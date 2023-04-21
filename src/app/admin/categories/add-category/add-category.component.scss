@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.in {
+  margin-bottom: 0.4rem;
+}
+
+.but {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
+input {
+  margin-top: 0.4rem;
+}

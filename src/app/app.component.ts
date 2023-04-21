@@ -16,7 +16,9 @@ import { Router } from '@angular/router';
 export class AppComponent {
 @ViewChild('menu', {static: true}) menu!: MatMenu;
 isInUserProfil: boolean = false;
-isLogged$ = this.authServi.isloged$;
+isLogged$ = this.authServi.getIsLogged();
+role$ = this.authServi.role$;
+isInAdmin = false;
   constructor (private authServi: AuthService, private matDialog: MatDialog, private helper: HelperService,  private route: Router) {
     this.helper.setAppComponenet(this);
   }
@@ -31,9 +33,20 @@ login() {
 logout() {
   this.isInUserProfil = false;
   this.authServi.logout();
+  this.isInAdmin = false;
 }
 goEinkaufen() {
   this.route.navigateByUrl('/');
   this.isInUserProfil = false;
+  this.isInAdmin = false;
+  }
+goToAdmin() {
+  this.route.navigateByUrl('admin');
+  this.isInAdmin = true;
+  this.isInUserProfil = false;
+}
+goToUser() {
+  this.route.navigateByUrl('user');
+  this.isInAdmin = false;
 }
 }
