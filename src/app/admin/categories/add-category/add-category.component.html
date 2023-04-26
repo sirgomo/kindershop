@@ -9,7 +9,7 @@
 <mat-dialog-actions align="center">
   <div class="but">
     <button mat-raised-button color="primary" (click)="save()" *ngIf="data === null">Save</button>
-    <button mat-raised-button color="primary" (click)="save()" *ngIf="data !== null">Update</button>
+    <button mat-raised-button color="primary" (click)="update()" *ngIf="data !== null">Update</button>
     <button mat-raised-button color="warn" (click)="abort()">Cancel</button>
   </div>
   <span *ngIf="add$ | async"></span>
