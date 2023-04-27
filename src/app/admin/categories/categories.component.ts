@@ -29,12 +29,9 @@ export class CategoriesComponent implements OnInit{
 
     this.categorie$ = this.dialog.open(AddCategoryComponent, conf).afterClosed().pipe(map((res) => {
     if(res === undefined) return this.catService.category$;
-
       return res;
     }));
 
-
-        // kod do utworzenia nowej kategorii
   }
 
   editCategory(id:number, name: string) {

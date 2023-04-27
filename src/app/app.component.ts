@@ -5,6 +5,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LoginComponent } from './login/login.component';
 import { HelperService } from './helper.service';
 import { Router } from '@angular/router';
+import { CategoriesService } from './admin/categories/categories.service';
 
 
 @Component({
@@ -18,8 +19,9 @@ export class AppComponent {
 isInUserProfil: boolean = false;
 isLogged$ = this.authServi.getIsLogged();
 role$ = this.authServi.role$;
+categories$ = this.category.findAll();
 isInAdmin = false;
-  constructor (private authServi: AuthService, private matDialog: MatDialog, private helper: HelperService,  private route: Router) {
+  constructor (private authServi: AuthService, private matDialog: MatDialog, private helper: HelperService,  private route: Router, private category: CategoriesService) {
     this.helper.setAppComponenet(this);
   }
 
@@ -48,5 +50,8 @@ goToAdmin() {
 goToUser() {
   this.route.navigateByUrl('user');
   this.isInAdmin = false;
+}
+showItemsInCategory(catid: number | undefined) {
+
 }
 }

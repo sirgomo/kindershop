@@ -25,7 +25,8 @@ export class CategoriesService {
 
      this.cat.next(res);
     return res;
-    }), shareReplay(1));
+    }), shareReplay(1)
+    );
   }
 
   create(category: iCategory, dialogRef: MatDialogRef<AddCategoryComponent>): Observable<any> {

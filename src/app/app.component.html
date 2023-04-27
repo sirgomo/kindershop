@@ -43,10 +43,9 @@
    </mat-toolbar-row>
    <mat-toolbar-row>
     <div class="category" *ngIf="!isInUserProfil && !isInAdmin">
-      <div class="catitem"><button mat-stroked-button> cat a</button></div>
-      <div class="catitem"><button mat-stroked-button > cat b</button></div>
-      <div class="catitem"><button mat-stroked-button > cat c</button></div>
-      <div class="catitem"><button mat-stroked-button > cat d</button></div>
+      <div *ngIf="categories$ | async as cats" class="category">
+        <div class="catitem" *ngFor="let item of cats"><button mat-stroked-button (click)="showItemsInCategory(item.id)">{{item.name}}</button></div>
+      </div>
       <div *ngIf="role$ | async as role">
       <div class="catitem" *ngIf="role === 'admin'"><button mat-stroked-button (click)="goToAdmin()"> Admin</button></div>
       </div>
