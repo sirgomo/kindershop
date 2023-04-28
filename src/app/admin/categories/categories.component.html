@@ -2,7 +2,7 @@
   <div class="row">
     <button mat-raised-button color="primary" (click)="createCategory()">Kategorie erstellen</button>
   </div>
-  <div *ngIf="categorie$ | async as categories else load">
+  <div *ngIf="categorie$ | async as categories">
       <table mat-table [dataSource]="categories">
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef> ID </th>
@@ -29,6 +29,4 @@
       </table>
   </div>
 </div>
-<ng-template #load>
-  <app-loader></app-loader>
-</ng-template>
+

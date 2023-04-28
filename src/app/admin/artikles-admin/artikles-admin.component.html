@@ -1,1 +1,48 @@
-<p>artikles-admin works!</p>
+<div class="container" *ngIf="artikel$ | async as dataSource">
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="artid">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.artid}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="aname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let element" (click)="editArtikel(element.aname)"> {{element.aname}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="artikelmenge">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </th>
+      <td mat-cell *matCellDef="let element"> {{element.artikelmenge}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="availability">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Availability </th>
+      <td mat-cell *matCellDef="let element"> {{element.availability ? 'Available' : 'Not available'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="rating">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Rating </th>
+      <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="categories">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+      <td mat-cell *matCellDef="let element"> {{element.categories}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef> Edit </th>
+      <td mat-cell *matCellDef="let element"> <button mat-button color="primary" (click)="editArtikel(element.aname)"> Edit </button> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Delete </th>
+      <td mat-cell *matCellDef="let element"> <button mat-button color="warn" (click)="deleteArtikel(element.artid)"> Delete </button> </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+

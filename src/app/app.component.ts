@@ -6,13 +6,15 @@ import { LoginComponent } from './login/login.component';
 import { HelperService } from './helper.service';
 import { Router } from '@angular/router';
 import { CategoriesService } from './admin/categories/categories.service';
+import { LoaderService } from './loader/loader.service';
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  //providers: [LoaderService]
 })
 export class AppComponent {
 @ViewChild('menu', {static: true}) menu!: MatMenu;
@@ -20,8 +22,9 @@ isInUserProfil: boolean = false;
 isLogged$ = this.authServi.getIsLogged();
 role$ = this.authServi.role$;
 categories$ = this.category.findAll();
+isLoading$ = this.loader.isloading$;
 isInAdmin = false;
-  constructor (private authServi: AuthService, private matDialog: MatDialog, private helper: HelperService,  private route: Router, private category: CategoriesService) {
+  constructor (private authServi: AuthService, private matDialog: MatDialog, private helper: HelperService,  private route: Router, private category: CategoriesService, private loader: LoaderService) {
     this.helper.setAppComponenet(this);
   }
 
