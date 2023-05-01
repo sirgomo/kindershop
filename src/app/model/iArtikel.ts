@@ -11,6 +11,7 @@ export interface iArtikel {
   ean: string;
   availability: string;
   weight: number;
+  menge: number;
   dimensions: string;
   images: string;
   relatedProducts: string;

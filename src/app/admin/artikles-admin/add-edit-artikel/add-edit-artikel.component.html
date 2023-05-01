@@ -1,0 +1,98 @@
+<div class="container">
+<form [formGroup]="form" class="artikel">
+  <div class="men">
+  <h4> Artikel hinzufügen/bearbeiten</h4>
+  </div>
+
+  <div mat-dialog-content>
+    <div class="form-container">
+      <div class="form-row">
+        <div class="form-image"></div>
+        <div class="form-nameBesch">
+          <mat-form-field>
+            <input matInput placeholder="Name" formControlName="name">
+            <mat-error *ngIf="form.get('name')?.hasError('required')">Name ist erforderlich</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <textarea matInput placeholder="Beschreibung" formControlName="description"></textarea>
+            <mat-error *ngIf="form.get('description')?.hasError('required')">Beschreibung ist erforderlich</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-row">
+        <mat-form-field>
+          <input type="number" matInput placeholder="Preis" formControlName="price">
+          <mat-error *ngIf="form.get('price')?.hasError('required')">Preis ist erforderlich</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Marke" formControlName="brand">
+          <mat-error *ngIf="form.get('brand')?.hasError('required')">Marke ist erforderlich</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Modell" formControlName="model">
+          <mat-error *ngIf="form.get('model')?.hasError('required')">Modell ist erforderlich</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field>
+          <input matInput placeholder="SKU" formControlName="sku">
+          <mat-error *ngIf="form.get('sku')?.hasError('required')">SKU ist erforderlich</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="EAN" formControlName="ean">
+          <mat-error *ngIf="form.get('ean')?.hasError('required')">EAN ist erforderlich</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+        <mat-label>Verfügbarkeit</mat-label>
+        <mat-select formControlName="availability">
+          <mat-option [value]="'1'"> Verfügbar </mat-option>
+          <mat-option  [value]="'0'"> Nicht Verfügbar </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('availability')?.hasError('required')">Verfügbarkeit ist erforderlich</mat-error>
+      </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field>
+          <input type="number" matInput placeholder="Gewicht" formControlName="weight">
+          <mat-error *ngIf="form.get('weight')?.hasError('required')">Gewicht ist erforderlich</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Abmessungen" formControlName="dimensions">
+          <mat-error *ngIf="form.get('dimensions')?.hasError('required')">Abmessungen sind erforderlich</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Bilder" formControlName="images">
+          <mat-error *ngIf="form.get('images')?.hasError('required')">Bilder sind erforderlich</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field>
+          <input matInput placeholder="Verwandte Produkte" formControlName="relatedProducts">
+          <mat-error *ngIf="form.get('relatedProducts')?.hasError('required')">Verwandte Produkte sind erforderlich</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Bewertungen leer" formControlName="reviews">
+        </mat-form-field>
+        <mat-form-field>
+          <input type="number" matInput placeholder="Bewertung 0" formControlName="rating">
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field>
+
+          <mat-label>Kategorien</mat-label>
+          <mat-select formControlName="categories">
+            <mat-option *ngFor="let category of (categories$ | async)"  [value]="category.id == form.get('categories')?.getRawValue()?.id ? form.get('categories')?.getRawValue() : category">{{ category.name }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('categories')?.hasError('required')">Kategorie ist erforderlich</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions align="center">
+    <span *ngIf="go$ |async"></span>
+    <button mat-raised-button (click)="onCancel()">Abbrechen</button>
+    <button mat-raised-button color="primary" [disabled]="!form.valid" (click)="onSubmit()">{{ data ? 'Änderungen Speichern' : 'Speichern' }}</button>
+  </div>
+</form>
+</div>

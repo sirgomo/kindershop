@@ -27,6 +27,8 @@ import {MatTableModule} from '@angular/material/table';
 import { AddCategoryComponent } from './admin/categories/add-category/add-category.component';
 import { LoaderComponent } from './loader/loader.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { AddEditArtikelComponent } from './admin/artikles-admin/add-edit-artikel/add-edit-artikel.component';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     CategoriesComponent,
     ArtiklesAdminComponent,
     AddCategoryComponent,
-    LoaderComponent
+    LoaderComponent,
+    AddEditArtikelComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatDialogModule,
     MatExpansionModule,
     MatTableModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSelectModule,
   ],
   providers: [ {
     provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true

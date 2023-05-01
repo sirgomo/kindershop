@@ -1,0 +1,35 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.form-nameBesch {
+  display: grid;
+}
+.form-row > * {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.form-row > :last-child {
+  margin-right: 0;
+}
+
+.form-image {
+  width: 500px;
+  height: 500px;
+  background-color: #ccc;
+  margin-right: 10px;
+}
+mat-dialog-title {
+  color: #398dbd;
+}

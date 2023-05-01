@@ -1,7 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { ArtikelsService } from './artikels.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { iArtikel } from 'src/app/model/iArtikel';
+import { AddEditArtikelComponent } from './add-edit-artikel/add-edit-artikel.component';
+import { throwDialogContentAlreadyAttachedError } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'app-artikles-admin',
@@ -14,16 +18,39 @@ export class ArtiklesAdminComponent {
   artikel$ = new Observable<any>();
 
   @ViewChild(MatSort, {static: true}) sort!: MatSort;
-  constructor (private artikelServi: ArtikelsService) {}
+  constructor (private artikelServi: ArtikelsService, private matDialog: MatDialog) {}
   ngOnInit() {
-    this.artikel$ = this.artikelServi.artikels$;
+    this.artikel$ = this.artikelServi.getAllArtikel();
   }
+  addArtikel() {
+    const conf : MatDialogConfig = new MatDialogConfig();
+    conf.width = '80%';
 
-  editArtikel(aname: string) {
-    // Implement edit logic
+
+    this.artikel$ = this.matDialog.open(AddEditArtikelComponent, conf).afterClosed().pipe(
+      map((res) => {
+        if(res === undefined) return this.artikelServi.artikels$;
+
+        return res;
+      })
+    )
+  }
+  editArtikel(art: iArtikel) {
+    const conf: MatDialogConfig = new MatDialogConfig();
+    conf.width = '80%';
+    conf.data = art;
+
+    this.artikel$ = this.matDialog.open(AddEditArtikelComponent, conf).afterClosed().pipe(
+      map((res) => {
+        if(res === undefined) return this.artikelServi.artikels$;
+
+
+        return res;
+      })
+    )
   }
 
   deleteArtikel(artid: number) {
-    // Implement delete logic
+    this.artikel$ = this.artikelServi.deleteArtikel(artid);
   }
 }
