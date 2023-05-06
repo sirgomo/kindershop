@@ -1,13 +1,14 @@
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { BehaviorSubject, EMPTY, Observable, combineLatest, map, of, scan, shareReplay, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, combineLatest, finalize, map, of, scan, shareReplay, switchMap, take, tap } from 'rxjs';
 import { iArtikel } from 'src/app/model/iArtikel';
 import { environments } from 'src/environments/environment';
 import { AddEditArtikelComponent } from './add-edit-artikel/add-edit-artikel.component';
 import { CategoriesService } from '../categories/categories.service';
 import { iCategory } from 'src/app/model/icategory';
 import { DomSanitizer } from '@angular/platform-browser';
+import { LoaderService } from 'src/app/loader/loader.service';
 
 
 @Injectable({
@@ -20,32 +21,40 @@ export class ArtikelsService {
   artikels$ = this.artSubject.asObservable();
   categories$ = new Observable<iCategory[]>();
   constructor(private http: HttpClient, private catService: CategoriesService,
-    private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer,
+    private loader: LoaderService) {
     this.categories$ = this.catService.findAll();
   }
 
   getAllArtikel(): Observable<iArtikel[]> {
+    this.loader.setLoaderOn();
     return this.http.get<iArtikel[]>(this.API).pipe(
       tap((res) => {
         if(res.length < 1) return null;
 
         this.artSubject.next(res);
+        this.loader.setLoaderOff();
         return res;
-      })
+      }),
     );
   }
 
   getArtikelById(id: number): Observable<iArtikel> {
+
     return this.http.get<iArtikel>(`${this.API}/${id}`);
   }
 
 
   createArtikel(artikel: iArtikel, dialRef: MatDialogRef<AddEditArtikelComponent>): Observable<any> {
+    this.loader.setLoaderOn();
     return this.http.post<iArtikel>(this.API, artikel).pipe(
       switchMap((res) => {
         if(res.id !== undefined && res.id !== null) {
           return this.artikels$.pipe(
-            map((artikels) => [...artikels, res])
+            map((artikels) => {
+              res.menge = 0;
+             return [...artikels, res]
+            })
           );
         } else {
           return this.artikels$;
@@ -53,6 +62,7 @@ export class ArtikelsService {
       }),
       tap((newArtikels) => {
         this.artSubject.next(newArtikels);
+        this.loader.setLoaderOff();
         dialRef.close(newArtikels);
       })
     );
@@ -61,7 +71,7 @@ export class ArtikelsService {
 
   updateArtikel(artikel: iArtikel, dialRef: MatDialogRef<AddEditArtikelComponent>): Observable<any> {
 
-
+    this.loader.setLoaderOn();
       return this.http.patch(`${this.API}/${artikel.id}`, artikel).pipe(
         map(res => {
           if(res === 1) {
@@ -75,6 +85,7 @@ export class ArtikelsService {
                     item.categories = [foundCategory];
 
                   }
+                  this.loader.setLoaderOff();
                   return item;
                 })
               })
@@ -100,7 +111,7 @@ export class ArtikelsService {
     return this.http.get(this.API + '/bilder/' + image, { responseType: 'blob' }).pipe(map((res) => {
     if(!res.size) return EMPTY;
 
-    console.log(res);
+
     const objectUrl = URL.createObjectURL(res);
     return this.sanitizer.bypassSecurityTrustUrl(objectUrl);
     }))
@@ -117,13 +128,11 @@ export class ArtikelsService {
           case HttpEventType.UploadProgress: {
             if(event.total !== undefined) {
               const percentDone = Math.round((100 * event.loaded) / event.total);
-              console.log(`File is ${percentDone}% uploaded`);
               return { progress: 'loading', message: percentDone };
             }
             return 'Error'
           }
           case HttpEventType.Response: {
-            console.log('File uploaded successfully ' + Object(event.body).path);
             return { progress: 'loaded', message: Object(event.body).path.split('/')[1] };
           }
           default: {

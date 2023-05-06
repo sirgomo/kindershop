@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { iArtikel } from 'src/app/model/iArtikel';
@@ -10,7 +10,8 @@ import { ArtikelsService } from '../artikels.service';
 @Component({
   selector: 'app-add-edit-artikel',
   templateUrl: './add-edit-artikel.component.html',
-  styleUrls: ['./add-edit-artikel.component.scss']
+  styleUrls: ['./add-edit-artikel.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddEditArtikelComponent {
   form!: FormGroup;
@@ -136,7 +137,6 @@ export class AddEditArtikelComponent {
             this.bildProgres = false;
           }
 
-         // this.fullImage$ = of(formData.get('image'));
           this.form.get('images')?.setValue(res.message);
         }
       })
