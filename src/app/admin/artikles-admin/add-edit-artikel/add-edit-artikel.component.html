@@ -7,7 +7,18 @@
   <div mat-dialog-content>
     <div class="form-container">
       <div class="form-row">
-        <div class="form-image"></div>
+        <div class="form-image" *ngIf="!form.get('images')?.getRawValue()">
+          <div *ngIf="fullImage$ | async as image">
+            <img [src]="image" width="500px" height="500px"
+            alt="Place image title">
+          </div>
+        </div>
+        <div class="form-image" *ngIf="form.get('images')?.getRawValue()">
+          <div *ngIf="fullImage$ | async as image else bildLoading">
+            <img [src]="image" width="500px" height="500px"
+            alt="Place image title">
+          </div>
+        </div>
         <div class="form-nameBesch">
           <mat-form-field>
             <input matInput placeholder="Name" formControlName="name">
@@ -60,10 +71,39 @@
           <input matInput placeholder="Abmessungen" formControlName="dimensions">
           <mat-error *ngIf="form.get('dimensions')?.hasError('required')">Abmessungen sind erforderlich</mat-error>
         </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Bilder" formControlName="images">
-          <mat-error *ngIf="form.get('images')?.hasError('required')">Bilder sind erforderlich</mat-error>
-        </mat-form-field>
+
+                <div  *ngIf="!form.get('images')?.getRawValue()">
+                  <div class="imgAndButt" *ngIf="!bildProgres">
+                    <div>
+                      <input hidden (change)="onFileSelected($event)" #fileInput type="file">
+                      <span class="file-name"*ngIf="file !== undefined" >{{file.name}}</span>
+                      <mat-error *ngIf="!file">Bilder sind erforderlich</mat-error>
+                    </div>
+                    <div>
+                      <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">
+                        <mat-icon>upload</mat-icon>
+                        <span> Datei auswählen</span>
+                      </button>
+                    </div>
+                  </div>
+                      <div class="progress" *ngIf="saveImage$ | async as progress">
+                        <mat-progress-bar class="progress-bar" mode="determinate"
+                        [value]="progress.message" >
+                        </mat-progress-bar>
+                     </div>
+                  </div>
+
+              <div class="imgAndButt" *ngIf="form.get('images')?.getRawValue()">
+                <div>
+                <mat-form-field>
+                  <mat-label>Image Link</mat-label>
+                  <input type="text" matInput  formControlName="images">
+                </mat-form-field>
+                </div>
+                <div>
+                  <button mat-raised-button color="primary" (click)="bildReset()"> Reset</button>
+                </div>
+            </div>
       </div>
       <div class="form-row">
         <mat-form-field>
@@ -96,3 +136,6 @@
   </div>
 </form>
 </div>
+<ng-template #bildLoading>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>

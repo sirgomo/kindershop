@@ -29,7 +29,7 @@ export class CategoriesService {
 
       this.cat.next(res);
       return res;
-    }), shareReplay(1), finalize(() => this.loader.setLoaderOff())
+    }), finalize(() => this.loader.setLoaderOff())
     );
   }
 
@@ -68,6 +68,7 @@ export class CategoriesService {
 
   // Funktion zum Löschen einer Kategorie
   delete(id: number): Observable<any> {
+    //TODO prüfen ob ich die kategorie löschen kann, vieleicht ist sie nicht leer!, dan disable delete
     this.loader.setLoaderOn();
     return this.http.delete(`${this.API}/${id}`).pipe(map((res) => {
       if(res === 1) {

@@ -18,6 +18,7 @@
 .form-row > * {
   flex: 1;
   margin-right: 10px;
+  align-items: baseline;
 }
 
 .form-row > :last-child {
@@ -33,3 +34,16 @@
 mat-dialog-title {
   color: #398dbd;
 }
+
+
+.imgAndButt {
+  display: flex;
+  justify-content: flex-start;
+  align-content: baseline;
+  gap: .4rem;
+  width: 100%;
+
+
+}
+
+

@@ -2,11 +2,10 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { iArtikel } from 'src/app/model/iArtikel';
-import { iCategory } from 'src/app/model/icategory';
 import { CategoriesService } from '../../categories/categories.service';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, of, tap } from 'rxjs';
 import { ArtikelsService } from '../artikels.service';
-import { isNgContainer } from '@angular/compiler';
+
 
 @Component({
   selector: 'app-add-edit-artikel',
@@ -17,6 +16,10 @@ export class AddEditArtikelComponent {
   form!: FormGroup;
   categories$ = this.catService.findAll();
   go$ = new Observable();
+  fullImage$ = new Observable<any>();
+  saveImage$ = new Observable<any>();
+  bildProgres : boolean = false;
+  file!: File;
 
   constructor(
     private fb: FormBuilder,
@@ -75,7 +78,7 @@ export class AddEditArtikelComponent {
       rating: this.data.rating,
       categories:  this.data.categories[0] // assuming the first category is selected
     });
-
+    this.fullImage$ = this.artService.getImage(this.data.images);
   }
 
   onSubmit(): Observable<any> {
@@ -111,5 +114,33 @@ export class AddEditArtikelComponent {
 
   onCancel(): void {
     this.dialogRef.close();
+  }
+  bildReset(){
+    this.fullImage$ = of(null);
+    this.form.get('images')?.reset();
+  }
+  onFileSelected(event : any) {
+    this.file = event.target.files[0];
+    if(this.file) {
+
+    const formData: FormData = new FormData();
+    formData.append('image', this.file);
+     this.saveImage$ =  this.artService.sendImageToServer(formData).pipe(
+      tap((res) => {
+        this.bildProgres = true;
+        if(res.progress === 'loaded') {
+          const reader = new FileReader();
+          reader.readAsDataURL(this.file);
+          reader.onload = () => {
+            this.fullImage$ = of(reader.result);
+            this.bildProgres = false;
+          }
+
+         // this.fullImage$ = of(formData.get('image'));
+          this.form.get('images')?.setValue(res.message);
+        }
+      })
+     );
+    }
   }
 }

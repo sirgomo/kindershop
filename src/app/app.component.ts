@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatMenu } from '@angular/material/menu';
 import { AuthService } from './auth/auth.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -7,6 +7,7 @@ import { HelperService } from './helper.service';
 import { Router } from '@angular/router';
 import { CategoriesService } from './admin/categories/categories.service';
 import { LoaderService } from './loader/loader.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -16,16 +17,20 @@ import { LoaderService } from './loader/loader.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   //providers: [LoaderService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 @ViewChild('menu', {static: true}) menu!: MatMenu;
 isInUserProfil: boolean = false;
 isLogged$ = this.authServi.getIsLogged();
 role$ = this.authServi.role$;
-categories$ = this.category.findAll();
+categories$ = new Observable<any>();
 isLoading$ = this.loader.isloading$;
 isInAdmin = false;
-  constructor (private authServi: AuthService, private matDialog: MatDialog, private helper: HelperService,  private route: Router, private category: CategoriesService, private loader: LoaderService) {
+  constructor (private authServi: AuthService, private matDialog: MatDialog, private helper: HelperService,  private route: Router, private category: CategoriesService, private loader: LoaderService) {}
+  ngOnInit(): void {
+    this.categories$ = this.category.findAll();
     this.helper.setAppComponenet(this);
+    this.isInAdmin = false;
+    this.isInUserProfil = false;
   }
 
 login() {

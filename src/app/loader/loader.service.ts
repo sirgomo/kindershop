@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, EMPTY, Observable } from "rxjs";
+import { BehaviorSubject, EMPTY, Observable, of } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class LoaderService {
   isloading$ = this.loader.asObservable();
 
   showLoaderUntilCompleted<T>(obs$ : Observable<T>): Observable<T> {
-    return EMPTY;
+    return of<any>(false);
   }
   setLoaderOn() {
     this.loader.next(true);

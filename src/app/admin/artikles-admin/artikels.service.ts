@@ -1,12 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { BehaviorSubject, Observable, combineLatest, map, of, scan, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, combineLatest, map, of, scan, shareReplay, switchMap, take, tap } from 'rxjs';
 import { iArtikel } from 'src/app/model/iArtikel';
 import { environments } from 'src/environments/environment';
 import { AddEditArtikelComponent } from './add-edit-artikel/add-edit-artikel.component';
 import { CategoriesService } from '../categories/categories.service';
 import { iCategory } from 'src/app/model/icategory';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Injectable({
@@ -18,13 +19,16 @@ export class ArtikelsService {
   private artSubject: BehaviorSubject<iArtikel[]> = new BehaviorSubject<iArtikel[]>([]);
   artikels$ = this.artSubject.asObservable();
   categories$ = new Observable<iCategory[]>();
-  constructor(private http: HttpClient, private catService: CategoriesService) {
+  constructor(private http: HttpClient, private catService: CategoriesService,
+    private sanitizer: DomSanitizer) {
     this.categories$ = this.catService.findAll();
   }
 
   getAllArtikel(): Observable<iArtikel[]> {
     return this.http.get<iArtikel[]>(this.API).pipe(
       tap((res) => {
+        if(res.length < 1) return null;
+
         this.artSubject.next(res);
         return res;
       })
@@ -91,5 +95,42 @@ export class ArtikelsService {
       })
     )
   }
+  getImage(image: string) {
 
+    return this.http.get(this.API + '/bilder/' + image, { responseType: 'blob' }).pipe(map((res) => {
+    if(!res.size) return EMPTY;
+
+    console.log(res);
+    const objectUrl = URL.createObjectURL(res);
+    return this.sanitizer.bypassSecurityTrustUrl(objectUrl);
+    }))
+
+  }
+  sendImageToServer(image: FormData): Observable<any> {
+    return this.http.post(this.API+'/image', image, {
+      reportProgress: true,
+      observe: 'events'
+    })
+    .pipe(
+      map(event => {
+        switch (event.type) {
+          case HttpEventType.UploadProgress: {
+            if(event.total !== undefined) {
+              const percentDone = Math.round((100 * event.loaded) / event.total);
+              console.log(`File is ${percentDone}% uploaded`);
+              return { progress: 'loading', message: percentDone };
+            }
+            return 'Error'
+          }
+          case HttpEventType.Response: {
+            console.log('File uploaded successfully ' + Object(event.body).path);
+            return { progress: 'loaded', message: Object(event.body).path.split('/')[1] };
+          }
+          default: {
+            return EMPTY;
+          }
+        }
+      })
+    );
+  }
 }

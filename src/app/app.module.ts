@@ -29,6 +29,7 @@ import { LoaderComponent } from './loader/loader.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AddEditArtikelComponent } from './admin/artikles-admin/add-edit-artikel/add-edit-artikel.component';
 import {MatSelectModule} from '@angular/material/select';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import {MatSelectModule} from '@angular/material/select';
     MatTableModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    MatProgressBarModule,
   ],
   providers: [ {
     provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
