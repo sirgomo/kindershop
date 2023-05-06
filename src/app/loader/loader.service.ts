@@ -8,9 +8,9 @@ export class LoaderService {
   private loader: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isloading$ = this.loader.asObservable();
 
-  showLoaderUntilCompleted<T>(obs$ : Observable<T>): Observable<T> {
-    return of<any>(false);
-  }
+  //showLoaderUntilCompleted<T>(obs$ : Observable<T>): Observable<T> {
+  //  return of<any>(false);
+  //}
   setLoaderOn() {
     this.loader.next(true);
   }

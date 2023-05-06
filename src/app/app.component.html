@@ -74,5 +74,8 @@
       <mat-icon>login</mat-icon>
     </button>
   </ng-template>
-  <app-loader *ngIf="isLoading$ | async"></app-loader>
+  <div *ngIf="isLoading$ | async as loading">
+    <app-loader *ngIf="loading"></app-loader>
+  </div>
+
 <router-outlet></router-outlet>

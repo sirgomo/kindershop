@@ -105,3 +105,9 @@ $my-theme: mat.define-light-theme((
   justify-content: center;
   margin-top: .5rem;
 }
+.button-center-row {
+  display: flex;
+  justify-content: center;
+  margin-top: .3rem;
+  margin-bottom: .3rem;
+}
