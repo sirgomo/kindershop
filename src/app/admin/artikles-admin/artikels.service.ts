@@ -27,7 +27,6 @@ export class ArtikelsService {
 
   constructor(private http: HttpClient, private catService: CategoriesService,
     private sanitizer: DomSanitizer,
-    private loader: LoaderService,
     private snackBar: MatSnackBar) {
     this.categories$ = this.catService.findAll();
   }
@@ -37,7 +36,7 @@ export class ArtikelsService {
    * @returns Eine Observable für die Liste der Artikel.
    */
   getAllArtikel(): Observable<iArtikel[]> {
-    this.loader.setLoaderOn();
+
     return this.http.get<iArtikel[]>(this.API).pipe(
       tap((res) => {
         if(res.length < 1) {
@@ -46,7 +45,7 @@ export class ArtikelsService {
           this.artSubject.next(res);
         }
       }),
-      finalize(() => this.loader.setLoaderOff()),
+      shareReplay(1),
       catchError((error: HttpErrorResponse) => {
         this.snackBar.open('Fehler beim Laden der Artikel', 'OK', { duration: 3000 });
         return EMPTY;
@@ -75,7 +74,7 @@ export class ArtikelsService {
    * @returns Eine Observable für den aktualisierten Artikel-Array.
    */
   createArtikel(artikel: iArtikel, dialRef: MatDialogRef<AddEditArtikelComponent>): Observable<any> {
-    this.loader.setLoaderOn();
+
     return this.http.post<iArtikel>(this.API, artikel).pipe(
       switchMap((res) => {
         if(res.id !== undefined && res.id !== null) {
@@ -91,12 +90,12 @@ export class ArtikelsService {
       }),
       tap((newArtikels) => {
         this.artSubject.next(newArtikels);
-        this.loader.setLoaderOff();
+
         dialRef.close(newArtikels);
       }),
       catchError((error: HttpErrorResponse) => {
         this.snackBar.open('Fehler beim Erstellen des Artikels', 'OK', { duration: 3000 });
-        this.loader.setLoaderOff();
+
         return EMPTY;
       })
     );
@@ -109,7 +108,7 @@ export class ArtikelsService {
    * @returns Eine Observable für den aktualisierten Artikel-Array.
    */
   updateArtikel(artikel: iArtikel, dialRef: MatDialogRef<AddEditArtikelComponent>): Observable<any> {
-    this.loader.setLoaderOn();
+
     return this.http.patch(`${this.API}/${artikel.id}`, artikel).pipe(
       map(res => {
         if(res === 1) {
@@ -131,10 +130,10 @@ export class ArtikelsService {
           this.snackBar.open('Fehler beim Aktualisieren des Artikels', 'OK', { duration: 3000 });
         }
       }),
-      finalize(() => this.loader.setLoaderOff()),
+
       catchError((error: HttpErrorResponse) => {
         this.snackBar.open('Fehler beim Aktualisieren des Artikels', 'OK', { duration: 3000 });
-        this.loader.setLoaderOff();
+
         return EMPTY;
       })
     );
@@ -191,7 +190,7 @@ export class ArtikelsService {
    * @returns Eine Observable für den Fortschritt oder das Ergebnis des Uploads.
    */
   sendImageToServer(image: FormData): Observable<any> {
-    this.loader.setLoaderOn();
+
     return this.http.post(this.API+'/image', image, {
       reportProgress: true,
       observe: 'events'
@@ -207,7 +206,7 @@ export class ArtikelsService {
             return 'Error'
           }
           case HttpEventType.Response: {
-            this.loader.setLoaderOff();
+
             return { progress: 'loaded', message: Object(event.body).path.split('/')[1] };
           }
           default: {
@@ -217,7 +216,6 @@ export class ArtikelsService {
       }),
       catchError((error: HttpErrorResponse) => {
         this.snackBar.open('Fehler beim Hochladen des Bildes', 'OK', { duration: 3000 });
-        this.loader.setLoaderOff();
         return EMPTY;
       })
     );

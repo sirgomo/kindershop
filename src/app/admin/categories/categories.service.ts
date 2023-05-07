@@ -25,7 +25,6 @@ export class CategoriesService {
 
   constructor(
     private http: HttpClient,
-    private loader: LoaderService,
     private snackBar: MatSnackBar
   ) {}
 
@@ -35,7 +34,7 @@ export class CategoriesService {
    */
   findAll(): Observable<iCategory[]> {
     // Show loader while retrieving categories
-    this.loader.setLoaderOn();
+
     return this.http.get<iCategory[]>(this.API).pipe(map(res => {
       // If response is empty, return an empty array
       if(res === undefined || res === null) {
@@ -45,7 +44,7 @@ export class CategoriesService {
       this.cat.next(res);
       // Return the retrieved categories
       return res;
-    }), finalize(() => this.loader.setLoaderOff())
+    }), shareReplay(1)
     );
   }
 
@@ -57,7 +56,7 @@ export class CategoriesService {
    */
   create(category: iCategory, dialogRef: MatDialogRef<AddCategoryComponent>): Observable<any> {
     // Show loader while adding category
-    this.loader.setLoaderOn();
+
     return this.http.post<iCategory>(this.API, category).pipe(map((res) => {
       if(res) {
         // Combine the current categories with the new category and update the subject
@@ -69,9 +68,7 @@ export class CategoriesService {
       }
       // Close the dialog after adding the category and return the updated categories
       return dialogRef.close(this.category$);
-    }),
-    finalize(() => this.loader.setLoaderOff())
-    );
+    }));
   }
 
   /**
@@ -82,7 +79,7 @@ export class CategoriesService {
    */
   update(cat: iCategory, dialogRef: MatDialogRef<AddCategoryComponent>) {
     // Show loader while updating category
-    this.loader.setLoaderOn();
+
     return this.http.put(`${this.API}/${cat.id}`, cat).pipe(map(res => {
       if(res === 1) {
         // Filter the updated category from the current categories and update the subject
@@ -95,9 +92,7 @@ export class CategoriesService {
       }
       // Close the dialog after updating the category and return the updated categories
       return dialogRef.close(this.category$);
-    }),
-    finalize(() => this.loader.setLoaderOff())
-    );
+    }));
   }
 
   /**
@@ -107,7 +102,7 @@ export class CategoriesService {
    */
   delete(id: number): Observable<any> {
     // Show loader while deleting category
-    this.loader.setLoaderOn();
+
     return this.http.delete(`${this.API}/${id}`).pipe(map((res) => {
       if(res === 1) {
         // Filter the deleted category from the current categories and update the subject
@@ -117,9 +112,7 @@ export class CategoriesService {
       }
       // Return the updated categories
       return this.category$;
-    }),
-    finalize(() => this.loader.setLoaderOff())
-    );
+    }));
   }
 
 }

@@ -12,7 +12,6 @@ export class LoaderService {
   //  return of<any>(false);
   //}
   setLoaderOn() {
-    console.log('loader');
     this.loader.next(true);
   }
   setLoaderOff() {
