@@ -30,6 +30,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AddEditArtikelComponent } from './admin/artikles-admin/add-edit-artikel/add-edit-artikel.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { ChangePasswordComponent } from './user/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     ArtiklesAdminComponent,
     AddCategoryComponent,
     LoaderComponent,
-    AddEditArtikelComponent
+    AddEditArtikelComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

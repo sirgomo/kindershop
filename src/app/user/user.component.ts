@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UserService } from './user.service';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest, concatMap, map, tap } from 'rxjs';
 import { IUser } from '../model/iuser';
 import { HelperService } from '../helper.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 @Component({
@@ -14,8 +16,9 @@ import { HelperService } from '../helper.service';
 export class UserComponent implements OnInit{
 
   user$!: Observable<any>;
+  changePass$!: Observable<any>;
 
-  constructor(private userService: UserService, private helper: HelperService) {
+  constructor(private userService: UserService, private helper: HelperService, private dialog: MatDialog) {
     this.helper.getAppComponent().isInUserProfil = true;
    }
 
@@ -30,5 +33,11 @@ export class UserComponent implements OnInit{
   updateUser(user: IUser) {
     const userId = localStorage.getItem('userid');
     this.user$ = this.userService.updateUser(Number(userId), user);
+  }
+  changePassword() {
+      const conf : MatDialogConfig = new MatDialogConfig();
+      conf.width = '300px';
+
+      this.dialog.open(ChangePasswordComponent, conf);
   }
 }
