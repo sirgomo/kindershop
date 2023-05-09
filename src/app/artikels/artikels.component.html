@@ -1,1 +1,29 @@
-<p>artikels works!</p>
+<div class="container">
+  <div class="arts" *ngIf="artikels$ | async as artikels" >
+    <mat-card *ngFor="let item of artikels" class="card">
+        <mat-card-header>
+            <mat-card-title>{{item.name}}</mat-card-title>
+            <mat-card-subtitle>{{ item.availability == 1 ? 'Verfügbar' : 'Nicht Verfügbar' }}</mat-card-subtitle>
+        </mat-card-header>
+        <div  class="img">
+          <img matCardImage  src="http://localhost:3000/artikel/thumbnail/{{item.images}}" >
+        </div>
+
+        <mat-card-content>
+           {{item.description}}
+        </mat-card-content>
+        <mat-card-actions align="start">
+          <div class="buttons">
+            <button mat-raised-button (click)="onAction" color="accent">In den Warenkorb</button>
+            <button mat-raised-button (click)="onAction">Artikel Details</button>
+          </div>
+
+        </mat-card-actions>
+        <mat-card-footer >
+          <div class="card-footer">
+            Price: {{item.price}} &euro;
+          </div>
+        </mat-card-footer>
+    </mat-card>
+  </div>
+</div>

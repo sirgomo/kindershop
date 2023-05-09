@@ -1,14 +1,13 @@
 import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { BehaviorSubject, EMPTY, Observable, catchError, combineLatest, finalize, map, of, scan, shareReplay, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, catchError, combineLatest, finalize, map, of, scan, shareReplay, switchMap, take, tap, throwError } from 'rxjs';
 import { iArtikel } from 'src/app/model/iArtikel';
 import { environments } from 'src/environments/environment';
 import { AddEditArtikelComponent } from './add-edit-artikel/add-edit-artikel.component';
 import { CategoriesService } from '../categories/categories.service';
 import { iCategory } from 'src/app/model/icategory';
 import { DomSanitizer } from '@angular/platform-browser';
-import { LoaderService } from 'src/app/loader/loader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
@@ -47,8 +46,9 @@ export class ArtikelsService {
       }),
       shareReplay(1),
       catchError((error: HttpErrorResponse) => {
-        this.snackBar.open('Fehler beim Laden der Artikel', 'OK', { duration: 3000 });
-        return EMPTY;
+        const message = 'Fehler beim Laden der Artikel';
+        this.snackBar.open(message, 'OK', { duration: 3000 });
+        return throwError(() => message);
       })
     );
   }
@@ -61,8 +61,9 @@ export class ArtikelsService {
   getArtikelById(id: number): Observable<iArtikel> {
     return this.http.get<iArtikel>(`${this.API}/${id}`).pipe(
       catchError((error: HttpErrorResponse) => {
-        this.snackBar.open('Fehler beim Laden des Artikels', 'OK', { duration: 3000 });
-        return EMPTY;
+        const message = 'Fehler beim Laden der Artikel';
+        this.snackBar.open(message, 'OK', { duration: 3000 });
+        return throwError(() => message);
       })
     );
   }
@@ -94,9 +95,10 @@ export class ArtikelsService {
         dialRef.close(newArtikels);
       }),
       catchError((error: HttpErrorResponse) => {
-        this.snackBar.open('Fehler beim Erstellen des Artikels', 'OK', { duration: 3000 });
+        const message = 'Fehler beim Erstellen des Artikels';
+        this.snackBar.open(message, 'OK', { duration: 3000 });
 
-        return EMPTY;
+        return throwError(() => message);
       })
     );
   }
@@ -125,16 +127,18 @@ export class ArtikelsService {
               })
             })
           )
-          dialRef.close(this.artikels$);
+         return dialRef.close(this.artikels$);
         } else {
-          this.snackBar.open('Fehler beim Aktualisieren des Artikels', 'OK', { duration: 3000 });
+          const message = 'Fehler beim Aktualisieren des Artikels';
+          this.snackBar.open( message, 'OK', { duration: 3000 });
+          return throwError(() => message);
         }
       }),
 
       catchError((error: HttpErrorResponse) => {
-        this.snackBar.open('Fehler beim Aktualisieren des Artikels', 'OK', { duration: 3000 });
-
-        return EMPTY;
+        const message = 'Fehler beim Aktualisieren des Artikels';
+          this.snackBar.open( message, 'OK', { duration: 3000 });
+          return throwError(() => message);
       })
     );
   }
@@ -151,13 +155,15 @@ export class ArtikelsService {
           this.artikels$ = this.artikels$.pipe(map(data => data.filter((item) => item.id !== id)));
           return this.artikels$;
         } else {
-          this.snackBar.open('Fehler beim Löschen des Artikels', 'OK', { duration: 3000 });
-          return EMPTY;
+          const message = 'Fehler beim Löschen des Artikels';
+          this.snackBar.open(message, 'OK', { duration: 3000 });
+          return throwError(() => message);
         }
       }),
       catchError((error: HttpErrorResponse) => {
-        this.snackBar.open('Fehler beim Löschen des Artikels', 'OK', { duration: 3000 });
-        return EMPTY;
+        const message = 'Fehler beim Löschen des Artikels';
+        this.snackBar.open(message, 'OK', { duration: 3000 });
+        return throwError(() => message);
       })
     )
   }
@@ -171,15 +177,17 @@ export class ArtikelsService {
     return this.http.get(this.API + '/bilder/' + image, { responseType: 'blob' }).pipe(
       map((res) => {
         if(!res.size) {
-          this.snackBar.open('Bild konnte nicht gefunden werden', 'OK', { duration: 3000 });
-          return EMPTY;
+          const message = 'Bild konnte nicht gefunden werden';
+          this.snackBar.open(message, 'OK', { duration: 3000 });
+          return throwError(() => message);
         }
         const objectUrl = URL.createObjectURL(res);
         return this.sanitizer.bypassSecurityTrustUrl(objectUrl);
       }),
       catchError((error: HttpErrorResponse) => {
-        this.snackBar.open('Fehler beim Laden des Bildes', 'OK', { duration: 3000 });
-        return EMPTY;
+        const message = 'Fehler beim Laden des Bildes';
+        this.snackBar.open(message, 'OK', { duration: 3000 });
+        return throwError(() => message);
       })
     )
   }
@@ -215,8 +223,9 @@ export class ArtikelsService {
         }
       }),
       catchError((error: HttpErrorResponse) => {
-        this.snackBar.open('Fehler beim Hochladen des Bildes', 'OK', { duration: 3000 });
-        return EMPTY;
+        const message = 'Fehler beim Hochladen des Bildes';
+        this.snackBar.open(message, 'OK', { duration: 3000 });
+        return throwError(() => message);
       })
     );
   }

@@ -44,24 +44,24 @@
    <mat-toolbar-row>
     <div class="category" *ngIf="!isInUserProfil && !isInAdmin">
 
-        <div class="catitem" *ngFor="let item of (categories$ | async)"><button mat-stroked-button (click)="showItemsInCategory(item.id)">{{item.name}}</button></div>
+        <div  *ngFor="let item of (categories$ | async)"><button mat-stroked-button color="accent" (click)="showItemsInCategory(item.id)">{{item.name}}</button></div>
 
       <div *ngIf="role$ | async as role">
-      <div class="catitem" *ngIf="role === 'admin'"><button mat-stroked-button (click)="goToAdmin()"> Admin</button></div>
+      <div *ngIf="role === 'admin'"><button mat-stroked-button color="accent" (click)="goToAdmin()"> Admin</button></div>
       </div>
     </div>
     <div class="category" *ngIf="isInUserProfil">
-      <div class="catitem"><button mat-stroked-button>Bestellungen</button></div>
-      <div class="catitem"><button mat-stroked-button>Rechnungen</button></div>
-      <div class="catitem"><button mat-stroked-button (click)="goEinkaufen()">Züruck zum Einkaufen</button></div>
+      <div ><button mat-stroked-button color="accent">Bestellungen</button></div>
+      <div ><button mat-stroked-button color="accent">Rechnungen</button></div>
+      <div ><button mat-stroked-button color="accent" (click)="goEinkaufen()">Züruck zum Einkaufen</button></div>
       <div *ngIf="role$ | async as role">
-        <div class="catitem" *ngIf="role === 'admin'"><button mat-stroked-button (click)="goToAdmin()"> Admin</button></div>
+        <div *ngIf="role === 'admin'"><button mat-stroked-button color="accent" (click)="goToAdmin()"> Admin</button></div>
         </div>
     </div>
     <div class="category" *ngIf="isInAdmin">
-      <div class="catitem"><button mat-stroked-button routerLink="categories">Categories</button></div>
-      <div class="catitem"><button mat-stroked-button routerLink="artikels">Artikels</button></div>
-      <div class="catitem"><button mat-stroked-button (click)="goEinkaufen()">Züruck zum Einkaufen</button></div>
+      <div ><button mat-stroked-button color="accent" routerLink="categories">Categories</button></div>
+      <div ><button mat-stroked-button color="accent" routerLink="artikels">Artikels</button></div>
+      <div ><button mat-stroked-button color="accent" (click)="goEinkaufen()">Züruck zum Einkaufen</button></div>
     </div>
    </mat-toolbar-row>
   </mat-toolbar>

@@ -32,6 +32,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ChangePasswordComponent } from './user/change-password/change-password.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,6 +69,7 @@ import { ChangePasswordComponent } from './user/change-password/change-password.
     MatProgressSpinnerModule,
     MatSelectModule,
     MatProgressBarModule,
+
   ],
   providers: [ {
     provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true

@@ -9,7 +9,7 @@ body {  font-family: Roboto, "Helvetica Neue", sans-serif;  }
 
 
 $my-primary: mat-palette($mat-blue);
-$my-accent: mat-palette($mat-green, A200, A100, A400);
+$my-accent: mat-palette($mat-teal, 300, 200, 400);
 $my-warning: mat-palette($mat-red);
 
 
@@ -70,7 +70,7 @@ $my-theme: mat.define-light-theme((
 
 .category {
   display: flex;
-  background-color:  #d3cccc;
+  background-color:  #f09d59;
   color: #eecac6;
   justify-content:flex-start;
   align-items: center;
@@ -96,7 +96,7 @@ $my-theme: mat.define-light-theme((
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color:  #d3cccc;
+  background-color:  #f09d59;
 }
 
 .input-row {
