@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ArtikelsService } from '../admin/artikles-admin/artikels.service';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest, map } from 'rxjs';
+import { HelperService } from '../helper.service';
+import { iArtikel } from '../model/iArtikel';
 
 
 @Component({
@@ -10,10 +12,17 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArtikelsComponent implements OnInit{
-  artikels$ = new Observable<any[]>();
-  constructor (private artielSer: ArtikelsService) {}
+  artikels$ =  new Observable<iArtikel[]>()
+  constructor (private artielSer: ArtikelsService, private helper: HelperService) {}
   ngOnInit(): void {
-    this.artikels$ = this.artielSer.getAllArtikel();
+
+  this.artikels$ =  combineLatest([this.artielSer.getAllArtikel(), this.helper.artikelInCategory$ ]).pipe(
+    map(([arti, catid]) => {
+          if(catid === -1) {
+        return arti.filter((item) => item.categories[0].id !== -1);
+      }
+      return arti.filter((item) => item.categories[0].id === catid);
+    }));
   }
   onAction() {}
   getImage(imgid: string) {

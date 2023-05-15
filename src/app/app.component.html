@@ -2,7 +2,7 @@
    <mat-toolbar-row>
     <div class="men" >
       <mat-icon>child_friendly</mat-icon>
-      <span>Sklep Dziecięcy</span>
+      <span class="catReset" (click)="showItemsInCategory(-1)">Sklep Dziecięcy</span>
       <span class="spacer"></span>
       <button mat-icon-button>
         <mat-icon>shopping_cart</mat-icon>
@@ -42,9 +42,11 @@
     </div>
    </mat-toolbar-row>
    <mat-toolbar-row>
-    <div class="category" *ngIf="!isInUserProfil && !isInAdmin">
+    <div  *ngIf="!isInUserProfil && !isInAdmin" class="category">
+      <div *ngIf="categories$ | async as cat else loading" class="category">
+        <div  *ngFor="let item of cat "><button mat-stroked-button color="accent" (click)="showItemsInCategory(item.id)">{{item.name}}<div *ngIf="changeCategory$ | async"></div></button></div>
+      </div>
 
-        <div  *ngFor="let item of (categories$ | async)"><button mat-stroked-button color="accent" (click)="showItemsInCategory(item.id)">{{item.name}}</button></div>
 
       <div *ngIf="role$ | async as role">
       <div *ngIf="role === 'admin'"><button mat-stroked-button color="accent" (click)="goToAdmin()"> Admin</button></div>
@@ -73,8 +75,7 @@
       <mat-icon>login</mat-icon>
     </button>
   </ng-template>
-  <div *ngIf="isLoading$ | async as loading">
-    <app-loader *ngIf="loading"></app-loader>
-  </div>
-
+<ng-template #loading>
+  <app-loader></app-loader>
+</ng-template>
 <router-outlet></router-outlet>

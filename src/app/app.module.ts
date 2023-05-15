@@ -31,6 +31,7 @@ import { AddEditArtikelComponent } from './admin/artikles-admin/add-edit-artikel
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ChangePasswordComponent } from './user/change-password/change-password.component';
+import { EinkaufskorbComponent } from './einkaufskorb/einkaufskorb.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { ChangePasswordComponent } from './user/change-password/change-password.
     AddCategoryComponent,
     LoaderComponent,
     AddEditArtikelComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    EinkaufskorbComponent
   ],
   imports: [
     BrowserModule,

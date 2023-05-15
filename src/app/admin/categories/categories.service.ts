@@ -33,9 +33,7 @@ export class CategoriesService {
    * @returns Observable<iCategory[]>
    */
   findAll(): Observable<iCategory[]> {
-    // Show loader while retrieving categories
-
-    return this.http.get<iCategory[]>(this.API).pipe(map(res => {
+    return this.http.get<iCategory[]>(this.API).pipe(map((res) => {
       // If response is empty, return an empty array
       if(res === undefined || res === null) {
         return [];
@@ -44,8 +42,7 @@ export class CategoriesService {
       this.cat.next(res);
       // Return the retrieved categories
       return res;
-    }), shareReplay(1)
-    );
+    }));
   }
 
   /**
@@ -55,8 +52,6 @@ export class CategoriesService {
    * @returns Observable<any>
    */
   create(category: iCategory, dialogRef: MatDialogRef<AddCategoryComponent>): Observable<any> {
-    // Show loader while adding category
-
     return this.http.post<iCategory>(this.API, category).pipe(map((res) => {
       if(res) {
         // Combine the current categories with the new category and update the subject
@@ -78,8 +73,6 @@ export class CategoriesService {
    * @returns Observable<any>
    */
   update(cat: iCategory, dialogRef: MatDialogRef<AddCategoryComponent>) {
-    // Show loader while updating category
-
     return this.http.put(`${this.API}/${cat.id}`, cat).pipe(map(res => {
       if(res === 1) {
         // Filter the updated category from the current categories and update the subject
@@ -101,8 +94,6 @@ export class CategoriesService {
    * @returns Observable<any>
    */
   delete(id: number): Observable<any> {
-    // Show loader while deleting category
-
     return this.http.delete(`${this.API}/${id}`).pipe(map((res) => {
       if(res === 1) {
         // Filter the deleted category from the current categories and update the subject

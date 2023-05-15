@@ -229,4 +229,7 @@ export class ArtikelsService {
       })
     );
   }
+  getArtikelsInCategoryById(catid: number) {
+
+  }
 }

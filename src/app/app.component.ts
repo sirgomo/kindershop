@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  //providers: [LoaderService]
+
 })
 export class AppComponent implements OnInit{
 @ViewChild('menu', {static: true}) menu!: MatMenu;
@@ -23,14 +23,16 @@ isInUserProfil: boolean = false;
 isLogged$ = this.authServi.getIsLogged();
 role$ = this.authServi.role$;
 categories$ = new Observable<any>();
-isLoading$ = this.loader.isloading$;
+changeCategory$ = new Observable<any>();
+
 isInAdmin = false;
-  constructor (private authServi: AuthService, private matDialog: MatDialog, private helper: HelperService,  private route: Router, private category: CategoriesService, private loader: LoaderService) {}
+  constructor (private authServi: AuthService, private matDialog: MatDialog, private helper: HelperService,  private route: Router, private category: CategoriesService) {}
   ngOnInit(): void {
     this.categories$ = this.category.findAll();
     this.helper.setAppComponenet(this);
     this.isInAdmin = false;
     this.isInUserProfil = false;
+    this.helper.setCategory(-1);
   }
 
 login() {
@@ -60,6 +62,7 @@ goToUser() {
   this.isInAdmin = false;
 }
 showItemsInCategory(catid: number | undefined) {
-
-}
+  if (catid !== undefined)
+   this.helper.setCategory(catid);
+  }
 }

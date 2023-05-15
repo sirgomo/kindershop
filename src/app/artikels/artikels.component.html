@@ -3,7 +3,7 @@
     <mat-card *ngFor="let item of artikels" class="card">
         <mat-card-header>
             <mat-card-title>{{item.name}}</mat-card-title>
-            <mat-card-subtitle>{{ item.availability == 1 ? 'Verfügbar' : 'Nicht Verfügbar' }}</mat-card-subtitle>
+            <mat-card-subtitle>{{ item.availability == '1' ? 'Verfügbar' : 'Nicht Verfügbar' }}</mat-card-subtitle>
         </mat-card-header>
         <div  class="img">
           <img matCardImage  src="http://localhost:3000/artikel/thumbnail/{{item.images}}" >
