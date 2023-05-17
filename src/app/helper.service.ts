@@ -8,7 +8,7 @@ import { BehaviorSubject, of } from 'rxjs';
 export class HelperService {
   private appCompo!: AppComponent;
   private artInCategory: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  private artProSite: BehaviorSubject<number> = new BehaviorSubject<number>(20);
+  private artProSite: BehaviorSubject<number> = new BehaviorSubject<number>(10);
   private searchItems: BehaviorSubject<string> = new BehaviorSubject<string>('');
   private siteNumber: BehaviorSubject<number> = new BehaviorSubject<number>(1);
   siteNumber$ = this.siteNumber.asObservable();

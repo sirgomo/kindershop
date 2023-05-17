@@ -6,8 +6,8 @@ import { LoginComponent } from './login/login.component';
 import { HelperService } from './helper.service';
 import { Router } from '@angular/router';
 import { CategoriesService } from './admin/categories/categories.service';
-import { LoaderService } from './loader/loader.service';
 import { Observable } from 'rxjs';
+
 
 
 @Component({
@@ -25,6 +25,7 @@ role$ = this.authServi.role$;
 categories$ = new Observable<any>();
 
 
+
 isInAdmin = false;
   constructor (private authServi: AuthService, private matDialog: MatDialog, private helper: HelperService,  private route: Router, private category: CategoriesService) {}
   ngOnInit(): void {
@@ -33,6 +34,7 @@ isInAdmin = false;
     this.isInAdmin = false;
     this.isInUserProfil = false;
     this.helper.setCategory(-1);
+
   }
 
 login() {
@@ -65,4 +67,6 @@ showItemsInCategory(catid: number | undefined) {
   if (catid !== undefined)
    this.helper.setCategory(catid);
   }
+
 }
+

@@ -1,0 +1,14 @@
+<div class="siteMenge">
+  <div>Site: </div>
+  <button (click)="setSiteNr(-1)"><<</button>
+  <div>{{siteNr}}</div>
+  <button (click)="setSiteNr(1)">>></button>
+  <div>Items pro Site : </div>
+  <div>
+    <select [(ngModel)]="artikelMengeProSite" [value]="artikelMengeProSite" (change)="setArtikelMengeOnSite()">
+      <option [value]="10">10</option>
+      <option [value]="15">15</option>
+    </select>
+  </div>
+
+</div>
