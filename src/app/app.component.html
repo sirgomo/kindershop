@@ -1,8 +1,9 @@
+
 <mat-toolbar>
    <mat-toolbar-row>
     <div class="men" >
       <mat-icon>child_friendly</mat-icon>
-      <span class="catReset" (click)="showItemsInCategory(-1)">Sklep Dziecięcy</span>
+      <span class="catReset" (click)="showItemsInCategory(-1)">Spiel und Spaß für kleine Helden - bei uns im Kinderladen!</span>
       <span class="spacer"></span>
       <button mat-icon-button>
         <mat-icon>shopping_cart</mat-icon>
@@ -44,26 +45,27 @@
    <mat-toolbar-row>
     <div  *ngIf="!isInUserProfil && !isInAdmin" class="category">
       <div *ngIf="categories$ | async as cat else loading" class="category">
-        <div  *ngFor="let item of cat "><button mat-stroked-button color="accent" (click)="showItemsInCategory(item.id)">{{item.name}}<div *ngIf="changeCategory$ | async"></div></button></div>
-      </div>
-
-
-      <div *ngIf="role$ | async as role">
-      <div *ngIf="role === 'admin'"><button mat-stroked-button color="accent" (click)="goToAdmin()"> Admin</button></div>
+          <div  *ngFor="let item of cat "><button mat-stroked-button color="primary" (click)="showItemsInCategory(item.id)">{{item.name}}</button></div>
+          <div *ngIf="role$ | async as role">
+            <div *ngIf="role === 'admin'"><button mat-stroked-button color="primary" (click)="goToAdmin()"> Admin</button></div>
+        </div>
       </div>
     </div>
     <div class="category" *ngIf="isInUserProfil">
-      <div ><button mat-stroked-button color="accent">Bestellungen</button></div>
-      <div ><button mat-stroked-button color="accent">Rechnungen</button></div>
-      <div ><button mat-stroked-button color="accent" (click)="goEinkaufen()">Züruck zum Einkaufen</button></div>
+      <div ><button mat-stroked-button color="primary">Bestellungen</button></div>
+      <div ><button mat-stroked-button color="primary">Rechnungen</button></div>
+      <div ><button mat-stroked-button color="primary" (click)="goEinkaufen()">Züruck zum Einkaufen</button></div>
       <div *ngIf="role$ | async as role">
-        <div *ngIf="role === 'admin'"><button mat-stroked-button color="accent" (click)="goToAdmin()"> Admin</button></div>
-        </div>
+        <div *ngIf="role === 'admin'"><button mat-stroked-button color="primary" (click)="goToAdmin()"> Admin</button></div>
+      </div>
     </div>
     <div class="category" *ngIf="isInAdmin">
-      <div ><button mat-stroked-button color="accent" routerLink="categories">Categories</button></div>
-      <div ><button mat-stroked-button color="accent" routerLink="artikels">Artikels</button></div>
-      <div ><button mat-stroked-button color="accent" (click)="goEinkaufen()">Züruck zum Einkaufen</button></div>
+      <div ><button mat-stroked-button color="primary" routerLink="categories">Categories</button></div>
+      <div ><button mat-stroked-button color="primary" routerLink="artikels">Artikels</button></div>
+      <div ><button mat-stroked-button color="primary" (click)="goEinkaufen()">Züruck zum Einkaufen</button></div>
+    </div>
+    <div class="searchpanel">
+      <app-searchpanel></app-searchpanel>
     </div>
    </mat-toolbar-row>
   </mat-toolbar>
@@ -79,3 +81,4 @@
   <app-loader></app-loader>
 </ng-template>
 <router-outlet></router-outlet>
+<div>Ile pro strone dodac selecta z iloscia</div>

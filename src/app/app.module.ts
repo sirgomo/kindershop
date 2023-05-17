@@ -32,6 +32,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ChangePasswordComponent } from './user/change-password/change-password.component';
 import { EinkaufskorbComponent } from './einkaufskorb/einkaufskorb.component';
+import { SearchpanelComponent } from './searchpanel/searchpanel.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { EinkaufskorbComponent } from './einkaufskorb/einkaufskorb.component';
     LoaderComponent,
     AddEditArtikelComponent,
     ChangePasswordComponent,
-    EinkaufskorbComponent
+    EinkaufskorbComponent,
+    SearchpanelComponent
   ],
   imports: [
     BrowserModule,

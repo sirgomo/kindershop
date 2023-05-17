@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { Observable, map } from 'rxjs';
-import { ArtikelsService } from './artikels.service';
+import { ArtikelsService } from '../../artikels/artikels.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { iArtikel } from 'src/app/model/iArtikel';
 import { AddEditArtikelComponent } from './add-edit-artikel/add-edit-artikel.component';
@@ -20,7 +20,7 @@ export class ArtiklesAdminComponent {
   @ViewChild(MatSort, {static: true}) sort!: MatSort;
   constructor (private artikelServi: ArtikelsService, private matDialog: MatDialog) {}
   ngOnInit() {
-    this.artikel$ = this.artikelServi.getAllArtikel();
+    this.artikel$ = this.artikelServi.getAllArtikel(-1,50,'',1);
   }
   addArtikel() {
     const conf : MatDialogConfig = new MatDialogConfig();

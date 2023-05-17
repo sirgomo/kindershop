@@ -5,7 +5,11 @@
 
 //@import "~@angular/material/_theming.scss";
 html, body { height: 100%; width: 100%; margin: 0; padding: 0;}
-body {  font-family: Roboto, "Helvetica Neue", sans-serif;  }
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: linear-gradient(to right, #b9d6d2 50%, #eecac6 50% );
+  width: 100%;
+  }
 
 
 $my-primary: mat-palette($mat-blue);
@@ -26,9 +30,7 @@ $my-theme: mat.define-light-theme((
 @include angular-material-theme($my-theme);
 
 .banner_container {
-  width: 100%;
   height: 478px;
-  background: linear-gradient(to right, #b9d6d2 50%, #eecac6 50%);
 }
 .banner {
   display: flex;
@@ -70,6 +72,7 @@ $my-theme: mat.define-light-theme((
 
 .category {
   display: flex;
+  flex-wrap: wrap;
   background-color:  #f09d59;
   color: #eecac6;
   justify-content:flex-start;
@@ -79,8 +82,21 @@ $my-theme: mat.define-light-theme((
   height: 50px;
   gap: .5rem;
 }
+nav{
+  display: flex;
+  width: 100%;
+}
+.menu-toggle {
+  display: none;
+}
+.searchpanel {
+  display: flex;
+  align-items: center;
+  background-color:  #f09d59;
+  height: 50px;
 
- .mat-icon {
+}
+.mat-icon {
   font-size: 24px;
   margin-right: 8px;
   color: #73b5cf;
@@ -92,11 +108,14 @@ $my-theme: mat.define-light-theme((
   background-color: #73b5cf;
 }
 
+
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   background-color:  #f09d59;
+  width: 100%;
 }
 
 .input-row {

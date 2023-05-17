@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { iArtikel } from 'src/app/model/iArtikel';
 import { CategoriesService } from '../../categories/categories.service';
 import { EMPTY, Observable, of, tap } from 'rxjs';
-import { ArtikelsService } from '../artikels.service';
+import { ArtikelsService } from '../../../artikels/artikels.service';
 
 
 @Component({

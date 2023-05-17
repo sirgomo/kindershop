@@ -4,8 +4,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { BehaviorSubject, EMPTY, Observable, catchError, combineLatest, finalize, map, of, scan, shareReplay, switchMap, take, tap, throwError } from 'rxjs';
 import { iArtikel } from 'src/app/model/iArtikel';
 import { environments } from 'src/environments/environment';
-import { AddEditArtikelComponent } from './add-edit-artikel/add-edit-artikel.component';
-import { CategoriesService } from '../categories/categories.service';
+import { AddEditArtikelComponent } from '../admin/artikles-admin/add-edit-artikel/add-edit-artikel.component';
+import { CategoriesService } from '../admin/categories/categories.service';
 import { iCategory } from 'src/app/model/icategory';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -34,9 +34,9 @@ export class ArtikelsService {
    * Holt alle Artikel vom Server.
    * @returns Eine Observable für die Liste der Artikel.
    */
-  getAllArtikel(): Observable<iArtikel[]> {
-
-    return this.http.get<iArtikel[]>(this.API).pipe(
+  getAllArtikel(cat: number, artMengeProSite: number, searchItem: string, siteNr: number): Observable<iArtikel[]> {
+    if( searchItem.length === 0) searchItem = '0';
+    return this.http.get<iArtikel[]>(this.API+`/${cat}/${artMengeProSite}/${searchItem}/${siteNr}`).pipe(
       tap((res) => {
         if(res.length < 1) {
           this.snackBar.open('Keine Artikel gefunden', 'OK', { duration: 3000 });
@@ -44,7 +44,6 @@ export class ArtikelsService {
           this.artSubject.next(res);
         }
       }),
-      shareReplay(1),
       catchError((error: HttpErrorResponse) => {
         const message = 'Fehler beim Laden der Artikel';
         this.snackBar.open(message, 'OK', { duration: 3000 });

@@ -23,7 +23,7 @@ isInUserProfil: boolean = false;
 isLogged$ = this.authServi.getIsLogged();
 role$ = this.authServi.role$;
 categories$ = new Observable<any>();
-changeCategory$ = new Observable<any>();
+
 
 isInAdmin = false;
   constructor (private authServi: AuthService, private matDialog: MatDialog, private helper: HelperService,  private route: Router, private category: CategoriesService) {}

@@ -67,7 +67,6 @@ export class AuthService {
       const base64Url = this.token.split('.')[1];
       const base64 = base64Url.replace('-', '+').replace('_', '/');
       const decoded = JSON.parse(Buffer.from(base64, 'base64').toString());
-      console.log(decoded)
       localStorage.setItem('token', this.token);
       localStorage.setItem('role', decoded.role);
       localStorage.setItem('email', decoded.email);
@@ -89,7 +88,6 @@ export class AuthService {
       const base64Url = token.split('.')[1];
       const base64 = base64Url.replace('-', '+').replace('_', '/');
       const decoded = JSON.parse(Buffer.from(base64, 'base64').toString());
-      console.log(' exp ' + decoded.exp + ' time ' + Math.floor(Date.now() / 1000))
      return decoded.exp > Math.floor(Date.now() / 1000) ? false : true;
     }
     return true;
