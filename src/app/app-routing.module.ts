@@ -7,11 +7,16 @@ import { ArtikelsComponent } from './artikels/artikels.component';
 import { AdminComponent } from './admin/admin.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
 import { ArtiklesAdminComponent } from './admin/artikles-admin/artikles-admin.component';
+import { EinkaufskorbComponent } from './einkaufskorb/einkaufskorb.component';
 
 const routes: Routes = [
   {
     component: CategoriesComponent,
     path: 'categories'
+  },
+  {
+    component: EinkaufskorbComponent,
+    path: 'korb',
   },
   {
     component: ArtiklesAdminComponent,

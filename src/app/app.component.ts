@@ -7,6 +7,7 @@ import { HelperService } from './helper.service';
 import { Router } from '@angular/router';
 import { CategoriesService } from './admin/categories/categories.service';
 import { Observable } from 'rxjs';
+import { EinkaufskorbService } from './einkaufskorb/einkaufskorb.service';
 
 
 
@@ -23,18 +24,22 @@ isInUserProfil: boolean = false;
 isLogged$ = this.authServi.getIsLogged();
 role$ = this.authServi.role$;
 categories$ = new Observable<any>();
+itemsInKorbMenge$ = this.korbServ.artikelsInKorb$;
 
 
 
 isInAdmin = false;
-  constructor (private authServi: AuthService, private matDialog: MatDialog, private helper: HelperService,  private route: Router, private category: CategoriesService) {}
+  constructor (private authServi: AuthService, private matDialog: MatDialog, private helper: HelperService,  private route: Router, private category: CategoriesService,
+    private korbServ: EinkaufskorbService) {}
   ngOnInit(): void {
     this.categories$ = this.category.findAll();
     this.helper.setAppComponenet(this);
     this.isInAdmin = false;
     this.isInUserProfil = false;
     this.helper.setCategory(-1);
-
+    if(localStorage.getItem('korb') !== null) {
+      this.korbServ.loadItems();
+    }
   }
 
 login() {

@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { BehaviorSubject, Observable, combineLatest, concatMap, finalize, map, merge, of, scan, shareReplay, switchMap, take, takeLast, tap } from 'rxjs';
 import { environments } from 'src/environments/environment';
 import { AddCategoryComponent } from './add-category/add-category.component';
-import { iCategory } from 'src/app/model/icategory';
+import { iCategory } from 'src/app/model/iCategory';
 import { LoaderService } from 'src/app/loader/loader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CategoriesService } from '../categories.service';
-import { iCategory } from 'src/app/model/icategory';
+import { iCategory } from 'src/app/model/iCategory';
 import { Observable } from 'rxjs';
 import { HelperService } from 'src/app/helper.service';
 

@@ -5,6 +5,7 @@ import { HelperService } from '../helper.service';
 import { iArtikel } from '../model/iArtikel';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ArtikelDetailsComponent } from './artikel-details/artikel-details.component';
+import { EinkaufskorbService } from '../einkaufskorb/einkaufskorb.service';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { ArtikelDetailsComponent } from './artikel-details/artikel-details.compo
 })
 export class ArtikelsComponent implements OnInit{
   artikels$ =  new Observable<iArtikel[]>()
-  constructor (private artielSer: ArtikelsService, private helper: HelperService, private dialog: MatDialog) {}
+  constructor (private artielSer: ArtikelsService, private helper: HelperService, private dialog: MatDialog, private korbServ: EinkaufskorbService) {}
   ngOnInit(): void {
 
     this.artikels$ = combineLatest([this.helper.artikelInCategory$, this.helper.artProSite$, this.helper.searchItem$, this.helper.siteNumber$]).pipe(
@@ -27,7 +28,9 @@ export class ArtikelsComponent implements OnInit{
 
     )
   }
-  onAction() {}
+  onAction(item: iArtikel) {
+    this.korbServ.addArtikelToKorb(item);
+  }
   showDetails(item: iArtikel) {
     const conf : MatDialogConfig = new MatDialogConfig();
     conf.data = item;

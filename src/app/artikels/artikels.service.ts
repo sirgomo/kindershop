@@ -6,7 +6,7 @@ import { iArtikel } from 'src/app/model/iArtikel';
 import { environments } from 'src/environments/environment';
 import { AddEditArtikelComponent } from '../admin/artikles-admin/add-edit-artikel/add-edit-artikel.component';
 import { CategoriesService } from '../admin/categories/categories.service';
-import { iCategory } from 'src/app/model/icategory';
+import { iCategory } from 'src/app/model/iCategory';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -227,8 +227,5 @@ export class ArtikelsService {
         return throwError(() => message);
       })
     );
-  }
-  getArtikelsInCategoryById(catid: number) {
-
   }
 }

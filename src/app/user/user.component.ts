@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UserService } from './user.service';
 import { Observable, combineLatest, concatMap, map, switchMap, tap } from 'rxjs';
-import { IUser } from '../model/iuser';
+import { IUser } from '../model/iUser';
 import { HelperService } from '../helper.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ChangePasswordComponent } from './change-password/change-password.component';

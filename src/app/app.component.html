@@ -5,8 +5,9 @@
       <mat-icon>child_friendly</mat-icon>
       <span class="catReset" (click)="showItemsInCategory(-1)">Spiel und Spaß für kleine Helden - bei uns im Kinderladen!</span>
       <span class="spacer"></span>
-      <button mat-icon-button>
+      <button mat-icon-button routerLink="korb">
         <mat-icon>shopping_cart</mat-icon>
+        <span *ngIf="itemsInKorbMenge$ | async as korb"><span class="badge" *ngIf="korb.length > 0">{{korb.length}}</span></span>
       </button>
       <div  *ngIf="isLogged$ | async else notLogged">
         <button mat-icon-button (click)="goToUser()">

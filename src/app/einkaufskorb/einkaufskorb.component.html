@@ -1,1 +1,12 @@
-<p>einkaufskorb works!</p>
+<div class="container">
+  <mat-table *ngIf="itemsInKorb$ | async as items" [dataSource]="items">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+      <mat-cell *matCellDef="let item">{{item.id}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Artikel Name</mat-header-cell>
+      <mat-cell *matCellDef="let item">{{item.name}}</mat-cell>
+    </ng-container>
+  </mat-table>
+</div>

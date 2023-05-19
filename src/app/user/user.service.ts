@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, combineLatest, map, of, tap } from 'rxjs';
-import { IUser } from '../model/iuser';
+import { IUser } from '../model/iUser';
 import { environments } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
