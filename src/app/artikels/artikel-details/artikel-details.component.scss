@@ -1,0 +1,45 @@
+.artikel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.artikel-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.artikel-image {
+ margin: 1rem 1rem 0;
+}
+
+.artikel-image img {
+  display: block;
+  min-width: 100%;
+}
+
+.artikel-info {
+  flex-grow: 1;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.artikel-info h2 {
+  margin-top: 0;
+}
+
+.artikel-info p {
+  margin: 10px 0;
+}
+
+.artikel-info strong {
+  margin-right: 5px;
+}
+.buttons {
+  display: flex;
+  margin-top: .4rem;
+  margin-bottom: .4rem;
+  justify-content: center;
+  gap: .4rem;
+}

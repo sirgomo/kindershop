@@ -34,6 +34,7 @@ import { ChangePasswordComponent } from './user/change-password/change-password.
 import { EinkaufskorbComponent } from './einkaufskorb/einkaufskorb.component';
 import { SearchpanelComponent } from './searchpanel/searchpanel.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { ArtikelDetailsComponent } from './artikels/artikel-details/artikel-details.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { PaginationComponent } from './pagination/pagination.component';
     ChangePasswordComponent,
     EinkaufskorbComponent,
     SearchpanelComponent,
-    PaginationComponent
+    PaginationComponent,
+    ArtikelDetailsComponent
   ],
   imports: [
     BrowserModule,

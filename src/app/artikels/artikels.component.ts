@@ -3,6 +3,8 @@ import { ArtikelsService } from './artikels.service';
 import { Observable, combineLatest, map, switchMap } from 'rxjs';
 import { HelperService } from '../helper.service';
 import { iArtikel } from '../model/iArtikel';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ArtikelDetailsComponent } from './artikel-details/artikel-details.component';
 
 
 @Component({
@@ -13,7 +15,7 @@ import { iArtikel } from '../model/iArtikel';
 })
 export class ArtikelsComponent implements OnInit{
   artikels$ =  new Observable<iArtikel[]>()
-  constructor (private artielSer: ArtikelsService, private helper: HelperService) {}
+  constructor (private artielSer: ArtikelsService, private helper: HelperService, private dialog: MatDialog) {}
   ngOnInit(): void {
 
     this.artikels$ = combineLatest([this.helper.artikelInCategory$, this.helper.artProSite$, this.helper.searchItem$, this.helper.siteNumber$]).pipe(
@@ -26,6 +28,13 @@ export class ArtikelsComponent implements OnInit{
     )
   }
   onAction() {}
+  showDetails(item: iArtikel) {
+    const conf : MatDialogConfig = new MatDialogConfig();
+    conf.data = item;
+    conf.width = '70%'
+
+    this.dialog.open(ArtikelDetailsComponent, conf);
+  }
   getImage(imgid: string) {
     return this.artielSer.getImage(imgid);
   }

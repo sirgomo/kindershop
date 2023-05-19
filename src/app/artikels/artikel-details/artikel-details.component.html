@@ -1,0 +1,27 @@
+<div class="artikel">
+  <div class="artikel-details">
+    <div class="artikel-image">
+      <img src="http://localhost:3000/artikel/bilder/{{data.images}}" alt="{{data.name}}" width="500" height="500">
+    </div>
+    <div class="artikel-info">
+      <h2>{{data.name}}</h2>
+      <p>{{data.description}}</p>
+      <p><strong>Preis:</strong> {{ data.price }} &euro;</p>
+      <p><strong>Marke:</strong> {{data.brand}}</p>
+      <p><strong>Modell:</strong> {{data.model}}</p>
+      <p><strong>SKU:</strong> {{data.sku}}</p>
+      <p><strong>EAN:</strong> {{data.ean}}</p>
+      <p><strong>Verfügbarkeit:</strong> {{data.availability}}</p>
+      <p><strong>Gewicht:</strong> {{data.weight}} g</p>
+      <p><strong>Menge:</strong> {{data.menge}}</p>
+      <p><strong>Abmessungen:</strong> {{data.dimensions}}</p>
+      <p><strong>Zugehörige Produkte:</strong> {{data.relatedProducts}}</p>
+      <p><strong>Bewertungen:</strong> {{data.reviews}}</p>
+      <p><strong>Bewertung:</strong> {{data.rating}}/5</p>
+    </div>
+  </div>
+  <div class="buttons">
+    <button mat-raised-button (click)="onAction()" color="accent">In den Warenkorb</button>
+    <button mat-raised-button (click)="close()">Schließen</button>
+  </div>
+  </div>
