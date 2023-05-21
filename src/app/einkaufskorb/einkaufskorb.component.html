@@ -37,13 +37,13 @@
   </mat-table>
 </div>
 <mat-stepper orientation="vertical" #matStepper>
-  <mat-step [stepControl]="anonim">
+  <mat-step >
     <div class="anonim" >
       <mat-checkbox [(ngModel)]="anonim" color="primary" *ngIf="!(isLoaged$ | async ) as logged">Kauf ohne Anmeldung</mat-checkbox>
       <div *ngIf="!anonim && !(isLoaged$ | async ) as logged">
         <button mat-raised-button (click)="login()" color="primary" *ngIf="logged">Login</button>
       </div>
   </div></mat-step>
-  <mat-step [editable]="isEditable">2 grosse</mat-step>
+  <mat-step [completed]="anonim" [editable]="isEditable">2 grosse</mat-step>
   <mat-step [editable]="isEditable">3 grosse</mat-step>
 </mat-stepper>
