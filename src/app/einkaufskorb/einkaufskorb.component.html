@@ -3,10 +3,47 @@
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
       <mat-cell *matCellDef="let item">{{item.id}}</mat-cell>
+      <mat-footer-cell *matFooterCellDef>Total: </mat-footer-cell>
     </ng-container>
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef>Artikel Name</mat-header-cell>
       <mat-cell *matCellDef="let item">{{item.name}}</mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>
     </ng-container>
+    <ng-container matColumnDef="size">
+      <mat-header-cell *matHeaderCellDef>Artikel Size</mat-header-cell>
+      <mat-cell *matCellDef="let item">{{item.grosse}}</mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+    </ng-container>
+    <ng-container matColumnDef="preis">
+      <mat-header-cell *matHeaderCellDef>Artikel Preis</mat-header-cell>
+      <mat-cell *matCellDef="let item">{{item.preis }} &euro;</mat-cell>
+      <mat-footer-cell *matFooterCellDef>{{totalPrice}} &euro;</mat-footer-cell>
+    </ng-container>
+    <ng-container matColumnDef="menge">
+      <mat-header-cell *matHeaderCellDef>Artikel Menge</mat-header-cell>
+      <mat-cell *matCellDef="let item"><div class="menge"><button mat-raised-button class="accent" (click)="plusItem(item.id)">+</button>{{item.menge}}
+        <button mat-raised-button class="accent" (click)="minusItem(item.id)">-</button></div></mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef>Artikel Entfernen</mat-header-cell>
+      <mat-cell *matCellDef="let item"><button mat-raised-button color="warn" (click)="deleteElement(item.id)">Entfernen</button></mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columns"></mat-row>
+    <mat-footer-row *matFooterRowDef="columns"></mat-footer-row>
   </mat-table>
 </div>
+<mat-stepper orientation="vertical" #matStepper>
+  <mat-step [stepControl]="anonim">
+    <div class="anonim" >
+      <mat-checkbox [(ngModel)]="anonim" color="primary" *ngIf="!(isLoaged$ | async ) as logged">Kauf ohne Anmeldung</mat-checkbox>
+      <div *ngIf="!anonim && !(isLoaged$ | async ) as logged">
+        <button mat-raised-button (click)="login()" color="primary" *ngIf="logged">Login</button>
+      </div>
+  </div></mat-step>
+  <mat-step [editable]="isEditable">2 grosse</mat-step>
+  <mat-step [editable]="isEditable">3 grosse</mat-step>
+</mat-stepper>
