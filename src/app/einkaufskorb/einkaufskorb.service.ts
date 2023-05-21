@@ -16,17 +16,31 @@ export class EinkaufskorbService {
   constructor(private http: HttpClient) { }
 
   addArtikelToKorb(item : iArtikel) {
+
     if(localStorage.getItem('korb') === null && item.id !== undefined) {
-      const items: iKorbItem[] = [{id : item.id, name: item.name, preis: item.price, große: item.dimensions }];
+      const items: iKorbItem[] = [{id : item.id, name: item.name, preis: item.price, grosse: item.dimensions, menge: 1 }];
       localStorage.setItem('korb', JSON.stringify(items));
      return this.artInKorb.next(items);
     }
 
     const json: iKorbItem[] = JSON.parse(localStorage.getItem('korb')!);
     if (item.id !== undefined) {
-      const items = [...json, {id : item.id, name: item.name, preis: item.price, große: item.dimensions }];
+      let menge = false;
+      json.map((element) => {
+        if(item.id === element.id) {
+          element.menge +=1;
+          localStorage.setItem('korb', JSON.stringify(json));
+          this.artInKorb.next(json);
+          menge = true;
+        }
+      });
+
+      if(menge) return;
+
+      const items = [...json, {id : item.id, name: item.name, preis: item.price, grosse: item.dimensions, menge: 1}];
       localStorage.setItem('korb', JSON.stringify(items));
       this.artInKorb.next(items);
+
     }
 
   }
@@ -45,6 +59,38 @@ export class EinkaufskorbService {
   loadItems() {
     if(localStorage.getItem('korb') !== null) {
       const items: iKorbItem[] = JSON.parse(localStorage.getItem('korb')!);
+      this.artInKorb.next(items);
+    }
+
+  }
+  deleteItem(itemid : number) {
+    const items = localStorage.getItem('korb');
+    if(!items) return;
+
+    const tmp: iKorbItem[] = JSON.parse(items);
+    const rem = tmp.filter((item) => item.id !== itemid);
+    localStorage.setItem('korb', JSON.stringify(rem));
+    this.artInKorb.next(rem);
+
+  }
+  changeMenge(itemid: number, menge: number) {
+    const items: iKorbItem[] = JSON.parse(localStorage.getItem('korb')!);
+    let itemLoschen = false;
+    items.map((res) => {
+        if(res.id === itemid){
+              res.menge += menge;
+
+              if  ( res.menge === 0)
+              itemLoschen = true;
+        }
+    });
+
+    if(itemLoschen) {
+      const tmp = items.filter((item) => item.id !== itemid);
+      localStorage.setItem('korb', JSON.stringify(tmp));
+      this.artInKorb.next(tmp);
+    } else {
+      localStorage.setItem('korb', JSON.stringify(items));
       this.artInKorb.next(items);
     }
 

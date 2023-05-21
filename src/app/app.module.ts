@@ -35,6 +35,10 @@ import { EinkaufskorbComponent } from './einkaufskorb/einkaufskorb.component';
 import { SearchpanelComponent } from './searchpanel/searchpanel.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { ArtikelDetailsComponent } from './artikels/artikel-details/artikel-details.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { ShippingaddressComponent } from './einkaufskorb/shippingaddress/shippingaddress.component';
+import { PaymentComponent } from './einkaufskorb/payment/payment.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -54,7 +58,9 @@ import { ArtikelDetailsComponent } from './artikels/artikel-details/artikel-deta
     EinkaufskorbComponent,
     SearchpanelComponent,
     PaginationComponent,
-    ArtikelDetailsComponent
+    ArtikelDetailsComponent,
+    ShippingaddressComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
@@ -77,6 +83,8 @@ import { ArtikelDetailsComponent } from './artikels/artikel-details/artikel-deta
     MatProgressSpinnerModule,
     MatSelectModule,
     MatProgressBarModule,
+    MatStepperModule,
+    MatCheckboxModule,
 
   ],
   providers: [ {

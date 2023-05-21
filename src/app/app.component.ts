@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { CategoriesService } from './admin/categories/categories.service';
 import { Observable } from 'rxjs';
 import { EinkaufskorbService } from './einkaufskorb/einkaufskorb.service';
+import { Location } from '@angular/common';
 
 
 
@@ -30,7 +31,7 @@ itemsInKorbMenge$ = this.korbServ.artikelsInKorb$;
 
 isInAdmin = false;
   constructor (private authServi: AuthService, private matDialog: MatDialog, private helper: HelperService,  private route: Router, private category: CategoriesService,
-    private korbServ: EinkaufskorbService) {}
+    private korbServ: EinkaufskorbService, private locat: Location) {}
   ngOnInit(): void {
     this.categories$ = this.category.findAll();
     this.helper.setAppComponenet(this);
@@ -47,6 +48,7 @@ login() {
   const dialogConfig : MatDialogConfig = new MatDialogConfig();
   dialogConfig.minHeight = '350px';
   dialogConfig.width = '400px';
+  dialogConfig.data = this.locat.path();
   this.matDialog.open(LoginComponent, dialogConfig);
 }
 logout() {
@@ -71,6 +73,7 @@ goToUser() {
 showItemsInCategory(catid: number | undefined) {
   if (catid !== undefined)
    this.helper.setCategory(catid);
+   this.route.navigateByUrl('/');
   }
 
 }

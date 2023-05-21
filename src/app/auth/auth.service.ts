@@ -9,6 +9,7 @@ import { RegisterComponent } from '../register/register.component';
 import { Buffer } from 'buffer';
 import { Route, Router } from '@angular/router';
 import { validateHorizontalPosition } from '@angular/cdk/overlay';
+import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +24,10 @@ export class AuthService {
    role$ = this.userRole.asObservable();
    token = '';
 
-  constructor(private httpClient: HttpClient, private snack: MatSnackBar, private route : Router) {}
+  constructor(private httpClient: HttpClient, private snack: MatSnackBar, private route : Router, private location : Router) {}
 
-  login(data : {email : string, password: string}, dilRef: MatDialogRef<LoginComponent>) {
+  login(data : {email : string, password: string}, dilRef: MatDialogRef<LoginComponent>, url: string) {
+    console.log(url)
    return this.httpClient.post(this.api + 'auth/login', data).pipe(map((res) => {
     if(Object(res).message !== undefined) {
       this.snack.open(Object(res).message, 'Ok', {duration: 2000});
@@ -36,8 +38,9 @@ export class AuthService {
     this.isLogedSubject.next(true);
     this.token = Object(res).access_token;
     this.setRole();
+    this.location.navigateByUrl(url);
     return '';
-   }, take(1)),  retry(1))
+   }), take(1))
   }
   regiseter(ob: any, dilRef: MatDialogRef<RegisterComponent>) {
     return this.httpClient.post(this.api+'auth/new', ob).pipe((map(res => {

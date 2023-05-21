@@ -1,5 +1,5 @@
 
-<mat-toolbar>
+<mat-toolbar class="toolbar">
    <mat-toolbar-row>
     <div class="men" >
       <mat-icon>child_friendly</mat-icon>
@@ -46,7 +46,7 @@
    <mat-toolbar-row>
     <div  *ngIf="!isInUserProfil && !isInAdmin" class="category">
       <div *ngIf="categories$ | async as cat else loading" class="category">
-          <div  *ngFor="let item of cat "><button mat-stroked-button color="primary" (click)="showItemsInCategory(item.id)">{{item.name}}</button></div>
+          <div  *ngFor="let item of cat "><button mat-stroked-button color="primary" routerLink="/" (click)="showItemsInCategory(item.id)">{{item.name}}</button></div>
           <div *ngIf="role$ | async as role">
             <div *ngIf="role === 'admin'"><button mat-stroked-button color="primary" (click)="goToAdmin()"> Admin</button></div>
         </div>
