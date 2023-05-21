@@ -1,1 +1,109 @@
-<p>shippingaddress works!</p>
+<div *ngIf="user$ | async"></div>
+<form [formGroup]="addresForm" (submit)="sendDataToParrent()">
+  <div class="formrow">
+      <mat-checkbox formControlName="shippingaddress" value="false" color="primary"><mat-icon matSuffix>location_city</mat-icon> Lieferadresse (abweichend von Rechnungsadresse)</mat-checkbox>
+    <mat-form-field>
+      <mat-label>E-Mail-Adresse</mat-label>
+      <input matInput formControlName="email" required type="email">
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-error *ngIf="addresForm.controls['email'].hasError('email')">
+        Falsches Format der E-Mail-Adresse
+      </mat-error>
+      <mat-error *ngIf="addresForm.controls['email'].hasError('required')">
+        E-Mail-Adresse ist erforderlich
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Vorname</mat-label>
+      <input matInput formControlName="vorname" required>
+      <mat-icon matSuffix>person</mat-icon>
+      <mat-error *ngIf="addresForm.controls['vorname'].hasError('required')">
+        Vorname ist erforderlich
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Nachname</mat-label>
+      <input matInput formControlName="nachname" required>
+      <mat-icon matSuffix>person</mat-icon>
+      <mat-error *ngIf="addresForm.controls['nachname'].hasError('required')">
+        Nachname ist erforderlich
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="formrow">
+    <mat-form-field>
+      <mat-label>Straße</mat-label>
+      <input matInput formControlName="strasse" required>
+      <mat-icon matSuffix>location_city</mat-icon>
+      <mat-error *ngIf="addresForm.controls['strasse'].hasError('required')">
+        Straße ist erforderlich
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Hausnummer</mat-label>
+      <input matInput formControlName="hausnummer" required>
+      <mat-icon matSuffix>location_city</mat-icon>
+      <mat-error *ngIf="addresForm.controls['hausnummer'].hasError('required')">
+        Hausnummer ist erforderlich
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Postleitzahl</mat-label>
+      <input type="number" matInput formControlName="plz" required>
+      <mat-icon matSuffix>location_on</mat-icon>
+      <mat-error *ngIf="addresForm.controls['plz'].hasError('required')">
+        Postleitzahl ist erforderlich
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Stadt</mat-label>
+      <input matInput formControlName="stadt" required>
+      <mat-icon matSuffix>location_city</mat-icon>
+      <mat-error *ngIf="addresForm.controls['stadt'].hasError('required')">
+        Stadt ist erforderlich
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="formrow" *ngIf="addresForm.get('shippingaddress')?.getRawValue() === true">
+    <mat-form-field>
+      <mat-label>Straße (Lieferadresse)</mat-label>
+      <input matInput formControlName="l_strasse">
+      <mat-icon matSuffix>location_city</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Hausnummer (Lieferadresse)</mat-label>
+      <input matInput formControlName="l_hausnummer">
+      <mat-icon matSuffix>location_city</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Postleitzahl (Lieferadresse)</mat-label>
+      <input type="number" matInput formControlName="l_plz">
+      <mat-icon matSuffix>location_on</mat-icon>
+    </mat-form-field>
+  </div>
+  <div class="formrow"  *ngIf="addresForm.get('shippingaddress')?.getRawValue() === true">
+    <mat-form-field>
+      <mat-label>Stadt (Lieferadresse)</mat-label>
+      <input matInput formControlName="l_stadt">
+      <mat-icon matSuffix>location_city</mat-icon>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Nachname (Lieferadresse)</mat-label>
+      <input matInput formControlName="l_nachname">
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
+  </div>
+  <div class="button-center-row">
+    <button mat-raised-button color="primary" [disabled]="addresForm.invalid" type="submit">
+      Speichern
+    </button>
+  </div>
+
+</form>

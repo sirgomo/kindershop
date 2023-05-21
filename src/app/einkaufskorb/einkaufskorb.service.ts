@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { iArtikel } from '../model/iArtikel';
 import { HttpClient } from '@angular/common/http';
 import { environments } from 'src/environments/environment';
 import { iKorbItem } from '../model/iKorbItem';
+import { IUser } from '../model/iUser';
 
 
 @Injectable({
@@ -11,6 +12,7 @@ import { iKorbItem } from '../model/iKorbItem';
 })
 export class EinkaufskorbService {
   private API = environments.API_URL;
+  private USER_API = environments.API_URL + 'user';
   private artInKorb: BehaviorSubject<iKorbItem[]> = new BehaviorSubject<iKorbItem[]>([]);
   artikelsInKorb$ = this.artInKorb.asObservable();
   constructor(private http: HttpClient) { }
@@ -94,5 +96,8 @@ export class EinkaufskorbService {
       this.artInKorb.next(items);
     }
 
+  }
+  getUserByEmail(email: string): Observable<IUser> {
+    return this.http.get<IUser>(this.USER_API + `/${email}`).pipe(map(res => res));
   }
 }

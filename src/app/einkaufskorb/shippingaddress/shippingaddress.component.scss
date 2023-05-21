@@ -1,0 +1,25 @@
+mat-form-field {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+mat-icon {
+  margin-right: 0.5rem;
+}
+
+mat-error {
+  font-size: 0.75rem;
+  color: red;
+}
+
+button {
+  margin-top: 1rem;
+}
+.formrow {
+  display: flex;
+  gap: .4rem;
+}
+mat-checkbox {
+  min-width: 20%;
+}
