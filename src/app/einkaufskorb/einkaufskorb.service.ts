@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, map } from 'rxjs';
 import { iArtikel } from '../model/iArtikel';
 import { HttpClient } from '@angular/common/http';
 import { environments } from 'src/environments/environment';
@@ -11,7 +11,7 @@ import { IUser } from '../model/iUser';
   providedIn: 'root'
 })
 export class EinkaufskorbService {
-  private API = environments.API_URL;
+  private BEST_API = environments.API_URL + 'bestellungen';
   private USER_API = environments.API_URL + 'user';
   private artInKorb: BehaviorSubject<iKorbItem[]> = new BehaviorSubject<iKorbItem[]>([]);
   artikelsInKorb$ = this.artInKorb.asObservable();
@@ -20,7 +20,7 @@ export class EinkaufskorbService {
   addArtikelToKorb(item : iArtikel) {
 
     if(localStorage.getItem('korb') === null && item.id !== undefined) {
-      const items: iKorbItem[] = [{id : item.id, name: item.name, preis: item.price, grosse: item.dimensions, menge: 1 }];
+      const items: iKorbItem[] = [{id : item.id, name: item.name, preis: item.price, mwst: item.mwst, grosse: item.dimensions, menge: 1 }];
       localStorage.setItem('korb', JSON.stringify(items));
      return this.artInKorb.next(items);
     }
@@ -39,7 +39,7 @@ export class EinkaufskorbService {
 
       if(menge) return;
 
-      const items = [...json, {id : item.id, name: item.name, preis: item.price, grosse: item.dimensions, menge: 1}];
+      const items = [...json, {id : item.id, name: item.name, preis: item.price, mwst: item.mwst, grosse: item.dimensions, menge: 1}];
       localStorage.setItem('korb', JSON.stringify(items));
       this.artInKorb.next(items);
 
@@ -99,5 +99,47 @@ export class EinkaufskorbService {
   }
   getUserByEmail(email: string): Observable<IUser> {
     return this.http.get<IUser>(this.USER_API + `/${email}`).pipe(map(res => res));
+  }
+  getBestelungen(menge: number, sitenr: number) {
+    return this.http.get(this.BEST_API +'?menge='+menge+'&sitenr='+sitenr)
+    .pipe(map((res) => {
+      console.log(res);
+      return res;
+    }))
+  }
+  getBestellungBeiEmail(email: string) {
+    return this.http.get(this.BEST_API + 'email/'+email)
+    .pipe(map((res) => {
+      console.log(res);
+      return res;
+    }))
+  }
+  getBestellungBeiId(id: number) {
+    return this.http.get(this.BEST_API + '/'+id)
+    .pipe(map((res) => {
+      console.log(res);
+      return res;
+    }))
+  }
+  checkBestellung(user: IUser, items: iKorbItem[]) {
+   return this.http.post(this.BEST_API, {user: user, items: items})
+    .pipe(map((res) => {
+      console.log(res);
+      return res;
+    }))
+  }
+  deleteBestellugn(bestellid: number) {
+    return this.http.delete(this.BEST_API + '/'+bestellid)
+    .pipe(map((res) => {
+      if(res === 1) {
+        console.log('ok, delted');
+        return EMPTY;
+      }
+
+      let err: Error = new Error();
+      Object.assign(err, res);
+      console.log(err.message);
+      return EMPTY;
+    }))
   }
 }

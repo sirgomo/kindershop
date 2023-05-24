@@ -36,6 +36,10 @@
           <mat-error *ngIf="form.get('price')?.hasError('required')">Preis ist erforderlich</mat-error>
         </mat-form-field>
         <mat-form-field>
+          <input type="number" matInput placeholder="MwSt" formControlName="mwst">
+          <mat-error *ngIf="form.get('mwst')?.hasError('required')">Mehrwertsteuer ist erforderlich</mat-error>
+        </mat-form-field>
+        <mat-form-field>
           <input matInput placeholder="Marke" formControlName="brand">
           <mat-error *ngIf="form.get('brand')?.hasError('required')">Marke ist erforderlich</mat-error>
         </mat-form-field>

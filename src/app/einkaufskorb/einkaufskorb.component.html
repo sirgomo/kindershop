@@ -20,11 +20,16 @@
       <mat-cell *matCellDef="let item">{{item.preis }} &euro;</mat-cell>
       <mat-footer-cell *matFooterCellDef>{{totalPrice}} &euro;</mat-footer-cell>
     </ng-container>
+    <ng-container matColumnDef="meherSteuer">
+      <mat-header-cell *matHeaderCellDef>MwSt</mat-header-cell>
+      <mat-cell *matCellDef="let item">{{getMeherwehrSteuer([item]) }} &euro;</mat-cell>
+      <mat-footer-cell *matFooterCellDef>{{getMeherwehrSteuer(items)}} &euro;</mat-footer-cell>
+    </ng-container>
     <ng-container matColumnDef="menge">
       <mat-header-cell *matHeaderCellDef>Artikel Menge</mat-header-cell>
       <mat-cell *matCellDef="let item"><div class="menge"><button mat-raised-button class="accent" (click)="plusItem(item.id)">+</button>{{item.menge}}
         <button mat-raised-button class="accent" (click)="minusItem(item.id)">-</button></div></mat-cell>
-      <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+      <mat-footer-cell *matFooterCellDef>Total: {{getTotalPriceWithMwst()}} </mat-footer-cell>
     </ng-container>
     <ng-container matColumnDef="delete">
       <mat-header-cell *matHeaderCellDef>Artikel Entfernen</mat-header-cell>
@@ -45,5 +50,5 @@
       </div>
   </div></mat-step>
   <mat-step  label="step 2" ><app-shippingaddress (setForm)="addressForm($event)"></app-shippingaddress></mat-step>
-  <mat-step  label="step 3" >3 grosse</mat-step>
+  <mat-step  label="step 3" ><div *ngIf="checkPrice$ | async"> check pirce</div></mat-step>
 </mat-stepper>

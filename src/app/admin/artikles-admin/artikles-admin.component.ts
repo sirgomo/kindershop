@@ -29,7 +29,7 @@ export class ArtiklesAdminComponent {
 
     this.artikel$ = this.matDialog.open(AddEditArtikelComponent, conf).afterClosed().pipe(
       map((res) => {
-        if(res === undefined) return this.artikelServi.artikels$;
+        if(res === undefined) return this.artikel$;
 
         return res;
       })

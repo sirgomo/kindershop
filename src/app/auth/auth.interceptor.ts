@@ -18,6 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
     let req = request;
     if( localStorage.getItem('role') === 'user' || localStorage.getItem('role') === 'admin') {
       if(this.authServi.getIsTokenExpired()) {
+        console.log('token expired')
         this.authServi.logout();
         return next.handle(req);
       }
@@ -27,7 +28,12 @@ export class AuthInterceptor implements HttpInterceptor {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       });
-      } else {
+      return next.handle(req);
+      } else if (localStorage.getItem('korb') && req.url === 'http://localhost:3000/bestellungen') {
+        return next.handle(req);
+      }
+
+      else {
         this.router.navigateByUrl('/');
       }
     return next.handle(req);

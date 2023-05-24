@@ -6,8 +6,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
 import { Location } from '@angular/common';
 import { MatStepper } from '@angular/material/stepper';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
+import { iKorbItem } from '../model/iKorbItem';
 import { IUser } from '../model/iUser';
+
 
 
 @Component({
@@ -24,14 +26,18 @@ export class EinkaufskorbComponent implements AfterViewInit{
   anonim: boolean = true;
   adressForm!: FormGroup;
   userData = {};
+  itemsInKorb : iKorbItem[] = new Array();
   itemsInKorb$ = this.korbServ.artikelsInKorb$.pipe(tap((res) => {
+    this.itemsInKorb.splice(0, this.itemsInKorb.length);
+    this.itemsInKorb = res;
     this.totalPrice = 0;
     for (let i = 0; i< res.length; i++) {
       this.totalPrice += Number(res[i].preis) * res[i].menge;
       this.totalPrice = Number(this.totalPrice.toFixed(2));
     }
   }));
-  columns: string[] = ['id', 'name', 'size', 'preis', 'menge', 'delete'];
+  checkPrice$ = new Observable();
+  columns: string[] = ['id', 'name', 'size', 'preis','meherSteuer', 'menge', 'delete'];
 
   constructor (private korbServ: EinkaufskorbService, private auth: AuthService, private matDialog: MatDialog,
     private locat: Location) {
@@ -78,6 +84,19 @@ export class EinkaufskorbComponent implements AfterViewInit{
   addressForm(address: FormGroup) {
     this.adressForm = address;
    Object.assign(this.userData, this.adressForm.value)
-   console.log((this.userData))
+   this.checkPrice$ = this.korbServ.checkBestellung(this.userData as IUser, this.itemsInKorb);
+   this.matStepper.next();
+  }
+  getMeherwehrSteuer(items: iKorbItem[]) {
+    let mwst = 0;
+    if (items.length < 1 ) return mwst;
+
+    for (let i = 0; i < items.length; i++) {
+      mwst += (items[i].preis * items[i].mwst / 100) * items[i].menge;
+    }
+    return mwst.toFixed(2);
+  }
+  getTotalPriceWithMwst() {
+    return (this.totalPrice + Number(this.getMeherwehrSteuer(this.itemsInKorb))).toFixed(2);
   }
 }

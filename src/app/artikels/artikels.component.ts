@@ -41,4 +41,9 @@ export class ArtikelsComponent implements OnInit{
   getImage(imgid: string) {
     return this.artielSer.getImage(imgid);
   }
+  getPriceWithMwSt(item: iArtikel) {
+    console.log(typeof item.price + ' / ' + typeof item.mwst)
+    let price = Number(item.price) + (Number(item.price) * item.mwst / 100);
+    return price.toFixed(2);
+  }
 }

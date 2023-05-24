@@ -5,6 +5,7 @@ export interface iArtikel {
   name: string;
   description: string;
   price: number;
+  mwst: number;
   brand: string;
   model: string;
   sku: string;
