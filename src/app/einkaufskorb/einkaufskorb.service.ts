@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, EMPTY, Observable, map } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, map, tap } from 'rxjs';
 import { iArtikel } from '../model/iArtikel';
 import { HttpClient } from '@angular/common/http';
 import { environments } from 'src/environments/environment';
@@ -122,9 +122,8 @@ export class EinkaufskorbService {
     }))
   }
   checkBestellung(user: IUser, items: iKorbItem[]) {
-   return this.http.post(this.BEST_API, {user: user, items: items})
-    .pipe(map((res) => {
-      console.log(res);
+   return this.http.post<{preis: string}>(this.BEST_API, {user: user, items: items})
+    .pipe(tap((res) => {
       return res;
     }))
   }

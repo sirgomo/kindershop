@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-table *ngIf="itemsInKorb$ | async as items" [dataSource]="items">
+  <mat-table *ngIf="itemsInKorb$ | async as items else loader" [dataSource]="items">
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
       <mat-cell *matCellDef="let item">{{item.id}}</mat-cell>
@@ -41,7 +41,7 @@
     <mat-footer-row *matFooterRowDef="columns"></mat-footer-row>
   </mat-table>
 </div>
-<mat-stepper orientation="vertical" #matStepper>
+<mat-stepper orientation="vertical" #matStepper >
   <mat-step label="step 1">
     <div class="anonim" *ngIf="!(isLoaged$ | async ) as logged" >
       <mat-checkbox [formControl]="form" color="primary" (change)="onChange()">Kauf ohne Anmeldung</mat-checkbox>
@@ -50,5 +50,8 @@
       </div>
   </div></mat-step>
   <mat-step  label="step 2" ><app-shippingaddress (setForm)="addressForm($event)"></app-shippingaddress></mat-step>
-  <mat-step  label="step 3" ><div *ngIf="checkPrice$ | async"> check pirce</div></mat-step>
+  <mat-step  label="step 3" ><div  *ngIf="checkPrice$ | async else loader"> <div id="containerp" class="containerp"> </div> </div></mat-step>
 </mat-stepper>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

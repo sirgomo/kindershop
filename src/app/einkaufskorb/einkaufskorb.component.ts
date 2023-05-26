@@ -9,6 +9,8 @@ import { MatStepper } from '@angular/material/stepper';
 import { FormControl, FormGroup } from '@angular/forms';
 import { iKorbItem } from '../model/iKorbItem';
 import { IUser } from '../model/iUser';
+import { loadScript } from '@paypal/paypal-js';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -40,7 +42,7 @@ export class EinkaufskorbComponent implements AfterViewInit{
   columns: string[] = ['id', 'name', 'size', 'preis','meherSteuer', 'menge', 'delete'];
 
   constructor (private korbServ: EinkaufskorbService, private auth: AuthService, private matDialog: MatDialog,
-    private locat: Location) {
+    private locat: Location, private snackBar: MatSnackBar) {
 
     }
   ngAfterViewInit(): void {
@@ -84,8 +86,50 @@ export class EinkaufskorbComponent implements AfterViewInit{
   addressForm(address: FormGroup) {
     this.adressForm = address;
    Object.assign(this.userData, this.adressForm.value)
-   this.checkPrice$ = this.korbServ.checkBestellung(this.userData as IUser, this.itemsInKorb);
+   this.checkPrice$ = this.korbServ.checkBestellung(this.userData as IUser, this.itemsInKorb).pipe(
+    tap((res) => {
+      if(res.preis === undefined) {
+        const err = new Error();
+        Object.assign(err, res);
+        this.snackBar.open(err.message, 'Ok', {duration: 3000})
+      //return
+      }
+      this.loadPaypal(res);
+    })
+   );
    this.matStepper.next();
+  }
+  async loadPaypal(item : {preis: string}) {
+    let paypal;
+
+    try {
+      paypal = await loadScript({ "client-id" : 'AeDiupsu7C8EsJ1LlfTWZ5Hjqa_jBrL07wotcEaGIyH8Q7BgtlStuniAPw94dAi1482Jv_-xk0RpJAlU', "currency": 'EUR',
+    });
+    } catch (err) {
+      console.log(err);
+    }
+    if(paypal?.Buttons !== undefined) {
+      try {
+
+        await paypal.Buttons({
+          createOrder(data, actions) {
+              return actions.order.create({
+                purchase_units: [{
+                  amount: {
+                    currency_code: 'EUR',
+                    value: item.preis,
+                  }
+                }]
+
+              })
+          },
+        //TODO on Aprove
+        }).render('#containerp')
+
+    } catch (error) {
+        console.error("failed to render the PayPal Buttons", error);
+    }
+  }
   }
   getMeherwehrSteuer(items: iKorbItem[]) {
     let mwst = 0;
