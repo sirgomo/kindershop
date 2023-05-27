@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="button-center-row">
+    <button mat-raised-button color="primary" (click)="neueKreditor()">Kreditor erstellen</button>
+  </div>
+  <div class="table" *ngIf="kreditoren$ | async as kreditoren">
+    <mat-table [dataSource]="kreditoren">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.id}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="knummer">
+        <mat-header-cell *matHeaderCellDef>Kreditor Nummer</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.kreditorennummer}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.name}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="tel">
+        <mat-header-cell *matHeaderCellDef>Telefonnummer</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.telefonnummer}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="fax">
+        <mat-header-cell *matHeaderCellDef>Fax</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.faxnummer}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.email}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef>Bearbeiten</mat-header-cell>
+        <mat-cell *matCellDef="let item"><button mat-raised-button (click)="editKreditor(item)"></button></mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="del">
+        <mat-header-cell *matHeaderCellDef>Kreditor Löschen!</mat-header-cell>
+        <mat-cell *matCellDef="let item"><button mat-raised-button (click)="deleteKreditor(item.id)">Löschen</button></mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="diplayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let column; columns: diplayedColumns"></mat-row>
+    </mat-table>
+  </div>
+</div>

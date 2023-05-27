@@ -39,6 +39,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { ShippingaddressComponent } from './einkaufskorb/shippingaddress/shippingaddress.component';
 import { PaymentComponent } from './einkaufskorb/payment/payment.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { KreditorenComponent } from './kreditoren/kreditoren.component';
+import { AddEditKreditorenComponent } from './kreditoren/add-edit-kreditoren/add-edit-kreditoren.component';
 
 
 @NgModule({
@@ -60,7 +62,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     PaginationComponent,
     ArtikelDetailsComponent,
     ShippingaddressComponent,
-    PaymentComponent
+    PaymentComponent,
+    KreditorenComponent,
+    AddEditKreditorenComponent
   ],
   imports: [
     BrowserModule,

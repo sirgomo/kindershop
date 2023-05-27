@@ -8,11 +8,20 @@ import { AdminComponent } from './admin/admin.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
 import { ArtiklesAdminComponent } from './admin/artikles-admin/artikles-admin.component';
 import { EinkaufskorbComponent } from './einkaufskorb/einkaufskorb.component';
+import { KreditorenComponent } from './kreditoren/kreditoren.component';
+import { routeGuard } from './auth/route.guard';
+
 
 const routes: Routes = [
   {
+    component: KreditorenComponent,
+    path: 'kreditor',
+    canActivate: [routeGuard]
+  },
+  {
     component: CategoriesComponent,
-    path: 'categories'
+    path: 'categories',
+    canActivate: [routeGuard]
   },
   {
     component: EinkaufskorbComponent,
@@ -20,11 +29,13 @@ const routes: Routes = [
   },
   {
     component: ArtiklesAdminComponent,
-    path: 'artikels'
+    path: 'artikels',
+    canActivate: [routeGuard]
   },
   {
     component: AdminComponent,
-    path: 'admin'
+    path: 'admin',
+    canActivate: [routeGuard]
   },
   {
     component: LoginComponent,
