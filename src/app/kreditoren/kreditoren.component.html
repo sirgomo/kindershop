@@ -14,7 +14,7 @@
       </ng-container>
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-        <mat-cell *matCellDef="let item">{{item.name}}</mat-cell>
+        <mat-cell *matCellDef="let item">{{item.kreditorenname}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="tel">
         <mat-header-cell *matHeaderCellDef>Telefonnummer</mat-header-cell>
@@ -30,7 +30,7 @@
       </ng-container>
       <ng-container matColumnDef="edit">
         <mat-header-cell *matHeaderCellDef>Bearbeiten</mat-header-cell>
-        <mat-cell *matCellDef="let item"><button mat-raised-button (click)="editKreditor(item)"></button></mat-cell>
+        <mat-cell *matCellDef="let item"><button mat-raised-button (click)="editKreditor(item)">Bearbeiten</button></mat-cell>
       </ng-container>
       <ng-container matColumnDef="del">
         <mat-header-cell *matHeaderCellDef>Kreditor Löschen!</mat-header-cell>
