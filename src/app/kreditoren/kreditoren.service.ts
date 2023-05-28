@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, shareReplay } from 'rxjs';
+import { BehaviorSubject, Observable, map, of, shareReplay, switchMap } from 'rxjs';
 import { environments } from 'src/environments/environment';
 import { iKreditoren } from 'src/app/model/iKreditoren'
 import { MatDialogRef } from '@angular/material/dialog';
@@ -12,12 +12,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class KreditorenService {
   kreditoren: BehaviorSubject<iKreditoren[]> = new BehaviorSubject<iKreditoren[]>([]);
-  kreditoren$ = this.kreditoren.asObservable().pipe(map((res) => {
+  kreditoren$ = this.kreditoren.asObservable().pipe(switchMap((res) => {
 
     if(res.length === 0)
       return this.getKreditors();
 
-      return res;
+      return of(res);
   }), shareReplay(1));
   API = environments.API_URL + 'kreditoren'
   constructor(private readonly http: HttpClient, private snck: MatSnackBar) { }
@@ -39,10 +39,17 @@ export class KreditorenService {
   createKreditor(kreditor : iKreditoren, ref: MatDialogRef<AddEditKreditorenComponent>): Observable<any> {
 
     if(kreditor.id === null) {
+      const kreditors = this.kreditoren.getValue();
+      const item = kreditors.find((tmp) => tmp.kreditorennummer === kreditor.kreditorennummer);
+      if(item !== undefined) {
+        this.snck.open('Es gib schön kreditor mit solche nr... Abrrechen', 'Ok', {duration: 3000})
+        return of(item);
+      }
+
       return this.http.post<iKreditoren>(this.API, kreditor).pipe(
         map((res) => {
           if(res.id){
-            const kreditors = this.kreditoren.getValue();
+
             kreditors.push(res);
             this.kreditoren.next(kreditors);
             ref.close(res);

@@ -28,11 +28,18 @@
             <textarea matInput placeholder="Beschreibung" formControlName="description"></textarea>
             <mat-error *ngIf="form.get('description')?.hasError('required')">Beschreibung ist erforderlich</mat-error>
           </mat-form-field>
+          <mat-form-field >
+            <mat-label>Liferant</mat-label>
+            <mat-select *ngIf="liferanten$ | async as lifernat" formControlName="liferant" >
+              <mat-option *ngFor="let item of lifernat" [value]="item.id" >{{item.kreditorenname}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('liferant')?.hasError('required')">Lifernat ist erforderlich</mat-error>
+          </mat-form-field>
         </div>
       </div>
       <div class="form-row">
         <mat-form-field>
-          <input type="number" matInput placeholder="Preis" formControlName="price">
+          <input type="number" matInput placeholder="Preis" formControlName="price" required>
           <mat-error *ngIf="form.get('price')?.hasError('required')">Preis ist erforderlich</mat-error>
         </mat-form-field>
         <mat-form-field>

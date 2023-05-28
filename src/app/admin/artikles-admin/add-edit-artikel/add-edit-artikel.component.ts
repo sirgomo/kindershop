@@ -5,6 +5,7 @@ import { iArtikel } from 'src/app/model/iArtikel';
 import { CategoriesService } from '../../categories/categories.service';
 import { EMPTY, Observable, of, tap } from 'rxjs';
 import { ArtikelsService } from '../../../artikels/artikels.service';
+import { KreditorenService } from 'src/app/kreditoren/kreditoren.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { ArtikelsService } from '../../../artikels/artikels.service';
 export class AddEditArtikelComponent {
   form!: FormGroup;
   categories$ = this.catService.findAll();
+  liferanten$ = this.liferService.kreditoren$;
   go$ = new Observable();
   fullImage$ = new Observable<any>();
   saveImage$ = new Observable<any>();
@@ -26,18 +28,10 @@ export class AddEditArtikelComponent {
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddEditArtikelComponent>,
     @Inject(MAT_DIALOG_DATA) public data: iArtikel,
-    private catService: CategoriesService,
-    private artService: ArtikelsService,
-  ) { }
-
-  ngOnInit(): void {
-    this.initForm();
-    if (this.data) {
-      this.patchForm();
-    }
-  }
-
-  initForm(): void {
+    private readonly catService: CategoriesService,
+    private readonly artService: ArtikelsService,
+    private readonly liferService: KreditorenService,
+  ) {
     this.form = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
@@ -51,13 +45,19 @@ export class AddEditArtikelComponent {
       weight: ['', Validators.required],
       menge: [{ value: '', disabled: true }],
       dimensions: ['', Validators.required],
+      liferant: [Number, Validators.required],
       images: ['', Validators.required],
       relatedProducts: ['', Validators.required],
       reviews: [''],
       rating: [''],
       categories: ['', Validators.required]
     });
+  }
 
+  ngOnInit(): void {
+    if (this.data) {
+      this.patchForm();
+    }
   }
 
   patchForm(): void {
@@ -75,6 +75,7 @@ export class AddEditArtikelComponent {
       weight: this.data.weight,
       menge: this.data.menge,
       dimensions: this.data.dimensions,
+      liferant: this.data.liferant,
       images: this.data.images,
       relatedProducts: this.data.relatedProducts,
       reviews: this.data.reviews,
@@ -100,6 +101,7 @@ export class AddEditArtikelComponent {
         weight: this.form.value.weight,
         menge: this.form.value.menge,
         dimensions: this.form.value.dimensions,
+        liferant: this.form.value.liferant,
         images: this.form.value.images,
         relatedProducts: this.form.value.relatedProducts,
         reviews: this.form.value.reviews,

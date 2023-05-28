@@ -14,6 +14,7 @@ export interface iArtikel {
   weight: number;
   menge: number;
   dimensions: string;
+  liferant: number;
   images: string;
   relatedProducts: string;
   reviews: string;
