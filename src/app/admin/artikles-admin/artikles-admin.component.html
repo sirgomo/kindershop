@@ -2,7 +2,8 @@
   <div class="button-center-row">
     <button mat-raised-button color="primary" (click)="addArtikel()">Artikel erstellen</button>
   </div>
-  <table mat-table [dataSource]="artikel$ | async" matSort>
+  <div *ngIf="artikel$ | async as artikels">
+  <table mat-table [dataSource]="artikels" matSort>
 
     <ng-container matColumnDef="artid">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
@@ -47,5 +48,6 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+</div>
 </div>
 <app-pagination></app-pagination>

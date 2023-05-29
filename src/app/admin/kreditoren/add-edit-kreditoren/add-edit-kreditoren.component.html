@@ -1,0 +1,85 @@
+<div>
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <div class="men" *ngIf="data !== null">Kreditor Bearbeiten</div>
+      <div class="men" *ngIf="data === null">Kreditor Erstellen</div>
+    </mat-toolbar-row>
+
+  </mat-toolbar>
+  <form [formGroup]="kreditorForm" class="form">
+    <div class="form-row">
+      <mat-form-field class="form-field">
+        <mat-label>Kreditoren Nummer</mat-label>
+        <input matInput placeholder="Kreditorennummer" formControlName="kreditorennummer">
+        <mat-error *ngIf="kreditorForm.controls['kreditorennummer'].errors?.['required']">Kreditorennummer ist erforderlich</mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Kreditoren Name</mat-label>
+        <input matInput placeholder="Kreditorenname" formControlName="kreditorenname">
+        <mat-error *ngIf="kreditorForm.controls['kreditorenname'].errors?.['required']">Kreditorenname ist erforderlich</mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Anschrift</mat-label>
+        <input matInput placeholder="Anschrift" formControlName="anschrift">
+        <mat-error *ngIf="kreditorForm.controls['anschrift'].errors?.['required']">Anschrift ist erforderlich</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field class="form-field">
+        <mat-label>Telefonnummer</mat-label>
+        <input matInput placeholder="Telefonnummer" formControlName="telefonnummer">
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Faxnummer</mat-label>
+        <input matInput placeholder="Faxnummer" formControlName="faxnummer">
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>E-Mail</mat-label>
+        <input matInput placeholder="E-Mail" formControlName="email" required>
+        <mat-error *ngIf="kreditorForm.controls['email'].errors?.['email']">E-Mail ist ungültig</mat-error>
+        <mat-error *ngIf="kreditorForm.controls['email'].errors?.['required']">E-Mail ist ungültig</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field class="form-field">
+        <mat-label>Bankname</mat-label>
+        <input matInput placeholder="Bankname" formControlName="bankname">
+        <mat-error *ngIf="kreditorForm.controls['bankname'].errors?.['required']">Bankname ist erforderlich</mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>IBAN</mat-label>
+        <input matInput placeholder="IBAN" formControlName="iban">
+        <mat-error *ngIf="kreditorForm.controls['iban'].errors?.['required']">IBAN ist erforderlich</mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>BIC</mat-label>
+        <input matInput placeholder="BIC" formControlName="bic">
+        <mat-error *ngIf="kreditorForm.controls['bic'].errors?.['required']">BIC ist erforderlich</mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Zahlungsbedingungen</mat-label>
+        <input matInput placeholder="Zahlungsbedingungen" formControlName="zahlungsbedingungen">
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field class="form-field">
+        <mat-label>Steuernummer</mat-label>
+        <input matInput placeholder="Steuernummer" formControlName="steuernummer">
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Ust-IdNr</mat-label>
+        <input matInput placeholder="UST-IDNR" formControlName="ust_idnr">
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Land</mat-label>
+        <input matInput placeholder="Land" formControlName="land">
+      </mat-form-field>
+    </div>
+    <div class="form-actions">
+      <button type="button" mat-raised-button color="primary" (click)="saveKreditor()" [disabled]="!kreditorForm.valid">Speichern</button>
+      <button type="button" mat-raised-button (click)="cancel()">Abbrechen</button>
+    </div>
+    <div *ngIf="item$ | async"></div>
+  </form>
+
+</div>

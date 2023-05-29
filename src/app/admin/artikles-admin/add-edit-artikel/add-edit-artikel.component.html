@@ -1,9 +1,12 @@
-<div class="container">
+<div>
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <div class="men">
+        <h4> Artikel hinzufügen/bearbeiten</h4>
+        </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
 <form [formGroup]="form" class="artikel">
-  <div class="men">
-  <h4> Artikel hinzufügen/bearbeiten</h4>
-  </div>
-
   <div mat-dialog-content>
     <div class="form-container">
       <div class="form-row">
@@ -28,13 +31,15 @@
             <textarea matInput placeholder="Beschreibung" formControlName="description"></textarea>
             <mat-error *ngIf="form.get('description')?.hasError('required')">Beschreibung ist erforderlich</mat-error>
           </mat-form-field>
-          <mat-form-field >
-            <mat-label>Liferant</mat-label>
-            <mat-select *ngIf="liferanten$ | async as lifernat" formControlName="liferant" >
-              <mat-option *ngFor="let item of lifernat" [value]="item.id" >{{item.kreditorenname}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="form.get('liferant')?.hasError('required')">Lifernat ist erforderlich</mat-error>
-          </mat-form-field>
+
+            <mat-form-field *ngIf="liferanten$ | async as lifernat" >
+              <mat-label>Liferant</mat-label>
+              <mat-select formControlName="liferant">
+                <mat-option *ngFor="let item of lifernat" [value]="item.id" >{{item.kreditorenname}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="form.get('liferant')?.hasError('required')">Lifernat ist erforderlich</mat-error>
+            </mat-form-field>
+
         </div>
       </div>
       <div class="form-row">

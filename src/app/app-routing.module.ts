@@ -8,7 +8,7 @@ import { AdminComponent } from './admin/admin.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
 import { ArtiklesAdminComponent } from './admin/artikles-admin/artikles-admin.component';
 import { EinkaufskorbComponent } from './einkaufskorb/einkaufskorb.component';
-import { KreditorenComponent } from './kreditoren/kreditoren.component';
+import { KreditorenComponent } from './admin/kreditoren/kreditoren.component';
 import { routeGuard } from './auth/route.guard';
 
 

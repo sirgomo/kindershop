@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { KreditorenService } from './kreditoren.service';
 import { Observable, combineLatest, concatMap, map, merge, startWith, switchMap, tap } from 'rxjs';
-import { iKreditoren } from '../model/iKreditoren';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddEditKreditorenComponent } from './add-edit-kreditoren/add-edit-kreditoren.component';
+import { iKreditoren } from 'src/app/model/iKreditoren';
 
 @Component({
   selector: 'app-kreditoren',

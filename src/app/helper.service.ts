@@ -36,4 +36,7 @@ export class HelperService {
   setSiteNumber(sitenr: number) {
     this.siteNumber.next(sitenr);
   }
+  getMengeProSite() {
+    return this.artProSite.getValue();
+  }
 }

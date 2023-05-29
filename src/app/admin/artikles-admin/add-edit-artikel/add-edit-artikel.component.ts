@@ -5,7 +5,7 @@ import { iArtikel } from 'src/app/model/iArtikel';
 import { CategoriesService } from '../../categories/categories.service';
 import { EMPTY, Observable, of, tap } from 'rxjs';
 import { ArtikelsService } from '../../../artikels/artikels.service';
-import { KreditorenService } from 'src/app/kreditoren/kreditoren.service';
+import { KreditorenService } from 'src/app/admin/kreditoren/kreditoren.service';
 
 
 @Component({

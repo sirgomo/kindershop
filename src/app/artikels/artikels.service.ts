@@ -9,6 +9,7 @@ import { CategoriesService } from '../admin/categories/categories.service';
 import { iCategory } from 'src/app/model/iCategory';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HelperService } from '../helper.service';
 
 
 /**
@@ -21,12 +22,18 @@ export class ArtikelsService {
 
   private API = environments.API_URL + 'artikel';
   private artSubject: BehaviorSubject<iArtikel[]> = new BehaviorSubject<iArtikel[]>([]);
-  artikels$ = this.artSubject.asObservable();
+  artikels$ = this.artSubject.asObservable().pipe(switchMap((res) => {
+    if(res.length === 0)
+     return this.getAllArtikel(-1, this.helper.getMengeProSite(), '', 1);
+
+      return of(res);
+  }));
   categories$ = new Observable<iCategory[]>();
 
   constructor(private http: HttpClient, private catService: CategoriesService,
     private sanitizer: DomSanitizer,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private helper: HelperService) {
     this.categories$ = this.catService.findAll();
   }
 
@@ -76,24 +83,20 @@ export class ArtikelsService {
   createArtikel(artikel: iArtikel, dialRef: MatDialogRef<AddEditArtikelComponent>): Observable<any> {
 
     return this.http.post<iArtikel>(this.API, artikel).pipe(
-      switchMap((res) => {
+      map((res) => {
         if(res.id !== undefined && res.id !== null) {
-          return this.artikels$.pipe(
-            map((artikels) => {
-              res.menge = 0;
-             return [...artikels, res]
-            })
-          );
+          const artikels = this.artSubject.getValue();
+          res.menge = 0;
+          const newArt = [...artikels, res];
+          this.artSubject.next(newArt);
+          dialRef.close(res);
+          return res;
         } else {
           return this.artikels$;
         }
       }),
-      tap((newArtikels) => {
-        this.artSubject.next(newArtikels);
-
-        dialRef.close(newArtikels);
-      }),
       catchError((error: HttpErrorResponse) => {
+       if( this.snackBar._openedSnackBarRef !== null) throwError(() => message);
         const message = 'Fehler beim Erstellen des Artikels';
         this.snackBar.open(message, 'OK', { duration: 3000 });
 
@@ -113,20 +116,11 @@ export class ArtikelsService {
     return this.http.patch(`${this.API}/${artikel.id}`, artikel).pipe(
       map(res => {
         if(res === 1) {
-          this.artikels$ = combineLatest([this.artikels$, of(artikel), this.categories$]).pipe(
-            map(([arts, artikel, categories]) => {
-              return arts.map((item) => {
-                if( item.id === artikel.id) {
-                  item = artikel;
-                  const foundCategory = categories.find((c) => c.id == artikel.categories[0].id);
-                  if(foundCategory)
-                    item.categories = [foundCategory];
-                }
-                return item;
-              })
-            })
-          )
-         return dialRef.close(this.artikels$);
+          const items = this.artSubject.getValue();
+          const index = items.findIndex((item) => item.id === artikel.id);
+          items[index] = artikel;
+          this.artSubject.next(items);
+         return dialRef.close(artikel);
         } else {
           const message = 'Fehler beim Aktualisieren des Artikels';
           this.snackBar.open( message, 'OK', { duration: 3000 });
