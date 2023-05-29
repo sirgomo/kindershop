@@ -38,9 +38,14 @@ import { ArtikelDetailsComponent } from './artikels/artikel-details/artikel-deta
 import { MatStepperModule } from '@angular/material/stepper';
 import { ShippingaddressComponent } from './einkaufskorb/shippingaddress/shippingaddress.component';
 import { PaymentComponent } from './einkaufskorb/payment/payment.component';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { KreditorenComponent } from './admin/kreditoren/kreditoren.component';
 import { AddEditKreditorenComponent } from './admin/kreditoren/add-edit-kreditoren/add-edit-kreditoren.component';
+import { WarenbuchungComponent } from './admin/warenbuchung/warenbuchung.component';
+import { EditBuchungComponent } from './admin/warenbuchung/edit-buchung/edit-buchung.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 @NgModule({
@@ -64,7 +69,9 @@ import { AddEditKreditorenComponent } from './admin/kreditoren/add-edit-kreditor
     ShippingaddressComponent,
     PaymentComponent,
     KreditorenComponent,
-    AddEditKreditorenComponent
+    AddEditKreditorenComponent,
+    WarenbuchungComponent,
+    EditBuchungComponent
   ],
   imports: [
     BrowserModule,
@@ -89,11 +96,15 @@ import { AddEditKreditorenComponent } from './admin/kreditoren/add-edit-kreditor
     MatProgressBarModule,
     MatStepperModule,
     MatCheckboxModule,
-
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTabsModule,
   ],
   providers: [ {
     provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
-  }],
+  },
+  MatDatepickerModule,
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

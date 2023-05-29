@@ -1,0 +1,66 @@
+<div>
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <div class="men" *ngIf="data !== null">Buchung Bearbeiten</div>
+      <div class="men" *ngIf="data === null">Buchung Erstellen</div>
+      <div class="searchpanel">
+        <app-searchpanel></app-searchpanel>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <form [formGroup]="buchungForm" class="form">
+    <input type="hidden" name="" formControlName="buchung_id" >
+    <div class="form-row">
+    <mat-form-field class="form-field">
+      <mat-label>Lieferschein ID</mat-label>
+      <input matInput formControlName="lieferschein_id">
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Lieferdatum</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="liefer_date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Buchungsdatum</mat-label>
+      <input matInput [matDatepicker]="picker2" formControlName="buchung_date">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+    </div>
+    <div class="form-row">
+
+
+    <mat-form-field class="form-field">
+      <mat-label>Korrigierte Nummer</mat-label>
+      <input matInput formControlName="korrigiertes_nr" type="number">
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Korrigierter Grund</mat-label>
+      <textarea matInput formControlName="korrigiertes_grund" ></textarea>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="kreditoren$ | async as kreditoren" class="form-field">
+      <mat-label>Kreditor</mat-label>
+      <mat-select formControlName="kreditor">
+        <mat-option *ngFor="let option of kreditoren" [value]="option.id">
+          {{ option.kreditorenname }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="form-field">
+      <mat-label>Buchen ?</mat-label>
+      <mat-checkbox [checked]="true" *ngIf="data?.gebucht === 2">Gebucht</mat-checkbox>
+      <mat-checkbox [checked]="false" *ngIf="data?.gebucht !== 2" (change)="change()" >Gebucht</mat-checkbox>
+    </div>
+    </div>
+    <button mat-raised-button color="primary" (click)="submit()">Speichern</button>
+  </form>
+  <mat-tab-group>
+    <mat-tab label="Artikels"></mat-tab>
+    <mat-tab label="Gebuchte Artikels"></mat-tab>
+  </mat-tab-group>
+</div>

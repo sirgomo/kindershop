@@ -10,9 +10,15 @@ import { ArtiklesAdminComponent } from './admin/artikles-admin/artikles-admin.co
 import { EinkaufskorbComponent } from './einkaufskorb/einkaufskorb.component';
 import { KreditorenComponent } from './admin/kreditoren/kreditoren.component';
 import { routeGuard } from './auth/route.guard';
+import { WarenbuchungComponent } from './admin/warenbuchung/warenbuchung.component';
 
 
 const routes: Routes = [
+  {
+    component: WarenbuchungComponent,
+    path: 'einbuchen',
+    canActivate: [routeGuard],
+  },
   {
     component: KreditorenComponent,
     path: 'kreditor',

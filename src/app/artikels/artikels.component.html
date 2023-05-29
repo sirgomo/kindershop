@@ -14,7 +14,8 @@
         </mat-card-content>
         <mat-card-actions align="start">
           <div class="buttons">
-            <button mat-raised-button (click)="onAction(item)" color="accent">In den Warenkorb</button>
+            <button mat-raised-button *ngIf="item.availability == '1'" (click)="onAction(item)" color="accent">In den Warenkorb</button>
+            <button mat-raised-button *ngIf="item.availability == '0'" disabled (click)="onAction(item)" color="accent">In den Warenkorb</button>
             <button mat-raised-button (click)="showDetails(item)">Artikel Details</button>
           </div>
 

@@ -29,6 +29,7 @@ export class ArtikelsComponent implements OnInit{
     )
   }
   onAction(item: iArtikel) {
+    if(item.availability == '1')
     this.korbServ.addArtikelToKorb(item);
   }
   showDetails(item: iArtikel) {

@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="button-center-row">
+    <button mat-raised-button color="primary" (click)="neueBuchung()">Buchung erfassen</button>
+  </div>
+  <div *ngIf="buchungen$ | async as buch" class="container">
+  <mat-table [dataSource]="buch">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>Bestellung Id</mat-header-cell>
+      <mat-cell *matCellDef="let item">{{item.buchung_id}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="liferschein">
+      <mat-header-cell *matHeaderCellDef>Liferschein Id</mat-header-cell>
+      <mat-cell *matCellDef="let item">{{item.lieferschein_id}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="buchungdate">
+      <mat-header-cell *matHeaderCellDef>Das Buchungsdatum</mat-header-cell>
+      <mat-cell *matCellDef="let item">{{item.buchung_date}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="kreditor">
+      <mat-header-cell *matHeaderCellDef>Lifernat</mat-header-cell>
+      <mat-cell *matCellDef="let item">{{item.liferant}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="gebucht">
+      <mat-header-cell *matHeaderCellDef>Bestellung Erfast</mat-header-cell>
+      <mat-cell *matCellDef="let item"><span *ngIf="item.gebucht !== 2">Nein</span>
+        <span *ngIf="item.gebucht === 2">Ja</span></mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="open">
+      <mat-header-cell *matHeaderCellDef>Buchung bearbeiten</mat-header-cell>
+      <mat-cell *matCellDef="let item"><button mat-raised-button (click)="editBuchung(item)">Bearbeiten</button></mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+    <mat-row *matRowDef="let column; columns: columns"></mat-row>
+  </mat-table>
+</div>
+</div>
