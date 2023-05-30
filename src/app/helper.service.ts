@@ -10,8 +10,10 @@ export class HelperService {
   private appCompo!: AppComponent;
   private artInCategory: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private artProSite: BehaviorSubject<number> = new BehaviorSubject<number>(10);
-  private searchItems: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  private searchItems: BehaviorSubject<string> = new BehaviorSubject<string>('0');
   private siteNumber: BehaviorSubject<number> = new BehaviorSubject<number>(1);
+  private liferantid: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
+  liferantid$ = this.liferantid.asObservable();
   siteNumber$ = this.siteNumber.asObservable();
   searchItem$ = this.searchItems.asObservable();
   artProSite$ = this.artProSite.asObservable();
@@ -38,5 +40,8 @@ export class HelperService {
   }
   getMengeProSite() {
     return this.artProSite.getValue();
+  }
+  setLiferant(liferantid: number) {
+    this.liferantid.next(liferantid);
   }
 }

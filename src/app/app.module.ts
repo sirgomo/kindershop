@@ -44,8 +44,9 @@ import { AddEditKreditorenComponent } from './admin/kreditoren/add-edit-kreditor
 import { WarenbuchungComponent } from './admin/warenbuchung/warenbuchung.component';
 import { EditBuchungComponent } from './admin/warenbuchung/edit-buchung/edit-buchung.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import {MatTabsModule} from '@angular/material/tabs';
+import { BuchungArtikelsComponent } from './admin/warenbuchung/buchung-artikels/buchung-artikels.component';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     KreditorenComponent,
     AddEditKreditorenComponent,
     WarenbuchungComponent,
-    EditBuchungComponent
+    EditBuchungComponent,
+    BuchungArtikelsComponent
   ],
   imports: [
     BrowserModule,
@@ -104,6 +106,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
   },
   MatDatepickerModule,
+  {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
 ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,45 @@
+<div *ngIf="artikels$ | async as artikels">
+  <table mat-table [dataSource]="artikels" class="mat-elevation-z8">
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.artikels_id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Price Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef> Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+    </ng-container>
+
+    <!-- MWST Column -->
+    <ng-container matColumnDef="mwst">
+      <th mat-header-cell *matHeaderCellDef> MWST </th>
+      <td mat-cell *matCellDef="let element"> {{element.mwst}} </td>
+    </ng-container>
+
+    <!-- Menge Column -->
+    <ng-container matColumnDef="menge">
+      <th mat-header-cell *matHeaderCellDef> Menge </th>
+      <td mat-cell *matCellDef="let element"> {{element.menge}} </td>
+    </ng-container>
+
+    <!-- Add Column -->
+    <ng-container matColumnDef="add">
+      <th mat-header-cell *matHeaderCellDef> Add </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button (click)="addProduct(element)">Add</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

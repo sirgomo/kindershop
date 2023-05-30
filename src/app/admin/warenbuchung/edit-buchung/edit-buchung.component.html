@@ -45,7 +45,7 @@
 
     <mat-form-field *ngIf="kreditoren$ | async as kreditoren" class="form-field">
       <mat-label>Kreditor</mat-label>
-      <mat-select formControlName="kreditor">
+      <mat-select formControlName="kreditor" (selectionChange)="liferantChange($event.value)">
         <mat-option *ngFor="let option of kreditoren" [value]="option.id">
           {{ option.kreditorenname }}
         </mat-option>
@@ -57,10 +57,15 @@
       <mat-checkbox [checked]="false" *ngIf="data?.gebucht !== 2" (change)="change()" >Gebucht</mat-checkbox>
     </div>
     </div>
-    <button mat-raised-button color="primary" (click)="submit()">Speichern</button>
+    <div class="form-actions">
+      <button mat-raised-button color="primary" (click)="submit()">Speichern</button>
+      <button mat-raised-button color="accent" (click)="close()">Abbrechen</button>
+    </div>
   </form>
-  <mat-tab-group>
-    <mat-tab label="Artikels"></mat-tab>
+  <mat-tab-group class="mattab">
+    <mat-tab label="Artikels">
+        <app-buchung-artikels [buchungId]="this.buchungForm.get('buchung_id')?.getRawValue()"></app-buchung-artikels>
+    </mat-tab>
     <mat-tab label="Gebuchte Artikels"></mat-tab>
   </mat-tab-group>
 </div>

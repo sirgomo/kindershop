@@ -1,5 +1,4 @@
 export interface iBuchungArtikel {
-
   id?: number;
   artikels_id: number;
   buchung_id: number;

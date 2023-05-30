@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { iBuchung } from 'src/app/model/iBuchung';
 import { iBuchungArtikel } from 'src/app/model/iBuchungArtikel';
 import { KreditorenService } from '../../kreditoren/kreditoren.service';
+import { HelperService } from 'src/app/helper.service';
 
 @Component({
   selector: 'app-edit-buchung',
@@ -15,7 +16,7 @@ export class EditBuchungComponent {
   kreditoren$ = this.kreditor.kreditoren$;
   artikels: iBuchungArtikel[] = [];
   constructor(private readonly dialRef: MatDialogRef<EditBuchungComponent>, @Optional() @Inject(MAT_DIALOG_DATA) public data :iBuchung, private fb: FormBuilder,
-  private kreditor: KreditorenService) {
+  private kreditor: KreditorenService, private helper: HelperService) {
     this.buchungForm = this.fb.group({
       buchung_id: [this.data?.buchung_id || Number, { disabled: true }],
       lieferschein_id: [this.data?.lieferschein_id || '', Validators.required],
@@ -28,8 +29,14 @@ export class EditBuchungComponent {
     });
   }
   submit() {}
+  close() {
+    this.dialRef.close();
+  }
   change() {
     this.buchungForm.get('gebucht')?.setValue(1);
     console.log(this.buchungForm)
+  }
+  liferantChange(liferantid: number) {
+    this.helper.setLiferant(liferantid);
   }
 }
