@@ -223,9 +223,9 @@ export class ArtikelsService {
     );
   }
   getArtikelsForBuchung(such: string, liferant: number) {
-    if(liferant === -1) return EMPTY;
+    if(such === '') such = '0';
     return this.http.get(this.API + '/buch/' + such + '/' + liferant).pipe(
-      map(res => res)
+      map(res =>  res)
     )
   }
 }

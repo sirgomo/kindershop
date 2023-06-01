@@ -9,8 +9,11 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <form [formGroup]="buchungForm" class="form">
-    <input type="hidden" name="" formControlName="buchung_id" >
     <div class="form-row">
+      <mat-form-field  class="form-field" >
+        <mat-label>Buchung Id</mat-label>
+        <input matInput type="number" name="" formControlName="buchung_id" readonly>
+      </mat-form-field>
     <mat-form-field class="form-field">
       <mat-label>Lieferschein ID</mat-label>
       <input matInput formControlName="lieferschein_id">
@@ -18,14 +21,14 @@
 
     <mat-form-field class="form-field">
       <mat-label>Lieferdatum</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="liefer_date">
+      <input matInput [matDatepicker]="picker" formControlName="liefer_date" >
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field class="form-field">
       <mat-label>Buchungsdatum</mat-label>
-      <input matInput [matDatepicker]="picker2" formControlName="buchung_date">
+      <input matInput [matDatepicker]="picker2" formControlName="buchung_date" [min]="minDate">
       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
       <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field>
@@ -45,8 +48,8 @@
 
     <mat-form-field *ngIf="kreditoren$ | async as kreditoren" class="form-field">
       <mat-label>Kreditor</mat-label>
-      <mat-select formControlName="kreditor" (selectionChange)="liferantChange($event.value)">
-        <mat-option *ngFor="let option of kreditoren" [value]="option.id">
+      <mat-select formControlName="kreditor" (selectionChange)="liferantChange($event.value.id)">
+        <mat-option *ngFor="let option of kreditoren" [value]="option">
           {{ option.kreditorenname }}
         </mat-option>
       </mat-select>
@@ -58,7 +61,8 @@
     </div>
     </div>
     <div class="form-actions">
-      <button mat-raised-button color="primary" (click)="submit()">Speichern</button>
+      <button mat-raised-button color="primary" (click)="submit(buchungForm.value)" *ngIf="buchungForm.status === 'VALID'" ><span *ngIf="speichern$ | async"></span> Speichern</button>
+      <button mat-raised-button color="primary" *ngIf="buchungForm.status === 'INVALID'" disabled >Speichern</button>
       <button mat-raised-button color="accent" (click)="close()">Abbrechen</button>
     </div>
   </form>
