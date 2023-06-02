@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { iBuchung } from 'src/app/model/iBuchung';
 import { KreditorenService } from '../../kreditoren/kreditoren.service';
 import { HelperService } from 'src/app/helper.service';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, map, startWith, tap } from 'rxjs';
 import { WarenbuchungService } from '../warenbuchung.service';
 import { DatePipe } from '@angular/common';
 
@@ -17,9 +17,21 @@ import { DatePipe } from '@angular/common';
 })
 export class EditBuchungComponent {
   buchungForm: FormGroup;
-  kreditoren$ = this.kreditor.kreditoren$;
+  private kredi: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  currentCreditor$ = this.kredi.asObservable();
+  kreditoren$ = combineLatest([this.kreditor.kreditoren$, this.currentCreditor$]).pipe(
+    map(([kreditoren, kredid])=> {
+      if(this.data && this.data.kreditor.id) {
+        const item = kreditoren.filter((tmp) => tmp.id === kredid)
+        this.buchungForm.get('kreditor')?.setValue(item[0]);
+      }
+      return kreditoren;
+    })
+  )
+
   speichern$ = new Observable();
   minDate = new Date(Date.now());
+
   constructor(private readonly dialRef: MatDialogRef<EditBuchungComponent>, @Optional() @Inject(MAT_DIALOG_DATA) public data :iBuchung, private fb: FormBuilder,
   private kreditor: KreditorenService, private helper: HelperService, private buchungServ: WarenbuchungService, private readonly datePi: DatePipe) {
     this.buchungForm = this.fb.group({
@@ -30,13 +42,12 @@ export class EditBuchungComponent {
       gebucht: [this.data?.gebucht || Number, Validators.required],
       korrigiertes_nr: [this.data?.korrigiertes_nr || Number],
       korrigiertes_grund: [this.data?.korrigiertes_grund || ''],
-      kreditor: [this.data?.kreditor || Number, Validators.required]
+      kreditor: [this.data?.kreditor || Object , Validators.required]
     });
+    if(data !== null && this.data.kreditor.id !== undefined)
+    this.kredi.next(this.data.kreditor.id);
   }
   submit(item: iBuchung) {
-    if(this.data === null ) {
-      if(item.artikels === undefined)
-      item.artikels = [];
 
     const date = this.datePi.transform(item.buchung_date, 'yyyy-MM-dd');
     const date2 = this.datePi.transform(item.liefer_date, 'yyyy-MM-dd');
@@ -45,17 +56,33 @@ export class EditBuchungComponent {
       item.liefer_date = date2;
     }
 
+    if(item.artikels === undefined)
+    item.artikels = [];
+    /* new Buchung */
+    if(this.data === null ) {
     this.speichern$ = this.buchungServ.createBuchung(item).pipe(
       map((res) => {
         this.data = res;
         this.buchungForm.patchValue(res);
+        if(res.kreditor.id !== undefined)
+        this.kredi.next(res.kreditor.id);
       })
     )
     return;
     }
-
+    /* edit Buchung */
     if(this.data?.artikels)
     item.artikels = this.data.artikels;
+
+    this.speichern$ = this.buchungServ.editBuchung(item).pipe(
+      map(res => {
+        this.data = res;
+        this.buchungForm.patchValue(res);
+        if(res.kreditor.id !== undefined)
+        this.kredi.next(res.kreditor.id);
+      })
+    )
+
 
   }
   close() {

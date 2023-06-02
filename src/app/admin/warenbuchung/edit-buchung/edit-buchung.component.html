@@ -67,9 +67,9 @@
     </div>
   </form>
   <mat-tab-group class="mattab">
+    <mat-tab label="Gebuchte Artikels"></mat-tab>
     <mat-tab label="Artikels">
         <app-buchung-artikels [buchungId]="this.buchungForm.get('buchung_id')?.getRawValue()"></app-buchung-artikels>
     </mat-tab>
-    <mat-tab label="Gebuchte Artikels"></mat-tab>
   </mat-tab-group>
 </div>

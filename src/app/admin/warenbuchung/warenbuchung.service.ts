@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, of, shareReplay, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, map, of, retry, shareReplay, switchMap } from 'rxjs';
 import { iBuchung } from 'src/app/model/iBuchung';
 import { environments } from 'src/environments/environment';
 
@@ -11,14 +11,11 @@ export class WarenbuchungService {
   buch: BehaviorSubject<iBuchung[]> = new BehaviorSubject<iBuchung[]>([]);
   buchungs$ = this.buch.asObservable().pipe(
     map((res) => {
-      console.log(res)
       if(res.length === 0)
        return this.getAllBuchungen();
 
-
         return res;
-    })
-  );
+    }));
    API = environments.API_URL + 'warenbuchung';
   constructor(private readonly httpClient: HttpClient) { }
 
@@ -39,15 +36,18 @@ export class WarenbuchungService {
     }));
   }
   editBuchung(buchung: iBuchung): Observable<iBuchung> {
-      return this.httpClient.patch<number>(this.API, buchung).pipe(
-        switchMap((res) => {
+      return this.httpClient.patch<iBuchung>(this.API, buchung).pipe(
+        map((res) => {
           const buchungen = this.buch.getValue();
           const index = buchungen.findIndex((item) => item.buchung_id === buchung.buchung_id);
-          buchungen[index] = buchung;
-          this.buch.next(buchungen);
-          console.log('edytowanych ' + res);
-
-          return of(buchung);
+          const item : iBuchung = {
+            ...buchungen[index],
+            ...res
+          }
+          const newBuch: iBuchung[] = buchungen.slice(0);
+          newBuch[index] = item;
+          this.buch.next(newBuch);
+          return res;
         })
       )
   }
