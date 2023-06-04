@@ -18,7 +18,6 @@ export class AuthInterceptor implements HttpInterceptor {
     let req = request;
     if( localStorage.getItem('role') === 'user' || localStorage.getItem('role') === 'admin') {
       if(this.authServi.getIsTokenExpired()) {
-        console.log('token expired')
         this.authServi.logout();
         return next.handle(req);
       }

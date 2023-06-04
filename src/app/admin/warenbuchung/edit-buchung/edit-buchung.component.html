@@ -66,10 +66,14 @@
       <button mat-raised-button color="accent" (click)="close()">Abbrechen</button>
     </div>
   </form>
-  <mat-tab-group class="mattab">
-    <mat-tab label="Gebuchte Artikels"></mat-tab>
+  <mat-tab-group class="mattab" (selectedTabChange)="selectedTabIndex($event)">
+    <mat-tab label="Gebuchte Artikels">
+      <div *ngIf="artikels$ | async as item"></div>
+    </mat-tab>
     <mat-tab label="Artikels">
+      <ng-template matTabContent>
         <app-buchung-artikels [buchungId]="this.buchungForm.get('buchung_id')?.getRawValue()"></app-buchung-artikels>
+      </ng-template>
     </mat-tab>
   </mat-tab-group>
 </div>

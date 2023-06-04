@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, map, of, retry, shareReplay, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { iBuchung } from 'src/app/model/iBuchung';
+import { iBuchungArtikel } from 'src/app/model/iBuchungArtikel';
 import { environments } from 'src/environments/environment';
 
 @Injectable({
@@ -50,5 +51,12 @@ export class WarenbuchungService {
           return res;
         })
       )
+  }
+  addArtikel(artikel: iBuchungArtikel): Observable<iBuchungArtikel> {
+    return this.httpClient.post<iBuchungArtikel>(this.API+'/art', artikel).pipe(
+      map((res) => {
+        return res;
+      })
+    )
   }
 }

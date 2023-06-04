@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BehaviorSubject, of } from 'rxjs';
 import { iArtikel } from './model/iArtikel';
+import { iBuchungArtikel } from './model/iBuchungArtikel';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,8 @@ export class HelperService {
   private searchItems: BehaviorSubject<string> = new BehaviorSubject<string>('0');
   private siteNumber: BehaviorSubject<number> = new BehaviorSubject<number>(1);
   private liferantid: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
+  private artikelInBuchung: BehaviorSubject<iBuchungArtikel[]> = new BehaviorSubject<iBuchungArtikel[]>([]);
+  artikelInBuchung$ = this.artikelInBuchung.asObservable();
   liferantid$ = this.liferantid.asObservable();
   siteNumber$ = this.siteNumber.asObservable();
   searchItem$ = this.searchItems.asObservable();
@@ -43,5 +46,11 @@ export class HelperService {
   }
   setLiferant(liferantid: number) {
     this.liferantid.next(liferantid);
+  }
+  setArtikelInBuchung(artikels: iBuchungArtikel[]) {
+    this.artikelInBuchung.next(artikels);
+  }
+  getArtikelsInBuchung() {
+    return this.artikelInBuchung.getValue();
   }
 }

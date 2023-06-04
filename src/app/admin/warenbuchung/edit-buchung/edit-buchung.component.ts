@@ -7,6 +7,7 @@ import { HelperService } from 'src/app/helper.service';
 import { BehaviorSubject, Observable, combineLatest, map, startWith, tap } from 'rxjs';
 import { WarenbuchungService } from '../warenbuchung.service';
 import { DatePipe } from '@angular/common';
+import { iBuchungArtikel } from 'src/app/model/iBuchungArtikel';
 
 
 @Component({
@@ -19,6 +20,11 @@ export class EditBuchungComponent {
   buchungForm: FormGroup;
   private kredi: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   currentCreditor$ = this.kredi.asObservable();
+
+  item$ = new Observable<any>();
+
+
+  artikels$ = new Observable();
   kreditoren$ = combineLatest([this.kreditor.kreditoren$, this.currentCreditor$]).pipe(
     map(([kreditoren, kredid])=> {
       if(this.data && this.data.kreditor.id) {
@@ -44,8 +50,21 @@ export class EditBuchungComponent {
       korrigiertes_grund: [this.data?.korrigiertes_grund || ''],
       kreditor: [this.data?.kreditor || Object , Validators.required]
     });
-    if(data !== null && this.data.kreditor.id !== undefined)
-    this.kredi.next(this.data.kreditor.id);
+    if(data !== null && this.data.kreditor.id !== undefined){
+      if(this.data.buchung_id)
+        this.item$ = this.buchungServ.getBuchungBeiId(this.data.buchung_id).pipe(
+            map((res) => {
+
+              this.helper.setArtikelInBuchung(res.artikels);
+              return res;
+            }))
+      this.artikels$ = combineLatest([this.helper.artikelInBuchung$, this.item$.pipe(startWith(null))]).pipe(map(([artikels, item]) => {
+          return artikels;
+        }))
+
+      this.kredi.next(this.data.kreditor.id);
+    }
+
   }
   submit(item: iBuchung) {
 
@@ -94,5 +113,10 @@ export class EditBuchungComponent {
   }
   liferantChange(liferantid: number) {
     this.helper.setLiferant(liferantid);
+  }
+  selectedTabIndex(event: any) {
+    if(event.index === 1 && this.data !== null && this.data.kreditor.id !== undefined) {
+      this.helper.setLiferant(this.data.kreditor.id);
+    }
   }
 }
