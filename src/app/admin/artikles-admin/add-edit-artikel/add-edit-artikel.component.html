@@ -25,10 +25,12 @@
         <div class="form-nameBesch">
           <mat-form-field>
             <input matInput placeholder="Name" formControlName="name">
+            <mat-label>Name</mat-label>
             <mat-error *ngIf="form.get('name')?.hasError('required')">Name ist erforderlich</mat-error>
           </mat-form-field>
           <mat-form-field>
             <textarea matInput placeholder="Beschreibung" formControlName="description"></textarea>
+            <mat-label>Beschreibung</mat-label>
             <mat-error *ngIf="form.get('description')?.hasError('required')">Beschreibung ist erforderlich</mat-error>
           </mat-form-field>
 
@@ -45,28 +47,34 @@
       <div class="form-row">
         <mat-form-field>
           <input type="number" matInput placeholder="Preis" formControlName="price" required>
+          <mat-label>Preis</mat-label>
           <mat-error *ngIf="form.get('price')?.hasError('required')">Preis ist erforderlich</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input type="number" matInput placeholder="MwSt" formControlName="mwst">
+          <mat-label>Mehrwertsteuer</mat-label>
           <mat-error *ngIf="form.get('mwst')?.hasError('required')">Mehrwertsteuer ist erforderlich</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Marke" formControlName="brand">
+          <mat-label>Marke</mat-label>
           <mat-error *ngIf="form.get('brand')?.hasError('required')">Marke ist erforderlich</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Modell" formControlName="model">
+          <mat-label>Modell</mat-label>
           <mat-error *ngIf="form.get('model')?.hasError('required')">Modell ist erforderlich</mat-error>
         </mat-form-field>
       </div>
       <div class="form-row">
         <mat-form-field>
           <input matInput placeholder="SKU" formControlName="sku">
+          <mat-label>SKU</mat-label>
           <mat-error *ngIf="form.get('sku')?.hasError('required')">SKU ist erforderlich</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="EAN" formControlName="ean">
+          <mat-label>EAN</mat-label>
           <mat-error *ngIf="form.get('ean')?.hasError('required')">EAN ist erforderlich</mat-error>
         </mat-form-field>
         <mat-form-field>
@@ -81,10 +89,12 @@
       <div class="form-row">
         <mat-form-field>
           <input type="number" matInput placeholder="Gewicht" formControlName="weight">
+          <mat-label>Gewicht</mat-label>
           <mat-error *ngIf="form.get('weight')?.hasError('required')">Gewicht ist erforderlich</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Abmessungen" formControlName="dimensions">
+          <mat-label>Abmessungen</mat-label>
           <mat-error *ngIf="form.get('dimensions')?.hasError('required')">Abmessungen sind erforderlich</mat-error>
         </mat-form-field>
 
@@ -124,13 +134,16 @@
       <div class="form-row">
         <mat-form-field>
           <input matInput placeholder="Verwandte Produkte" formControlName="relatedProducts">
+          <mat-label>Verwandte Produkte</mat-label>
           <mat-error *ngIf="form.get('relatedProducts')?.hasError('required')">Verwandte Produkte sind erforderlich</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Bewertungen leer" formControlName="reviews">
+          <mat-label>Bewertungen leer</mat-label>
         </mat-form-field>
         <mat-form-field>
           <input type="number" matInput placeholder="Bewertung 0" formControlName="rating">
+          <mat-label>Bewertung 0</mat-label>
         </mat-form-field>
       </div>
       <div class="form-row">
