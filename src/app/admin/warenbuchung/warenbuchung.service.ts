@@ -59,4 +59,9 @@ export class WarenbuchungService {
       })
     )
   }
+  deleteArtikelFromBuchung(artid: number, buchungsid: number) {
+    return this.httpClient.delete(this.API+`/${artid}/${buchungsid}`).pipe(
+      map(res => res)
+    )
+  }
 }

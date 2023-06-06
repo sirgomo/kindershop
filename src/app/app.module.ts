@@ -47,6 +47,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import { BuchungArtikelsComponent } from './admin/warenbuchung/buchung-artikels/buchung-artikels.component';
+import { ArtikelsInBuchungComponent } from './admin/warenbuchung/artikels-in-buchung/artikels-in-buchung.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { BuchungArtikelsComponent } from './admin/warenbuchung/buchung-artikels/
     AddEditKreditorenComponent,
     WarenbuchungComponent,
     EditBuchungComponent,
-    BuchungArtikelsComponent
+    BuchungArtikelsComponent,
+    ArtikelsInBuchungComponent
   ],
   imports: [
     BrowserModule,

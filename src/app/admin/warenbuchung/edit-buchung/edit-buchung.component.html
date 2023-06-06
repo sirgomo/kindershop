@@ -63,12 +63,12 @@
     <div class="form-actions">
       <button mat-raised-button color="primary" (click)="submit(buchungForm.value)" *ngIf="buchungForm.status === 'VALID'" ><span *ngIf="speichern$ | async"></span> Speichern</button>
       <button mat-raised-button color="primary" *ngIf="buchungForm.status === 'INVALID'" disabled >Speichern</button>
-      <button mat-raised-button color="accent" (click)="close()">Abbrechen</button>
+      <button mat-raised-button color="accent" (click)="close()">Beenden</button>
     </div>
   </form>
   <mat-tab-group class="mattab" (selectedTabChange)="selectedTabIndex($event)">
     <mat-tab label="Gebuchte Artikels">
-      <div *ngIf="artikels$ | async as item"></div>
+      <app-artikels-in-buchung *ngIf="artikels$ | async"></app-artikels-in-buchung>
     </mat-tab>
     <mat-tab label="Artikels">
       <ng-template matTabContent>

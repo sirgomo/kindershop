@@ -1,0 +1,50 @@
+<div *ngIf="artikels$ | async as artikels; else loader">
+    <mat-table [dataSource]="artikels">
+      <ng-container matColumnDef="artid">
+        <mat-header-cell *matHeaderCellDef>Artikel Id</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.artikels_id}}</mat-cell>
+        <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+      </ng-container>
+      <ng-container matColumnDef="artname">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.name}}</mat-cell>
+        <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+      </ng-container>
+      <ng-container matColumnDef="einzpreis">
+        <mat-header-cell *matHeaderCellDef>Preis (einzeln)</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.price}}</mat-cell>
+        <mat-footer-cell *matFooterCellDef>Netto: {{getGesamtBruttoPreis()[0]}}</mat-footer-cell>
+      </ng-container>
+      <ng-container matColumnDef="mwst">
+        <mat-header-cell *matHeaderCellDef>Umsatzsteuer</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.mwst}}</mat-cell>
+        <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+      </ng-container>
+      <ng-container matColumnDef="menge">
+        <mat-header-cell *matHeaderCellDef>Artikel Menge</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{item.menge}}</mat-cell>
+        <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+      </ng-container>
+      <ng-container matColumnDef="gesamtmwst">
+        <mat-header-cell *matHeaderCellDef>Gesamt Umsatzsteuer</mat-header-cell>
+        <mat-cell *matCellDef="let item; let i = index">{{getGesamtMwst(i).toFixed(2)}}</mat-cell>
+        <mat-footer-cell *matFooterCellDef>Umsatzsteuer: {{getGesamtBruttoPreis()[1]}}</mat-footer-cell>
+      </ng-container>
+      <ng-container matColumnDef="gesamtpreis">
+        <mat-header-cell *matHeaderCellDef>Gesamt Preis(netto)</mat-header-cell>
+        <mat-cell *matCellDef="let item; let i = index">{{getGesamtePreisForArtikelNetto(i).toFixed(2)}}</mat-cell>
+        <mat-footer-cell *matFooterCellDef>Brutto: {{getGesamtBruttoPreis()[2]}}</mat-footer-cell>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef>Artikel entfernen</mat-header-cell>
+        <mat-cell *matCellDef="let item"><button mat-raised-button color="warn" (click)="deleteItem(item)" >Entfernen <span *ngIf="action$ | async"></span></button></mat-cell>
+        <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="showColumns"></mat-header-row>
+      <mat-row *matRowDef="let column; columns: showColumns"></mat-row>
+      <mat-footer-row *matFooterRowDef="showColumns"></mat-footer-row>
+    </mat-table>
+</div>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
