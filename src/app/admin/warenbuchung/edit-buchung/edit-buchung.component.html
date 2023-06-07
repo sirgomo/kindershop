@@ -68,7 +68,9 @@
   </form>
   <mat-tab-group class="mattab" (selectedTabChange)="selectedTabIndex($event)">
     <mat-tab label="Gebuchte Artikels">
+      <ng-template matTabContent>
       <app-artikels-in-buchung *ngIf="artikels$ | async"></app-artikels-in-buchung>
+      </ng-template>
     </mat-tab>
     <mat-tab label="Artikels">
       <ng-template matTabContent>

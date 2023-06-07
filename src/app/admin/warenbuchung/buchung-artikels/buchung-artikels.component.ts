@@ -38,7 +38,7 @@ export class BuchungArtikelsComponent {
              artikels[i] = item;
         } else {
 
-          const index = artikelInBuch.findIndex((item) => item.artikels_id === items[i].id);
+          const index = artikelInBuch.findIndex((item) => item.artikels_id === items[i].id && this.buchungId === item.buchung_id);
           if (index !== -1) {
             const item = {id: artikelInBuch[index].id, artikels_id: items[i].id,
               buchung_id: artikelInBuch[index].buchung_id, price: artikelInBuch[index].price, mwst: artikelInBuch[index].mwst, menge : artikelInBuch[index].menge,
@@ -85,7 +85,7 @@ export class BuchungArtikelsComponent {
         const curentItems = this.helfer.getArtikelsInBuchung();
          // Wenn der Artikel bereits in der Buchung vorhanden war, wird der Eintrag in der Buchungsliste aktualisiert
           if(element.id) {
-            const index = curentItems.findIndex((item) => item.id === res.id);
+            const index = curentItems.findIndex((item) => item.artikels_id === res.artikels_id);
             const tmpItems = curentItems.slice(0);
             const newItem = {
               ...element,
@@ -93,13 +93,12 @@ export class BuchungArtikelsComponent {
             }
           tmpItems[index] = {...curentItems[index], ...newItem};
           this.helfer.setArtikelInBuchung(tmpItems);
-          this.artikels$ = of(tmpItems);
           return;
         }
         // Wenn der Artikel neu zur Buchung hinzugefügt wurde, wird er in der Buchungsliste hinzugefügt
         element.id = res.id;
         this.helfer.setArtikelInBuchung([...curentItems, element]);
-        this.artikels$ = of([...curentItems, element]);
+
       }));
     }
 

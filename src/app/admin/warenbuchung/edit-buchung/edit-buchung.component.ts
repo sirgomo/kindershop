@@ -66,7 +66,7 @@ export class EditBuchungComponent {
 
       this.kredi.next(this.data.kreditor.id);
     }
-
+    this.helper.setLiferant(-1);
   }
   submit(item: iBuchung) {
 
