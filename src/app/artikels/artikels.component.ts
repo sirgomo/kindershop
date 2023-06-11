@@ -6,6 +6,7 @@ import { iArtikel } from '../model/iArtikel';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ArtikelDetailsComponent } from './artikel-details/artikel-details.component';
 import { EinkaufskorbService } from '../einkaufskorb/einkaufskorb.service';
+import { environments } from 'src/environments/environment';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { EinkaufskorbService } from '../einkaufskorb/einkaufskorb.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArtikelsComponent implements OnInit{
+  api = environments.API_URL;
   artikels$ =  new Observable<iArtikel[]>()
   constructor (private artielSer: ArtikelsService, private helper: HelperService, private dialog: MatDialog, private korbServ: EinkaufskorbService) {}
   ngOnInit(): void {

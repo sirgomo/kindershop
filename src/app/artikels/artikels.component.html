@@ -6,7 +6,7 @@
             <mat-card-subtitle>{{ item.availability == '1' ? 'Verfügbar' : 'Nicht Verfügbar' }}</mat-card-subtitle>
         </mat-card-header>
         <div  class="img">
-          <img matCardImage  src="http://localhost:3000/artikel/thumbnail/{{item.images}}" >
+          <img matCardImage  src="{{api}}artikel/thumbnail/{{item.images}}" >
         </div>
 
         <mat-card-content>
