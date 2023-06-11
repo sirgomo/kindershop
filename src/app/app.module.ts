@@ -37,7 +37,6 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { ArtikelDetailsComponent } from './artikels/artikel-details/artikel-details.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ShippingaddressComponent } from './einkaufskorb/shippingaddress/shippingaddress.component';
-import { PaymentComponent } from './einkaufskorb/payment/payment.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { KreditorenComponent } from './admin/kreditoren/kreditoren.component';
 import { AddEditKreditorenComponent } from './admin/kreditoren/add-edit-kreditoren/add-edit-kreditoren.component';
@@ -69,7 +68,6 @@ import { ArtikelsInBuchungComponent } from './admin/warenbuchung/artikels-in-buc
     PaginationComponent,
     ArtikelDetailsComponent,
     ShippingaddressComponent,
-    PaymentComponent,
     KreditorenComponent,
     AddEditKreditorenComponent,
     WarenbuchungComponent,

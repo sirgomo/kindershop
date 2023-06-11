@@ -122,7 +122,7 @@ export class EinkaufskorbService {
     }))
   }
   checkBestellung(user: IUser, items: iKorbItem[]) {
-   return this.http.post<{preis: string}>(this.BEST_API, {user: user, items: items})
+   return this.http.post<{preis: string, item: iKorbItem[]}>(this.BEST_API, {user: user, items: items})
     .pipe(tap((res) => {
       return res;
     }))

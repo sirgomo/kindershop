@@ -50,7 +50,7 @@
       </div>
   </div></mat-step>
   <mat-step  label="step 2" ><app-shippingaddress (setForm)="addressForm($event)"></app-shippingaddress></mat-step>
-  <mat-step  label="step 3" ><div  *ngIf="checkPrice$ | async else loader"> <div id="containerp" class="containerp"> </div> </div></mat-step>
+  <mat-step  label="step 3" ><div  *ngIf="checkPrice$ | async else loader"  class="containerp"><div  id="containerp" class="pbutton" ></div></div></mat-step>
 </mat-stepper>
 <ng-template #loader>
   <app-loader></app-loader>
