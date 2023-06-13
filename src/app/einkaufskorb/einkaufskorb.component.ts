@@ -85,6 +85,7 @@ export class EinkaufskorbComponent implements AfterViewInit{
   this.matStepper.next();
   }
   addressForm(address: FormGroup) {
+
     this.adressForm = address;
    Object.assign(this.userData, this.adressForm.value)
    this.checkPrice$ = this.korbServ.checkBestellung(this.userData as IUser, this.itemsInKorb).pipe(
@@ -95,6 +96,7 @@ export class EinkaufskorbComponent implements AfterViewInit{
         this.snackBar.open(err.message, 'Ok', {duration: 3000})
       //return
       }
+      console.log(res)
       this.loadPaypal(res, this.adressForm);
     })
    );

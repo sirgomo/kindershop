@@ -8,9 +8,11 @@ import {
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
+import { environments } from 'src/environments/environment';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  API = environments.API_URL;
 
   constructor(private router: Router, private authServi: AuthService) {}
 
@@ -28,7 +30,7 @@ export class AuthInterceptor implements HttpInterceptor {
         }
       });
       return next.handle(req);
-      } else if (localStorage.getItem('korb') && req.url === 'http://localhost:3000/bestellungen') {
+      } else if (localStorage.getItem('korb') && req.url === `${this.API}bestellungen`) {
         return next.handle(req);
       }
 
