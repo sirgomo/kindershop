@@ -57,7 +57,18 @@ export class ArtiklesAdminComponent {
     )
     this.artikel$ = combineLatest([this.artikel$, this.addEditArtikel$.pipe(startWith(null))]).pipe(
       map(([artikels, artikel]) => {
-          return artikels;
+        const item = artikel as iArtikel;
+        const arts = artikels.slice(0);
+       if(artikel !== null && item.id !== undefined)
+       {
+        const ind = artikels.findIndex((iitem) => iitem.id === item.id);
+        const tmpitem = {
+          ...artikels[ind],
+          ...item
+        }
+        arts[ind] = tmpitem;
+       }
+          return arts;
       })
     )
   }
