@@ -5,6 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { environments } from 'src/environments/environment';
 import { iKorbItem } from '../model/iKorbItem';
 import { IUser } from '../model/iUser';
+import { iPaypalRes } from '../model/iPaypalRes';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HelperService } from '../helper.service';
 
 
 @Injectable({
@@ -15,7 +18,7 @@ export class EinkaufskorbService {
   private USER_API = environments.API_URL + 'user';
   private artInKorb: BehaviorSubject<iKorbItem[]> = new BehaviorSubject<iKorbItem[]>([]);
   artikelsInKorb$ = this.artInKorb.asObservable();
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private readonly snackBar : MatSnackBar, private helper: HelperService) { }
 
   addArtikelToKorb(item : iArtikel) {
 
@@ -108,9 +111,9 @@ export class EinkaufskorbService {
     }))
   }
   getBestellungBeiEmail(email: string) {
-    return this.http.get(this.BEST_API + 'email/'+email)
+    return this.http.get<iPaypalRes[]>(this.BEST_API + '/email/'+email)
     .pipe(map((res) => {
-      console.log(res);
+      console.log(res)
       return res;
     }))
   }
@@ -131,7 +134,7 @@ export class EinkaufskorbService {
     return this.http.delete(this.BEST_API + '/'+bestellid)
     .pipe(map((res) => {
       if(res === 1) {
-        console.log('ok, delted');
+        console.log('ok, deleted');
         return EMPTY;
       }
 
@@ -140,5 +143,23 @@ export class EinkaufskorbService {
       console.log(err.message);
       return EMPTY;
     }))
+  }
+  createBestellugn(bestellung: iPaypalRes) {
+    const bes = this.http.post<iPaypalRes>(this.BEST_API+'/new', bestellung).subscribe(res => {
+   //   console.log('res ' + JSON.stringify(res) );
+      if(res.id === undefined) {
+        this.snackBar.open('Etwas ist schiefgelaufen, bestellung wurde nicht gespiechert!', 'Ok', {duration: 5000});
+        bes.unsubscribe();
+        return;
+      }
+
+      const buchungen = this.helper.getBuchungen();
+      const curr = [...buchungen, res];
+      localStorage.removeItem('korb');
+      this.artInKorb.next([]);
+    //  console.log(curr)
+      this.helper.setBuchungen(curr);
+      bes.unsubscribe();
+      });
   }
 }

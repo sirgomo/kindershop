@@ -47,6 +47,7 @@ import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import { BuchungArtikelsComponent } from './admin/warenbuchung/buchung-artikels/buchung-artikels.component';
 import { ArtikelsInBuchungComponent } from './admin/warenbuchung/artikels-in-buchung/artikels-in-buchung.component';
+import { UserBestellungComponent } from './user/user-bestellung/user-bestellung.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { ArtikelsInBuchungComponent } from './admin/warenbuchung/artikels-in-buc
     WarenbuchungComponent,
     EditBuchungComponent,
     BuchungArtikelsComponent,
-    ArtikelsInBuchungComponent
+    ArtikelsInBuchungComponent,
+    UserBestellungComponent
   ],
   imports: [
     BrowserModule,

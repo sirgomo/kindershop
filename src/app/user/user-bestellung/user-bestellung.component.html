@@ -1,0 +1,63 @@
+<div *ngIf="bestellungen$ | async as bestell; else loading">
+  <div *ngIf="bestell.length < 1" class="email">
+    <div>Leider wurden keine Bestellungen mit der angegebenen E-Mail-Adresse gefunden. Möchten Sie es mit einer anderen E-Mail-Adresse versuchen?</div>
+    <div>
+      <mat-form-field>
+        <mat-label>Mit welcher Zahlungsmethode wurde bezahlt?</mat-label>
+        <input type="text" matInput [(ngModel)]="userEmail">
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-raised-button (click)="findBestellungen()">Bestellungen finden</button>
+    </div>
+  </div>
+<mat-table [dataSource]="bestell" *ngIf="bestell.length > 0" >
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef>Bestellungs-ID</mat-header-cell>
+    <mat-cell *matCellDef="let bestellung"> {{bestellung.id}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="edate">
+    <mat-header-cell *matHeaderCellDef> Einkaufsdatum </mat-header-cell>
+    <mat-cell *matCellDef="let bestellung"> {{bestellung.einkaufs_datum | date: 'shortDate'}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="bstatus">
+    <mat-header-cell *matHeaderCellDef>Status </mat-header-cell>
+    <mat-cell *matCellDef="let bestellung"> {{bestellung.bestellung_status}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="bdate">
+    <mat-header-cell *matHeaderCellDef>Bezahlt am </mat-header-cell>
+    <mat-cell *matCellDef="let bestellung"> {{bestellung.bazahlt_am | date: 'shortDate'}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="price">
+    <mat-header-cell *matHeaderCellDef> Preis </mat-header-cell>
+    <mat-cell *matCellDef="let bestellung"> {{bestellung.total_price}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="steuer">
+    <mat-header-cell *matHeaderCellDef> Mehrwertsteuer </mat-header-cell>
+    <mat-cell *matCellDef="let bestellung"> {{bestellung.steuer}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="vdate">
+    <mat-header-cell *matHeaderCellDef> Versanddatum </mat-header-cell>
+    <mat-cell *matCellDef="let bestellung"> {{bestellung.versand_datum | date: 'shortDate'}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="details">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let bestellung">
+      <button mat-button (click)="showDetails(bestellung.id)">Details</button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="column"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: column" (click)="showDetails(row)" style="cursor: pointer;" ></mat-row>
+</mat-table>
+</div>
+<ng-template #loading>
+  <app-loader></app-loader>
+</ng-template>

@@ -3,6 +3,7 @@ import { AppComponent } from './app.component';
 import { BehaviorSubject, of } from 'rxjs';
 import { iArtikel } from './model/iArtikel';
 import { iBuchungArtikel } from './model/iBuchungArtikel';
+import { iPaypalRes } from './model/iPaypalRes';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,14 @@ export class HelperService {
   private siteNumber: BehaviorSubject<number> = new BehaviorSubject<number>(1);
   private liferantid: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
   private artikelInBuchung: BehaviorSubject<iBuchungArtikel[]> = new BehaviorSubject<iBuchungArtikel[]>([]);
+  private buchungen: BehaviorSubject<iPaypalRes[]> = new BehaviorSubject<iPaypalRes[]>([]);
   artikelInBuchung$ = this.artikelInBuchung.asObservable();
   liferantid$ = this.liferantid.asObservable();
   siteNumber$ = this.siteNumber.asObservable();
   searchItem$ = this.searchItems.asObservable();
   artProSite$ = this.artProSite.asObservable();
   artikelInCategory$ = this.artInCategory.asObservable();
+  buchungen$ = this.buchungen.asObservable();
   constructor() { }
 
   setAppComponenet(app: AppComponent) {
@@ -52,5 +55,11 @@ export class HelperService {
   }
   getArtikelsInBuchung() {
     return this.artikelInBuchung.getValue();
+  }
+  setBuchungen(buch: iPaypalRes[]) {
+    this.buchungen.next(buch);
+  }
+  getBuchungen() {
+    return this.buchungen.value;
   }
 }

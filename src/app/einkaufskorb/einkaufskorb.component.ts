@@ -1,6 +1,6 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { EinkaufskorbService } from './einkaufskorb.service';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
@@ -22,6 +22,7 @@ import { BESTELLUNGSTATUS, PAYART, iPaypalRes } from '../model/iPaypalRes';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EinkaufskorbComponent implements AfterViewInit{
+
   @ViewChild('matStepper', {static: false}) matStepper!: MatStepper;
   totalPrice : number = 0;
   isLoaged$ = new Observable<any>;
@@ -46,6 +47,8 @@ export class EinkaufskorbComponent implements AfterViewInit{
     private locat: Location, private snackBar: MatSnackBar) {
 
     }
+
+
   ngAfterViewInit(): void {
     this.isLoaged$ = this.auth.isloged$.pipe(tap((res) => {
       if (res && this.anonim === true) {
@@ -88,6 +91,7 @@ export class EinkaufskorbComponent implements AfterViewInit{
 
     this.adressForm = address;
    Object.assign(this.userData, this.adressForm.value)
+   //check preises im server
    this.checkPrice$ = this.korbServ.checkBestellung(this.userData as IUser, this.itemsInKorb).pipe(
     tap((res) => {
       if(res.preis === undefined) {
@@ -96,17 +100,15 @@ export class EinkaufskorbComponent implements AfterViewInit{
         this.snackBar.open(err.message, 'Ok', {duration: 3000})
       //return
       }
-      console.log(res)
-      this.loadPaypal(res, this.adressForm);
+      this.loadPaypal(res, this.adressForm, this.korbServ);
     })
    );
    this.matStepper.next();
   }
-  async loadPaypal(item : {preis: string, item: iKorbItem[]}, userdata: FormGroup) {
+  async loadPaypal(item : {preis: string, item: iKorbItem[]}, userdata: FormGroup, serv: EinkaufskorbService) {
     let paypal;
     const pItems = await this.getItemsFurPaypal(item.item);
-
-  const user = this.getUserAddresse(userdata);
+    const user = this.getUserAddresse(userdata);
 
     try {
       paypal = await loadScript({ "client-id" : 'AeDiupsu7C8EsJ1LlfTWZ5Hjqa_jBrL07wotcEaGIyH8Q7BgtlStuniAPw94dAi1482Jv_-xk0RpJAlU', "currency": 'EUR',
@@ -179,9 +181,9 @@ export class EinkaufskorbComponent implements AfterViewInit{
                 pay.strasse = user.strasse;
                 pay.total_price = Number(res.purchase_units[0].amount.breakdown?.item_total?.value);
 
+               serv.createBestellugn(pay);
 
-              //  pay.artikels_list
-              console.log(pay)
+
                 }
               }, (err) => {
                 console.log(err);

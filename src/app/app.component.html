@@ -53,8 +53,7 @@
       </div>
     </div>
     <div class="category" *ngIf="isInUserProfil">
-      <div ><button mat-stroked-button color="primary">Bestellungen</button></div>
-      <div ><button mat-stroked-button color="primary">Rechnungen</button></div>
+      <div ><button mat-stroked-button color="primary" routerLink="user-bestellung">Bestellungen</button></div>
       <div ><button mat-stroked-button color="primary" (click)="goEinkaufen()">Züruck zum Einkaufen</button></div>
       <div *ngIf="role$ | async as role">
         <div *ngIf="role === 'admin'"><button mat-stroked-button color="primary" (click)="goToAdmin()"> Admin</button></div>
