@@ -3,7 +3,7 @@
     <div>Leider wurden keine Bestellungen mit der angegebenen E-Mail-Adresse gefunden. Möchten Sie es mit einer anderen E-Mail-Adresse versuchen?</div>
     <div>
       <mat-form-field>
-        <mat-label>Mit welcher Zahlungsmethode wurde bezahlt?</mat-label>
+        <mat-label>Mit welcher Email wurde bezahlt?</mat-label>
         <input type="text" matInput [(ngModel)]="userEmail">
       </mat-form-field>
     </div>
@@ -41,7 +41,10 @@
     <mat-header-cell *matHeaderCellDef> Mehrwertsteuer </mat-header-cell>
     <mat-cell *matCellDef="let bestellung"> {{bestellung.steuer}} </mat-cell>
   </ng-container>
-
+  <ng-container matColumnDef="brutto">
+    <mat-header-cell *matHeaderCellDef> Preise Brutto </mat-header-cell>
+    <mat-cell *matCellDef="let bestellung"> {{getBrutto(bestellung)}} </mat-cell>
+  </ng-container>
   <ng-container matColumnDef="vdate">
     <mat-header-cell *matHeaderCellDef> Versanddatum </mat-header-cell>
     <mat-cell *matCellDef="let bestellung"> {{bestellung.versand_datum | date: 'shortDate'}} </mat-cell>

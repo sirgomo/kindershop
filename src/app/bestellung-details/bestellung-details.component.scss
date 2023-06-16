@@ -1,0 +1,41 @@
+.address {
+  font-size: .9rem;
+}
+.rechnung {
+  display: flex;
+  flex-direction: column;
+ align-items: center;
+  height: 85%;
+  min-height: 85%;
+  min-width: 90%;
+}
+.artrow {
+  display: flex;
+  justify-content: space-between;
+
+  gap: .4rem;
+  padding: .4rem .4rem;
+  flex-grow: 1;
+}
+.userData {
+  display: flex;
+  flex-direction: column;
+  margin-left: 3rem;
+  margin-top: 4rem;
+  min-width: 90%;
+}
+.art {
+  display: grid;
+  border: 1px solid rgb(182, 176, 176);
+  margin: .4rem .4rem;
+  width: 90%;
+  max-width: 90%;
+  margin-top: 2rem;
+}
+.col {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(221, 215, 215);
+}

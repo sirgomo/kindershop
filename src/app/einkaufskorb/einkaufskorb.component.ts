@@ -110,16 +110,19 @@ export class EinkaufskorbComponent implements AfterViewInit{
     const pItems = await this.getItemsFurPaypal(item.item);
     const user = this.getUserAddresse(userdata);
 
+
+
     try {
       paypal = await loadScript({ "client-id" : 'AeDiupsu7C8EsJ1LlfTWZ5Hjqa_jBrL07wotcEaGIyH8Q7BgtlStuniAPw94dAi1482Jv_-xk0RpJAlU', "currency": 'EUR',
     });
     } catch (err) {
       console.log(err);
     }
-    if(paypal?.Buttons !== undefined) {
+
+    if(paypal !== undefined && paypal?.Buttons !== undefined) {
       try {
 
-      const a =  await paypal.Buttons({
+      await paypal.Buttons({
           createOrder(data, actions) {
               return actions.order.create({
                 application_context: {
@@ -160,7 +163,7 @@ export class EinkaufskorbComponent implements AfterViewInit{
                 const pay = <iPaypalRes>{};
                 pay.payart = PAYART.PAYPAL;
                 pay.bazahlt_am = new Date(Date.now());
-                pay.artikels_list = JSON.stringify( res.purchase_units[0].items);
+                pay.artikels_list = JSON.stringify( item.item);
                 pay.bestellung_status = BESTELLUNGSTATUS.INBEARBEITUNG;
                 pay.einkaufs_datum = new Date(Date.now());
                 pay.email = res.payer.email_address;
@@ -204,7 +207,6 @@ export class EinkaufskorbComponent implements AfterViewInit{
             layout: 'vertical'
           },
         }).render('#containerp')
-        console.log(a)
     } catch (error) {
         console.error("failed to render the PayPal Buttons", error);
     }
@@ -251,7 +253,7 @@ export class EinkaufskorbComponent implements AfterViewInit{
       const pItem : PurchaseItem = {
         name: items[i].name,
         quantity: items[i].menge.toString(),
-        unit_amount: { currency_code: 'EUR', value: (items[i].preis * items[i].menge).toFixed(2) },
+        unit_amount: { currency_code: 'EUR', value: items[i].preis.toString() },
         category: 'PHYSICAL_GOODS',
         tax: { currency_code: 'EUR', value: (items[i].preis * items[i].mwst / 100).toFixed(2)},
       }

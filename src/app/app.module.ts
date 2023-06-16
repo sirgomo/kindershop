@@ -48,6 +48,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { BuchungArtikelsComponent } from './admin/warenbuchung/buchung-artikels/buchung-artikels.component';
 import { ArtikelsInBuchungComponent } from './admin/warenbuchung/artikels-in-buchung/artikels-in-buchung.component';
 import { UserBestellungComponent } from './user/user-bestellung/user-bestellung.component';
+import { BestellungDetailsComponent } from './bestellung-details/bestellung-details.component';
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import { UserBestellungComponent } from './user/user-bestellung/user-bestellung.
     EditBuchungComponent,
     BuchungArtikelsComponent,
     ArtikelsInBuchungComponent,
-    UserBestellungComponent
+    UserBestellungComponent,
+    BestellungDetailsComponent
   ],
   imports: [
     BrowserModule,

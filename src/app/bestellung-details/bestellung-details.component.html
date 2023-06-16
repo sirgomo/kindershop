@@ -1,0 +1,48 @@
+<mat-toolbar>
+  <div class="men">
+    <div class=" bestell"><h3>Bestellung Nr: {{ data.id }}</h3></div>
+    <div class="address"> {{firma.name }}, {{ firma.anschrift }}, {{firma.plzUStadt}}</div>
+
+  </div>
+</mat-toolbar>
+
+
+
+  <div class="rechnung" *ngIf="data$ | async as best">
+    <div class="userData">
+      <div class="left">
+        <div>{{best.vorname}} {{best.nachname}}</div>
+        <div>{{best.strasse}} {{best.hausnummer}}</div>
+        <div>{{best.plz}} {{best.stadt}}</div>
+      </div>
+      <div class="right">
+
+      </div>
+    </div>
+
+    <div class="art">
+        <div class="artrow">
+          <div class="col">Pos.</div>
+          <div class="col">Art: Id</div>
+          <div class="col">Art. Name</div>
+          <div class="col">Art. Preise</div>
+          <div class="col">Art. Mwst.</div>
+          <div class="col">Art. Größe</div>
+          <div class="col">Art. Menge</div>
+        </div>
+        <div class="artrow" *ngFor="let item of artikels; let i = index">
+          <div class="col">{{i}}</div>
+          <div class="col">{{item.id}}</div>
+          <div class="col">{{item.name}}</div>
+          <div class="col">{{item.preis}}</div>
+          <div class="col">{{item.mwst}}</div>
+          <div class="col">{{item.grosse}}</div>
+          <div class="col">{{item.menge}}</div>
+        </div>
+      </div>
+</div>
+
+<mat-dialog-actions align="center">
+    <button mat-button matDialogClose>Close dialog</button>
+</mat-dialog-actions>
+

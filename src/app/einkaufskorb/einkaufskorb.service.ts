@@ -118,7 +118,7 @@ export class EinkaufskorbService {
     }))
   }
   getBestellungBeiId(id: number) {
-    return this.http.get(this.BEST_API + '/'+id)
+    return this.http.get<iPaypalRes>(this.BEST_API + '/'+id)
     .pipe(map((res) => {
       console.log(res);
       return res;
