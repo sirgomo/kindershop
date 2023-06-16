@@ -16,7 +16,9 @@
         <div>{{best.plz}} {{best.stadt}}</div>
       </div>
       <div class="right">
-
+          <div>Bestellung id: {{ best.id }}</div>
+          <div>Status: {{ best.bestellung_status }}</div>
+          <div>Gekauft am: {{best.einkaufs_datum | date: 'shortDate'}}</div>
       </div>
     </div>
 
@@ -24,21 +26,29 @@
         <div class="artrow">
           <div class="col">Pos.</div>
           <div class="col">Art: Id</div>
-          <div class="col">Art. Name</div>
-          <div class="col">Art. Preise</div>
-          <div class="col">Art. Mwst.</div>
+          <div class="coll">Art. Name</div>
           <div class="col">Art. Größe</div>
           <div class="col">Art. Menge</div>
+          <div class="col">Art. Mwst.</div>
+          <div class="col">Art. Preise (Netto)</div>
         </div>
         <div class="artrow" *ngFor="let item of artikels; let i = index">
           <div class="col">{{i}}</div>
           <div class="col">{{item.id}}</div>
-          <div class="col">{{item.name}}</div>
-          <div class="col">{{item.preis}}</div>
-          <div class="col">{{item.mwst}}</div>
+          <div class="coll">{{item.name}}</div>
           <div class="col">{{item.grosse}}</div>
           <div class="col">{{item.menge}}</div>
+          <div class="col">{{item.mwst}}</div>
+          <div class="col">{{item.preis}}</div>
         </div>
+      </div>
+      <div class="summe">
+       <div> Summe Netto:  {{getNetto()}}</div>
+        <div>Summe Mwst: {{getMwst()}}</div>
+      </div>
+      <div class="betrag">
+        <div>Betrag: </div>
+        <div> {{getBrutto()}}</div>
       </div>
 </div>
 

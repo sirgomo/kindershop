@@ -58,7 +58,6 @@ findBestellungen() {
   }))
 }
 getBrutto(item: any) {
-  console.log(item)
   return (Number(item.total_price) + Number(item.steuer)).toFixed(2);
 }
 }
