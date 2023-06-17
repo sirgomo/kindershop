@@ -98,7 +98,8 @@ export class EinkaufskorbComponent implements AfterViewInit{
         const err = new Error();
         Object.assign(err, res);
         this.snackBar.open(err.message, 'Ok', {duration: 3000})
-      //return
+        this.matStepper.previous();
+        return
       }
       this.loadPaypal(res, this.adressForm, this.korbServ);
     })
@@ -246,6 +247,7 @@ export class EinkaufskorbComponent implements AfterViewInit{
   }
 
   private getItemsFurPaypal(items: iKorbItem[]): { items: PurchaseItem[], total_items: number, total_tax: number } {
+    if(items === undefined) return { items: [], total_items: 0, total_tax: 0 };
     const pItems : PurchaseItem[] = new Array(items.length);
     let menge = 0;
     let tax = 0;

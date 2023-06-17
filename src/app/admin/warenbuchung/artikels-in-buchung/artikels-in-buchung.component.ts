@@ -36,13 +36,17 @@ export class ArtikelsInBuchungComponent {
     return [preis.toFixed(2), mwst.toFixed(2), (preis+mwst).toFixed(2)];
   }
   deleteItem(item: iBuchungArtikel) {
+
+
     if(item.id)
     this.action$ = this.buchService.deleteArtikelFromBuchung(item.id, item.buchung_id).pipe(
       tap((res) => {
+        console.log(res)
         if(res !== 1) {
           const err = new Error();
           Object.assign(err, res)
           this.snackBar.open(err.message, 'Ok', { duration: 4000})
+          return;
         }
 
         const artikels = this.helper.getArtikelsInBuchung();

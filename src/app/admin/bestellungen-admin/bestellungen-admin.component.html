@@ -1,53 +1,43 @@
 <div *ngIf="bestellungen$ | async as bestell; else loading">
-  <div *ngIf="bestell.length < 1" class="email">
-    <div>Leider wurden keine Bestellungen mit der angegebenen E-Mail-Adresse gefunden. Möchten Sie es mit einer anderen E-Mail-Adresse versuchen?</div>
-    <div>
-      <mat-form-field>
-        <mat-label>Mit welcher Email wurde bezahlt?</mat-label>
-        <input type="text" matInput [(ngModel)]="userEmail">
-      </mat-form-field>
-    </div>
-    <div>
-      <button mat-raised-button (click)="findBestellungen()">Bestellungen finden</button>
-    </div>
-  </div>
-<mat-table [dataSource]="bestell" *ngIf="bestell.length > 0" >
+<mat-table [dataSource]="bestell">
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef>Bestellungs-ID</mat-header-cell>
-    <mat-cell *matCellDef="let bestellung"> {{bestellung.id}} </mat-cell>
+    <mat-cell *matCellDef="let bestellung" (click)="showDetails(bestellung)" style="cursor: pointer;" > {{bestellung.id}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="edate">
     <mat-header-cell *matHeaderCellDef> Einkaufsdatum </mat-header-cell>
-    <mat-cell *matCellDef="let bestellung"> {{bestellung.einkaufs_datum | date: 'shortDate'}} </mat-cell>
+    <mat-cell *matCellDef="let bestellung" (click)="showDetails(bestellung)" style="cursor: pointer;"> {{bestellung.einkaufs_datum | date: 'shortDate'}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="bstatus">
     <mat-header-cell *matHeaderCellDef>Status </mat-header-cell>
-    <mat-cell *matCellDef="let bestellung"> {{bestellung.bestellung_status}} </mat-cell>
+    <mat-cell *matCellDef="let bestellung"> <mat-select [(ngModel)]="bestellung.bestellung_status" (selectionChange)="onStatusChange(bestellung)">
+        <mat-option *ngFor="let item of bestellungStatus" [value]="item === bestellung.bestellung_status ? bestellung.bestellung_status : item">{{item}}</mat-option>
+    </mat-select> </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="bdate">
     <mat-header-cell *matHeaderCellDef>Bezahlt am </mat-header-cell>
-    <mat-cell *matCellDef="let bestellung"> {{bestellung.bazahlt_am | date: 'shortDate'}} </mat-cell>
+    <mat-cell *matCellDef="let bestellung" (click)="showDetails(bestellung)" style="cursor: pointer;"> {{bestellung.bazahlt_am | date: 'shortDate'}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="price">
     <mat-header-cell *matHeaderCellDef> Preis </mat-header-cell>
-    <mat-cell *matCellDef="let bestellung"> {{bestellung.total_price}} </mat-cell>
+    <mat-cell *matCellDef="let bestellung" (click)="showDetails(bestellung)" style="cursor: pointer;"> {{bestellung.total_price}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="steuer">
     <mat-header-cell *matHeaderCellDef> Mehrwertsteuer </mat-header-cell>
-    <mat-cell *matCellDef="let bestellung"> {{bestellung.steuer}} </mat-cell>
+    <mat-cell *matCellDef="let bestellung" (click)="showDetails(bestellung)" style="cursor: pointer;"> {{bestellung.steuer}} </mat-cell>
   </ng-container>
   <ng-container matColumnDef="brutto">
     <mat-header-cell *matHeaderCellDef> Preise Brutto </mat-header-cell>
-    <mat-cell *matCellDef="let bestellung"> {{getBrutto(bestellung)}} </mat-cell>
+    <mat-cell *matCellDef="let bestellung" (click)="showDetails(bestellung)" style="cursor: pointer;"> {{getBrutto(bestellung)}} </mat-cell>
   </ng-container>
   <ng-container matColumnDef="vdate">
     <mat-header-cell *matHeaderCellDef> Versanddatum </mat-header-cell>
-    <mat-cell *matCellDef="let bestellung"> {{bestellung.versand_datum | date: 'shortDate'}} </mat-cell>
+    <mat-cell *matCellDef="let bestellung" (click)="showDetails(bestellung)" style="cursor: pointer;"> {{bestellung.versand_datum | date: 'shortDate'}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="details">
@@ -58,7 +48,7 @@
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="column"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: column" (click)="showDetails(row)" style="cursor: pointer;" ></mat-row>
+  <mat-row *matRowDef="let row; columns: column" ></mat-row>
 </mat-table>
 </div>
 <ng-template #loading>

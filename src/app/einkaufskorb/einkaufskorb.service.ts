@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, EMPTY, Observable, map, tap } from 'rxjs';
+import { APP_ID, Injectable } from '@angular/core';
+import { BehaviorSubject, EMPTY, Observable, combineLatest, map, startWith, switchMap, tap } from 'rxjs';
 import { iArtikel } from '../model/iArtikel';
 import { HttpClient } from '@angular/common/http';
 import { environments } from 'src/environments/environment';
 import { iKorbItem } from '../model/iKorbItem';
 import { IUser } from '../model/iUser';
-import { iPaypalRes } from '../model/iPaypalRes';
+import { BESTELLUNGSTATUS, iPaypalRes } from '../model/iPaypalRes';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HelperService } from '../helper.service';
 
@@ -16,8 +16,18 @@ import { HelperService } from '../helper.service';
 export class EinkaufskorbService {
   private BEST_API = environments.API_URL + 'bestellungen';
   private USER_API = environments.API_URL + 'user';
+  mengeProSite = 20;
+  currentSiteNr = 1;
   private artInKorb: BehaviorSubject<iKorbItem[]> = new BehaviorSubject<iKorbItem[]>([]);
   artikelsInKorb$ = this.artInKorb.asObservable();
+  private bestellungen: BehaviorSubject<iPaypalRes[]> = new BehaviorSubject<iPaypalRes[]>([]);
+  bestellungen$ = this.bestellungen.asObservable().pipe(map((res) => {
+    if (res.length === 0)
+      return this.getBestelungen(this.mengeProSite, this.currentSiteNr).pipe(map(res => res));
+
+      return res;
+  }))
+
   constructor(private http: HttpClient, private readonly snackBar : MatSnackBar, private helper: HelperService) { }
 
   addArtikelToKorb(item : iArtikel) {
@@ -104,9 +114,11 @@ export class EinkaufskorbService {
     return this.http.get<IUser>(this.USER_API + `/${email}`).pipe(map(res => res));
   }
   getBestelungen(menge: number, sitenr: number) {
-    return this.http.get(this.BEST_API +'?menge='+menge+'&sitenr='+sitenr)
-    .pipe(map((res) => {
-      console.log(res);
+    return this.http.get<iPaypalRes[]>(this.BEST_API +'?menge='+menge+'&sitenr='+sitenr)
+      .pipe(map((res) => {
+        if(res === null) return [];
+
+      this.bestellungen.next(res);
       return res;
     }))
   }
@@ -152,13 +164,31 @@ export class EinkaufskorbService {
         return;
       }
 
-      const buchungen = this.helper.getBuchungen();
+      const buchungen = this.bestellungen.getValue();
       const curr = [...buchungen, res];
       localStorage.removeItem('korb');
       this.artInKorb.next([]);
     //  console.log(curr)
-      this.helper.setBuchungen(curr);
+      this.bestellungen.next(curr);
       bes.unsubscribe();
       });
+  }
+  changeBestellungStatus(item: {id: number, status: BESTELLUNGSTATUS}) {
+    const change$ = this.http.post<iPaypalRes>(this.BEST_API+'/change-status', item).pipe(map(res => res));
+    return combineLatest([this.bestellungen$, change$.pipe(startWith(null))]).pipe(map(([best, stat]) => {
+      if(stat === null)
+        return best;
+
+      const items = this.bestellungen.getValue();
+      const index = items.findIndex((tmp) => tmp.id === item.id);
+      const tmpItem = {
+        ...items[index],
+        ...item
+      }
+      const newItems = items.slice(0);
+      newItems[index] = tmpItem;
+      this.bestellungen.next(newItems);
+      return newItems;
+    }))
   }
 }

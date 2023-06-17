@@ -24,14 +24,13 @@ export class UserBestellungComponent {
   column: string[] = ['id', 'edate', 'bstatus', 'bdate', 'price', 'steuer','brutto', 'vdate'];
     constructor(private readonly service: EinkaufskorbService, private readonly helper: HelperService,
       private readonly snackBar: MatSnackBar, private readonly route: Router, private readonly dialog: MatDialog) {
-        this.helper.setBuchungen([]);
+
       }
 
 getBuchungen() {
   const email = localStorage.getItem('email')
   if(email !== null) {
     return this.service.getBestellungBeiEmail(email).pipe(map(res => {
-      this.helper.setBuchungen(res);
       return res as iPaypalRes[];
     }));
 
@@ -53,7 +52,7 @@ showDetails(item: any) {
 findBestellungen() {
   this.bestellungen$ = this.service.getBestellungBeiEmail(this.userEmail).pipe(map(res => {
     if(res === null) return [];
-    this.helper.setBuchungen(res);
+
     return res;
   }))
 }
