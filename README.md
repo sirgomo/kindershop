@@ -1,5 +1,7 @@
 # Kindershop
 
+life - https://kinder.ww-soft.de
+
 Projekt eines Kinderladens mit Kleidung mit NestJS + TypeORM als Backend und Angular als Frontend mit RxJS. Das Hauptziel ist das Erlernen und Üben von RxJS. Das Projekt wird in der Freizeit weiterentwickelt.
 
 Bisher erledigt:
@@ -13,6 +15,7 @@ Kundenkorb:
 - Überprüfung von Artikeln und Preisen auf dem Server
 - Zahlung mit PayPal
 - Bestellung erstellen (muss noch umgesetzt werden)
+- Bestellung bearbeiten, set Bestellung status
 
 Benutzer:
 - Benutzerprofil
