@@ -12,9 +12,15 @@ import { KreditorenComponent } from './admin/kreditoren/kreditoren.component';
 import { routeGuard } from './auth/route.guard';
 import { WarenbuchungComponent } from './admin/warenbuchung/warenbuchung.component';
 import { UserBestellungComponent } from './user/user-bestellung/user-bestellung.component';
+import { BestellungenAdminComponent } from './admin/bestellungen-admin/bestellungen-admin.component';
 
 
 const routes: Routes = [
+  {
+    component: BestellungenAdminComponent,
+    path: 'admin-bestellung',
+    canActivate: [routeGuard]
+  },
   {
     component: UserBestellungComponent,
     path: 'user-bestellung',

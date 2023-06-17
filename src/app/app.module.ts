@@ -49,6 +49,7 @@ import { BuchungArtikelsComponent } from './admin/warenbuchung/buchung-artikels/
 import { ArtikelsInBuchungComponent } from './admin/warenbuchung/artikels-in-buchung/artikels-in-buchung.component';
 import { UserBestellungComponent } from './user/user-bestellung/user-bestellung.component';
 import { BestellungDetailsComponent } from './bestellung-details/bestellung-details.component';
+import { BestellungenAdminComponent } from './admin/bestellungen-admin/bestellungen-admin.component';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { BestellungDetailsComponent } from './bestellung-details/bestellung-deta
     BuchungArtikelsComponent,
     ArtikelsInBuchungComponent,
     UserBestellungComponent,
-    BestellungDetailsComponent
+    BestellungDetailsComponent,
+    BestellungenAdminComponent
   ],
   imports: [
     BrowserModule,

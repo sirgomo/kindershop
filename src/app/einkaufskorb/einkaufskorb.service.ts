@@ -113,7 +113,6 @@ export class EinkaufskorbService {
   getBestellungBeiEmail(email: string) {
     return this.http.get<iPaypalRes[]>(this.BEST_API + '/email/'+email)
     .pipe(map((res) => {
-      console.log(res)
       return res;
     }))
   }
